@@ -1,37 +1,130 @@
- <!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>لوحة تحكم الشركة</title>
+    <title>لوحة تحكم الشركة - شيخ ستور</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        body { font-family: "Cairo", sans-serif; background: #000000; }
-        .btn-green { background: #10B981; }
-        .btn-red { background: #EF4444; }
-        .btn-blue { background: #3B82F6; }
+        * { font-family: "Cairo", sans-serif; }
+        body { background: #000000; color: #fff; }
+       .glass {
+            background: rgba(17, 17, 17, 0.8);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+       .btn-neon-green { 
+            background: linear-gradient(135deg, #10B981, #059669); 
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
+            transition: all 0.3s;
+        }
+       .btn-neon-green:hover {
+            box-shadow: 0 0 30px rgba(16, 185, 129, 0.7);
+            transform: translateY(-2px);
+        }
+       .btn-neon-red { 
+            background: linear-gradient(135deg, #EF4444, #DC2626); 
+            box-shadow: 0 0 20px rgba(239, 68, 68, 0.4);
+            transition: all 0.3s;
+        }
+       .btn-neon-blue { 
+            background: linear-gradient(135deg, #3B82F6, #1D4ED8); 
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
+            transition: all 0.3s;
+        }
+       .btn-neon-blue:hover {
+            box-shadow: 0 0 30px rgba(59, 130, 246, 0.7);
+            transform: translateY(-2px);
+        }
+       .gradient-text { 
+            background: linear-gradient(90deg, #3B82F6, #10B981); 
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent; 
+        }
+       .card-glow {
+            background: linear-gradient(145deg, #111111, #0A0A0A);
+            border: 1px solid #1F1F1F;
+            transition: all 0.4s ease;
+        }
+       .card-glow:hover {
+            border-color: #3B82F6;
+            box-shadow: 0 10px 40px rgba(59, 130, 246, 0.2);
+        }
+       .status-new { border-right: 4px solid #3B82F6; }
+       .status-prep { border-right: 4px solid #F59E0B; }
+       .status-done { border-right: 4px solid #10B981; }
     </style>
 </head>
-<body class="text-white p-6">
-    <div id="loginBox" class="max-w-md mx-auto mt-20 bg-gray-900 p-6 rounded-xl">
-        <h2 class="text-2xl font-bold mb-4 text-center">تسجيل دخول الأدمن</h2>
-        <input id="username" type="text" placeholder="اسم المستخدم" class="w-full p-3 mb-3 rounded bg-black border border-gray-800">
-        <input id="password" type="password" placeholder="كلمة المرور" class="w-full p-3 mb-3 rounded bg-black border border-gray-800">
-        <button onclick="login()" class="btn-blue w-full p-3 rounded-lg font-bold">دخول</button>
+<body>
+    <!-- تسجيل الدخول -->
+    <div id="loginBox" class="min-h-screen flex items-center justify-center p-6">
+        <div class="glass rounded-3xl p-10 w-full max-w-md border border-gray-800">
+            <div class="text-center mb-8">
+                <div class="w-20 h-20 mx-auto rounded-2xl btn-neon-blue flex items-center justify-center mb-4">
+                    <i class="fa-solid fa-lock text-3xl"></i>
+                </div>
+                <h2 class="text-3xl font-black mb-2">تسجيل <span class="gradient-text">الدخول</span></h2>
+                <p class="text-gray-400">لوحة تحكم أدمن الشركة</p>
+            </div>
+            <input id="username" type="text" placeholder="اسم المستخدم" class="w-full p-4 mb-4 rounded-xl bg-black border border-gray-800 focus:border-blue-500 outline-none transition-all">
+            <input id="password" type="password" placeholder="كلمة المرور" class="w-full p-4 mb-6 rounded-xl bg-black border border-gray-800 focus:border-blue-500 outline-none transition-all">
+            <button onclick="login()" class="btn-neon-blue w-full p-4 rounded-xl font-black text-lg">
+                <i class="fa-solid fa-right-to-bracket ml-2"></i> دخول للوحة التحكم
+            </button>
+        </div>
     </div>
 
-    <div id="dashboard" class="hidden">
-        <div class="flex justify-between items-center mb-6">
-            <h1 id="companyTitle" class="text-3xl font-black"></h1>
-            <button onclick="showAddProduct()" class="btn-green px-4 py-2 rounded-lg"><i class="fa-solid fa-plus"></i> منتج جديد</button>
-        </div>
-        
-        <h2 class="text-2xl font-bold mb-4">الطلبات الجديدة</h2>
-        <div id="ordersList" class="space-y-4 mb-8"></div>
+    <!-- لوحة التحكم -->
+    <div id="dashboard" class="hidden p-6">
+        <div class="container mx-auto">
+            <!-- الهيدر -->
+            <div class="glass rounded-3xl p-8 mb-8">
+                <div class="flex justify-between items-center flex-wrap gap-4">
+                    <div class="flex items-center gap-4">
+                        <img id="companyLogo" class="w-16 h-16 rounded-2xl border-2 border-blue-500 object-cover">
+                        <div>
+                            <h1 id="companyTitle" class="text-4xl font-black gradient-text"></h1>
+                            <p class="text-gray-400">لوحة إدارة المتجر</p>
+                        </div>
+                    </div>
+                    <button onclick="showAddProduct()" class="btn-neon-green px-6 py-3 rounded-xl font-black">
+                        <i class="fa-solid fa-plus ml-2"></i> منتج جديد
+                    </button>
+                </div>
+            </div>
 
-        <h2 class="text-2xl font-bold mb-4">منتجاتي</h2>
-        <div id="productsList" class="grid grid-cols-2 md:grid-cols-4 gap-4"></div>
+            <!-- الطلبات -->
+            <div class="glass rounded-3xl p-8 mb-8">
+                <h2 class="text-2xl font-bold mb-6 flex items-center gap-3">
+                    <i class="fa-solid fa-bell text-yellow-500"></i> الطلبات الواردة
+                    <span id="orderCount" class="bg-blue-500 text-xs px-3 py-1 rounded-full">0</span>
+                </h2>
+                <div id="ordersList" class="space-y-4"></div>
+            </div>
+
+            <!-- المنتجات -->
+            <div class="glass rounded-3xl p-8">
+                <h2 class="text-2xl font-bold mb-6 flex items-center gap-3">
+                    <i class="fa-solid fa-box text-green-500"></i> منتجات متجرك
+                </h2>
+                <div id="productsList" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-5"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- نافذة إضافة منتج -->
+    <div id="addProductModal" class="fixed inset-0 bg-black bg-opacity-90 backdrop-blur-sm hidden items-center justify-center z-50 p-6">
+        <div class="glass p-8 rounded-3xl w-full max-w-md border border-gray-800">
+            <h3 class="text-2xl font-black mb-6 gradient-text">إضافة منتج جديد</h3>
+            <input id="pName" type="text" placeholder="اسم المنتج" class="w-full p-4 mb-4 rounded-xl bg-black border border-gray-800 focus:border-blue-500 outline-none">
+            <input id="pPrice" type="number" placeholder="السعر بالليرة" class="w-full p-4 mb-4 rounded-xl bg-black border border-gray-800 focus:border-blue-500 outline-none">
+            <input id="pImage" type="text" placeholder="رابط صورة المنتج" class="w-full p-4 mb-6 rounded-xl bg-black border border-gray-800 focus:border-blue-500 outline-none">
+            <div class="flex gap-3">
+                <button onclick="saveProduct()" class="btn-neon-green flex-1 p-4 rounded-xl font-bold">حفظ المنتج</button>
+                <button onclick="closeProductModal()" class="btn-neon-red flex-1 p-4 rounded-xl font-bold">إلغاء</button>
+            </div>
+        </div>
     </div>
 
     <script type="module">
@@ -46,7 +139,7 @@
           messagingSenderId: "123646936115",
           appId: "1:123646936115:web:bb6b3db2cae8340ddc8f46"
         };
-        
+
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
         const companyId = new URLSearchParams(window.location.search).get('id');
@@ -57,34 +150,60 @@
             companyData = companyDoc.data();
             const user = document.getElementById('username').value;
             const pass = document.getElementById('password').value;
-            
+
             if (user === companyData.username && pass === companyData.password) {
                 document.getElementById('loginBox').classList.add('hidden');
                 document.getElementById('dashboard').classList.remove('hidden');
                 document.getElementById('companyTitle').textContent = companyData.name;
+                document.getElementById('companyLogo').src = companyData.logo;
                 loadOrders();
                 loadProducts();
             } else {
-                alert('بيانات الدخول غلط');
+                alert('❌ بيانات الدخول غلط يا وحش');
             }
         }
 
         function loadOrders() {
             const q = query(collection(db, "sheikh_orders"), where("companyId", "==", companyId));
             onSnapshot(q, (snapshot) => {
-                document.getElementById('ordersList').innerHTML = snapshot.docs.map(docSnap => {
+                document.getElementById('orderCount').textContent = snapshot.size;
+                const list = document.getElementById('ordersList');
+                if (snapshot.empty) {
+                    list.innerHTML = `<div class="text-center py-12 text-gray-500"><i class="fa-solid fa-inbox text-5xl mb-4"></i><p>ما في طلبات جديدة حالياً</p></div>`;
+                    return;
+                }
+                list.innerHTML = snapshot.docs.map(docSnap => {
                     const o = docSnap.data();
+                    let statusClass = 'status-new';
+                    if (o.status === 'قيد التحضير') statusClass = 'status-prep';
+                    if (o.status === 'تم التسليم') statusClass = 'status-done';
+                    
                     return `
-                        <div class="bg-gray-900 p-4 rounded-xl border-r-4 border-blue-500">
-                            <p class="font-bold">${o.customer.name} - ${o.customer.phone}</p>
-                            <p class="text-sm text-gray-400">${o.customer.address}</p>
-                            <p class="mt-2">${o.items.map(i => `${i.name} ×${i.qty}`).join(' • ')}</p>
-                            <p class="text-green-500 font-bold mt-2">${o.total} ل.س</p>
-                            <select onchange="updateStatus('${docSnap.id}', this.value)" class="bg-black rounded p-1 mt-2 text-sm">
-                                <option ${o.status==='طلب جديد'?'selected':''}>طلب جديد</option>
-                                <option ${o.status==='قيد التحضير'?'selected':''}>قيد التحضير</option>
-                                <option ${o.status==='تم التسليم'?'selected':''}>تم التسليم</option>
-                            </select>
+                        <div class="glass rounded-2xl p-6 ${statusClass}">
+                            <div class="flex justify-between items-start mb-4">
+                                <div>
+                                    <p class="font-black text-lg mb-1"><i class="fa-solid fa-user text-blue-500 ml-2"></i>${o.customer.name}</p>
+                                    <p class="text-sm text-gray-400"><i class="fa-solid fa-phone ml-2"></i>${o.customer.phone}</p>
+                                    <p class="text-sm text-gray-400"><i class="fa-solid fa-location-dot ml-2"></i>${o.customer.address}</p>
+                                </div>
+                                <div class="text-left">
+                                    <p class="text-2xl font-black text-green-400">${o.total.toLocaleString()} ل.س</p>
+                                    <select onchange="updateStatus('${docSnap.id}', this.value)" class="bg-black rounded-lg p-2 mt-2 text-sm border border-gray-800 focus:border-blue-500 outline-none">
+                                        <option ${o.status==='طلب جديد'?'selected':''}>طلب جديد</option>
+                                        <option ${o.status==='قيد التحضير'?'selected':''}>قيد التحضير</option>
+                                        <option ${o.status==='تم التسليم'?'selected':''}>تم التسليم</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="bg-black rounded-xl p-4">
+                                <p class="text-xs text-gray-500 mb-2">المنتجات:</p>
+                                ${o.items.map(i => `
+                                    <div class="flex justify-between text-sm mb-1">
+                                        <span>${i.name} ×${i.qty}</span>
+                                        <span class="text-green-400">${(i.price * i.qty).toLocaleString()} ل.س</span>
+                                    </div>
+                                `).join('')}
+                            </div>
                         </div>
                     `;
                 }).join('');
@@ -94,15 +213,24 @@
         function loadProducts() {
             const q = query(collection(db, "sheikh_products"), where("companyId", "==", companyId));
             onSnapshot(q, (snapshot) => {
-                document.getElementById('productsList').innerHTML = snapshot.docs.map(docSnap => {
+                const list = document.getElementById('productsList');
+                if (snapshot.empty) {
+                    list.innerHTML = `<div class="col-span-full text-center py-12 text-gray-500"><i class="fa-solid fa-box-open text-5xl mb-4"></i><p>ما ضفت منتجات لسا.. ضيف أول منتج</p></div>`;
+                    return;
+                }
+                list.innerHTML = snapshot.docs.map(docSnap => {
                     const p = docSnap.data();
                     return `
-                        <div class="bg-gray-900 rounded-xl overflow-hidden border border-gray-800">
-                            <img src="${p.image}" class="w-full h-32 object-cover">
-                            <div class="p-3">
-                                <p class="font-bold text-sm">${p.name}</p>
-                                <p class="text-green-500">${p.price} ل.س</p>
-                                <button onclick="deleteProduct('${docSnap.id}')" class="btn-red text-xs mt-2 px-2 py-1 rounded">حذف</button>
+                        <div class="card-glow rounded-2xl overflow-hidden group">
+                            <div class="relative overflow-hidden">
+                                <img src="${p.image}" class="w-full h-40 object-cover group-hover:scale-110 transition-transform duration-500">
+                                <button onclick="deleteProduct('${docSnap.id}')" class="absolute top-2 left-2 btn-neon-red w-8 h-8 rounded-lg opacity-0 group-hover:opacity-100 transition-all">
+                                    <i class="fa-solid fa-trash text-xs"></i>
+                                </button>
+                            </div>
+                            <div class="p-4">
+                                <p class="font-bold text-sm h-10 mb-2">${p.name}</p>
+                                <p class="text-xl font-black text-green-400">${p.price.toLocaleString()} ل.س</p>
                             </div>
                         </div>
                     `;
@@ -115,19 +243,31 @@
         }
 
         window.deleteProduct = async (id) => {
-            if(confirm('متأكد من حذف المنتج؟')) await deleteDoc(doc(db, "sheikh_products", id));
+            if(confirm('⚠️ متأكد من حذف المنتج؟')) await deleteDoc(doc(db, "sheikh_products", id));
         }
 
-        window.showAddProduct = () => {
-            const name = prompt('اسم المنتج:');
-            const price = prompt('السعر:');
-            const image = prompt('رابط الصورة:');
+        window.showAddProduct = () => document.getElementById('addProductModal').classList.remove('hidden');
+        window.closeProductModal = () => document.getElementById('addProductModal').classList.add('hidden');
+
+        window.saveProduct = async () => {
+            const name = document.getElementById('pName').value;
+            const price = document.getElementById('pPrice').value;
+            const image = document.getElementById('pImage').value;
             if(name && price && image) {
-                addDoc(collection(db, "sheikh_products"), {
-                    name, price: Number(price), image, companyId
+                await addDoc(collection(db, "sheikh_products"), {
+                    name, 
+                    price: Number(price), 
+                    image, 
+                    companyId
                 });
+                closeProductModal();
+                document.getElementById('pName').value = '';
+                document.getElementById('pPrice').value = '';
+                document.getElementById('pImage').value = '';
+            } else {
+                alert('عبي كل الحقول يا ملك');
             }
         }
     </script>
 </body>
-</html>                           
+</html>          
