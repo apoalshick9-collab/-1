@@ -1,4 +1,5 @@
-       <!DOCTYPE html>
+                                                       `).join('');
+      <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
@@ -8,24 +9,22 @@
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Tajawal', sans-serif; background: #000; color: #fff; }
-       .glass { background: rgba(20, 20, 20, 0.8); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1); }
-       .card-glow { background: linear-gradient(145deg, #111, #0a0a0a); border: 1px solid #222; transition: all 0.3s; }
-       .card-glow:hover { border-color: #3b82f6; box-shadow: 0 0 30px rgba(59, 130, 246, 0.3); transform: translateY(-4px); }
-       .btn-neon-blue { background: #3b82f6; box-shadow: 0 0 20px rgba(59, 130, 246, 0.5); }
-       .btn-neon-green { background: #10b981; box-shadow: 0 0 20px rgba(16, 185, 129, 0.5); }
-       .btn-neon-red { background: #ef4444; box-shadow: 0 0 20px rgba(239, 68, 68, 0.5); }
-       .gradient-text { background: linear-gradient(90deg, #3b82f6, #8b5cf6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-       .modal { transition: all 0.3s; }
-       .toast { animation: slideIn 0.3s ease-out; }
+      .glass { background: rgba(20, 20, 20, 0.8); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1); }
+      .card-glow { background: linear-gradient(145deg, #111, #0a0a0a); border: 1px solid #222; transition: all 0.3s; }
+      .card-glow:hover { border-color: #3b82f6; box-shadow: 0 0 30px rgba(59, 130, 246, 0.3); transform: translateY(-4px); }
+      .btn-neon-blue { background: #3b82f6; box-shadow: 0 0 20px rgba(59, 130, 246, 0.5); }
+      .btn-neon-green { background: #10b981; box-shadow: 0 0 20px rgba(16, 185, 129, 0.5); }
+      .btn-neon-red { background: #ef4444; box-shadow: 0 0 20px rgba(239, 68, 68, 0.5); }
+      .gradient-text { background: linear-gradient(90deg, #3b82f6, #8b5cf6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+      .modal { transition: all 0.3s; }
+      .toast { animation: slideIn 0.3s ease-out; }
         @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
     </style>
 </head>
 <body class="min-h-screen">
 
-    <!-- Toast -->
     <div id="toast" class="fixed top-5 left-5 z-[100] hidden"></div>
 
-    <!-- Header -->
     <header class="glass sticky top-0 z-40 p-4">
         <div class="max-w-7xl mx-auto flex items-center justify-between">
             <div class="flex items-center gap-4">
@@ -41,13 +40,12 @@
             </div>
             <h1 class="text-3xl font-black gradient-text">شيخ ستور</h1>
             <button onclick="window.location.href='./super-admin.html'" class="btn-neon-blue px-4 py-2 rounded-xl font-bold">
-                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"></path></svg>
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"></path></svg>
             </button>
         </div>
     </header>
 
     <main class="max-w-7xl mx-auto p-6">
-        <!-- Search -->
         <div class="glass p-6 rounded-3xl mb-8">
             <div class="flex gap-3">
                 <input id="searchInput" type="text" placeholder="ابحث عن متجر أو منتج..." class="flex-1 p-4 rounded-xl bg-black border border-gray-800 focus:border-blue-500 outline-none text-lg">
@@ -57,7 +55,6 @@
             </div>
         </div>
 
-        <!-- Companies Grid -->
         <div id="companiesSection">
             <h2 class="text-2xl font-black mb-6 flex items-center gap-3">
                 <span class="gradient-text">المتاجر المتاحة</span>
@@ -66,7 +63,6 @@
             <div id="companiesGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4"></div>
         </div>
 
-        <!-- Products Section -->
         <div id="productsSection" class="hidden">
             <div class="flex items-center justify-between mb-6">
                 <button onclick="backToCompanies()" class="btn-neon-blue px-6 py-3 rounded-xl font-bold flex items-center gap-2">
@@ -79,7 +75,6 @@
         </div>
     </main>
 
-    <!-- Cart Modal -->
     <div id="cartModal" class="modal fixed inset-0 bg-black bg-opacity-90 backdrop-blur-sm hidden items-center justify-center z-50 p-6">
         <div class="glass p-8 rounded-3xl w-full max-w-2xl border border-gray-800 max-h-[90vh] overflow-y-auto">
             <div class="flex items-center justify-between mb-6">
@@ -99,7 +94,6 @@
         </div>
     </div>
 
-    <!-- Checkout Modal -->
     <div id="checkoutModal" class="modal fixed inset-0 bg-black bg-opacity-90 backdrop-blur-sm hidden items-center justify-center z-50 p-6">
         <div class="glass p-8 rounded-3xl w-full max-w-md border border-gray-800">
             <h3 class="text-2xl font-black mb-6 gradient-text">معلومات التوصيل</h3>
@@ -113,7 +107,6 @@
         </div>
     </div>
 
-    <!-- Order Tracking Modal -->
     <div id="trackingModal" class="modal fixed inset-0 bg-black bg-opacity-90 backdrop-blur-sm hidden items-center justify-center z-50 p-6">
         <div class="glass p-8 rounded-3xl w-full max-w-md border border-gray-800">
             <h3 class="text-2xl font-black mb-6 gradient-text">تتبع طلبك</h3>
@@ -149,24 +142,34 @@
             await loadCompanies();
         };
 
+        // التعديل الأساسي هون: شلت where("approved", "==", true)
         async function loadCompanies() {
-            const q = query(collection(db, "sheikh_companies"), where("approved", "==", true));
-            const snapshot = await getDocs(q);
-            allCompanies = snapshot.docs.map(doc => ({ id: doc.id,...doc.data() }));
-            renderCompanies(allCompanies);
+            try {
+                const snapshot = await getDocs(collection(db, "sheikh_companies"));
+                allCompanies = snapshot.docs.map(doc => ({ id: doc.id,...doc.data() }));
+                console.log('Companies loaded:', allCompanies);
+                renderCompanies(allCompanies);
+            } catch (error) {
+                console.error('Error loading companies:', error);
+                showToast('خطأ بتحميل المتاجر', 'error');
+            }
         }
 
         function renderCompanies(companies) {
             const grid = document.getElementById('companiesGrid');
+            if (companies.length === 0) {
+                grid.innerHTML = '<p class="col-span-full text-center text-gray-500 text-lg py-12">لا توجد متاجر حالياً</p>';
+                return;
+            }
+
             grid.innerHTML = companies.map(c => {
-                // هيك بيقرأ logo أو logoUrl أو image أي واحد فيهم موجود
                 const logoSrc = c.logo || c.logoUrl || c.image || 'https://cdn-icons-png.flaticon.com/512/3081/3081559.png';
-                
+
                 return `
                 <button onclick="loadCompanyProducts('${c.id}', '${c.name}')" class="card-glow p-5 rounded-2xl text-center group">
                     <div class="w-20 h-20 mx-auto rounded-2xl overflow-hidden mb-3 border-2 border-gray-800 group-hover:border-blue-500 transition-all bg-gray-900 flex items-center justify-center">
-                        <img src="${logoSrc}" 
-                             class="w-full h-full object-cover" 
+                        <img src="${logoSrc}"
+                             class="w-full h-full object-cover"
                              onerror="this.onerror=null; this.src='https://cdn-icons-png.flaticon.com/512/3081/3081559.png';"
                              alt="${c.name}">
                     </div>
@@ -181,21 +184,25 @@
             document.getElementById('companyTitle').textContent = companyName;
             document.getElementById('companiesSection').classList.add('hidden');
             document.getElementById('productsSection').classList.remove('hidden');
-            
+
+            console.log('Loading products for company:', companyId);
+
             const q = query(collection(db, "sheikh_products"), where("companyId", "==", companyId));
             const snapshot = await getDocs(q);
             const products = snapshot.docs.map(doc => ({ id: doc.id,...doc.data() }));
-            
+
+            console.log('Products found:', products);
+
             const grid = document.getElementById('productsGrid');
             if (products.length === 0) {
                 grid.innerHTML = '<p class="col-span-full text-center text-gray-500 text-lg py-12">لا توجد منتجات حالياً</p>';
                 return;
             }
-            
+
             grid.innerHTML = products.map(p => `
                 <div class="card-glow p-4 rounded-2xl">
                     <div class="w-full h-40 rounded-xl overflow-hidden mb-3 bg-gray-900">
-                        <img src="${p.image || 'https://cdn-icons-png.flaticon.com/512/3081/3081559.png'}" 
+                        <img src="${p.image || 'https://cdn-icons-png.flaticon.com/512/3081/3081559.png'}"
                              class="w-full h-full object-cover"
                              onerror="this.onerror=null; this.src='https://cdn-icons-png.flaticon.com/512/3081/3081559.png';"
                              alt="${p.name}">
@@ -235,13 +242,13 @@
         window.showCart = () => {
             const modal = document.getElementById('cartModal');
             const items = document.getElementById('cartItems');
-            
+
             if (cart.length === 0) {
                 items.innerHTML = '<p class="text-center text-gray-500 py-12">السلة فارغة</p>';
             } else {
                 items.innerHTML = cart.map((item, idx) => `
                     <div class="glass p-4 rounded-xl flex items-center gap-4">
-                        <img src="${item.image || 'https://cdn-icons-png.flaticon.com/512/3081/3081559.png'}" 
+                        <img src="${item.image || 'https://cdn-icons-png.flaticon.com/512/3081/3081559.png'}"
                              class="w-20 h-20 rounded-lg object-cover bg-gray-900"
                              onerror="this.onerror=null; this.src='https://cdn-icons-png.flaticon.com/512/3081/3081559.png';">
                         <div class="flex-1">
@@ -259,7 +266,7 @@
                     </div>
                 `).join('');
             }
-            
+
             const total = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
             document.getElementById('cartTotal').textContent = total.toLocaleString() + ' ل.س';
             modal.classList.remove('hidden');
@@ -304,14 +311,14 @@
             const name = document.getElementById('customerName').value;
             const phone = document.getElementById('customerPhone').value;
             const address = document.getElementById('customerAddress').value;
-            
+
             if (!name ||!phone ||!address) {
                 return showToast('الرجاء ملء جميع الحقول', 'error');
             }
-            
+
             const total = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
             const code = 'SHK' + Math.random().toString(36).substr(2, 6).toUpperCase();
-            
+
             await addDoc(collection(db, "sheikh_orders"), {
                 code,
                 customer: { name, phone, address },
@@ -320,13 +327,13 @@
                 status: 'جديد',
                 createdAt: new Date().toISOString()
             });
-            
+
             cart = [];
             localStorage.setItem('sheikh_cart', JSON.stringify(cart));
             updateCartCount();
             closeCheckout();
             showToast(`تم الطلب بنجاح! كود التتبع: ${code}`, 'success');
-            
+
             document.getElementById('customerName').value = '';
             document.getElementById('customerPhone').value = '';
             document.getElementById('customerAddress').value = '';
@@ -347,17 +354,17 @@
         window.trackOrder = async () => {
             const code = document.getElementById('trackingCode').value.trim().toUpperCase();
             if (!code) return showToast('أدخل كود الطلب', 'error');
-            
+
             const q = query(collection(db, "sheikh_orders"), where("code", "==", code), limit(1));
             const snapshot = await getDocs(q);
-            
+
             if (snapshot.empty) {
                 return showToast('لم يتم العثور على الطلب', 'error');
             }
-            
+
             const order = snapshot.docs[0].data();
             const result = document.getElementById('trackingResult');
-            
+
             const statusColors = {
                 'جديد': 'bg-blue-500',
                 'قيد التجهيز': 'bg-yellow-500',
@@ -365,7 +372,7 @@
                 'تم التوصيل': 'bg-green-500',
                 'ملغي': 'bg-red-500'
             };
-            
+
             result.innerHTML = `
                 <div class="glass p-6 rounded-xl">
                     <div class="flex items-center justify-between mb-4">
@@ -397,9 +404,9 @@
         window.searchAll = async () => {
             const term = document.getElementById('searchInput').value.trim().toLowerCase();
             if (!term) return loadCompanies();
-            
-            const filtered = allCompanies.filter(c => 
-                c.name.toLowerCase().includes(term) || 
+
+            const filtered = allCompanies.filter(c =>
+                c.name.toLowerCase().includes(term) ||
                 (c.category && c.category.toLowerCase().includes(term))
             );
             renderCompanies(filtered);
@@ -413,10 +420,11 @@
             setTimeout(() => toast.classList.add('hidden'), 3000);
         }
 
-        // Enter key للبحث
         document.getElementById('searchInput').addEventListener('keypress', (e) => {
             if (e.key === 'Enter') searchAll();
         });
     </script>
 </body>
-</html>                                           
+</html>      
+            
+                        
