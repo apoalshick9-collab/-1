@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
@@ -6,7 +6,12 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <style>body { font-family: "Cairo", sans-serif; background: #000000; }</style>
+    <style>
+        body { font-family: "Cairo", sans-serif; background: #000000; }
+        .btn-green { background: #10B981; }
+        .btn-red { background: #EF4444; }
+        .btn-blue { background: #3B82F6; }
+    </style>
 </head>
 <body class="text-white p-6">
     <h1 class="text-3xl font-black mb-6"><span class="text-blue-500">شيخ ستور</span> | السوبر أدمن</h1>
@@ -38,7 +43,15 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
         import { getFirestore, collection, onSnapshot, addDoc, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-        const firebaseConfig = { /* نفس الكونفيغ */ };
+        const firebaseConfig = {
+          apiKey: "AIzaSyDCH2eWEqV2XHlDzQ4_NN90Fn73gB6qzDA",
+          authDomain: "flutter-ai-playground-55de8.firebaseapp.com",
+          projectId: "flutter-ai-playground-55de8",
+          storageBucket: "flutter-ai-playground-55de8.firebasestorage.app",
+          messagingSenderId: "123646936115",
+          appId: "1:123646936115:web:bb6b3db2cae8340ddc8f46"
+        };
+        
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
@@ -49,7 +62,7 @@
                 return `
                     <div class="bg-gray-900 p-4 rounded-xl border border-gray-800">
                         <div class="flex items-center gap-3 mb-3">
-                            <img src="${c.logo}" class="w-12 h-12 rounded-full object-cover" />
+                            <img src="${c.logo}" class="w-12 h-12 rounded-full object-cover">
                             <div>
                                 <p class="font-bold">${c.name}</p>
                                 <p class="text-xs text-gray-500">${c.category}</p>
@@ -63,7 +76,9 @@
                     </div>
                 `;
             }).join('');
-        });window.showAddCompany = () => document.getElementById('addCompanyModal').classList.remove('hidden');
+        });
+
+        window.showAddCompany = () => document.getElementById('addCompanyModal').classList.remove('hidden');
         window.closeModal = () => document.getElementById('addCompanyModal').classList.add('hidden');
 
         window.saveCompany = async () => {
@@ -82,4 +97,4 @@
         }
     </script>
 </body>
-</html>
+</html>              
