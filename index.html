@@ -1,60 +1,119 @@
-   <!DOCTYPE html>
+    <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>شيخ ستور - المول الإلكتروني</title>
+    <title>شيخ ستور - المول الإلكتروني الفخم</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        body { font-family: "Cairo", sans-serif; background: #000000; }
-        .btn-green { background: #10B981; }
-        .btn-red { background: #EF4444; }
-        .btn-blue { background: #3B82F6; }
-        .card { background: #111111; border: 1px solid #222222; }
-        .card:hover { border-color: #3B82F6; transform: translateY(-4px); transition: 0.3s; }
+        * { font-family: "Cairo", sans-serif; }
+        body { background: #000000; color: #fff; }
+       .glass {
+            background: rgba(17, 17, 17, 0.7);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+       .btn-neon-green {
+            background: linear-gradient(135deg, #10B981, #059669);
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
+            transition: all 0.3s;
+        }
+       .btn-neon-green:hover {
+            box-shadow: 0 0 30px rgba(16, 185, 129, 0.7);
+            transform: translateY(-2px);
+        }
+       .btn-neon-blue {
+            background: linear-gradient(135deg, #3B82F6, #1D4ED8);
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
+            transition: all 0.3s;
+        }
+       .btn-neon-blue:hover {
+            box-shadow: 0 0 30px rgba(59, 130, 246, 0.7);
+            transform: translateY(-2px);
+        }
+       .btn-neon-red {
+            background: linear-gradient(135deg, #EF4444, #DC2626);
+            box-shadow: 0 0 20px rgba(239, 68, 68, 0.4);
+            transition: all 0.3s;
+        }
+       .card-glow {
+            background: linear-gradient(145deg, #111111, #0A0A0A);
+            border: 1px solid #1F1F1F;
+            transition: all 0.4s ease;
+        }
+       .card-glow:hover {
+            border-color: #3B82F6;
+            box-shadow: 0 10px 40px rgba(59, 130, 246, 0.2);
+            transform: translateY(-8px);
+        }
+       .gradient-text {
+            background: linear-gradient(90deg, #3B82F6, #10B981);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
     </style>
 </head>
-<body class="text-white">
-    <!-- الهيدر -->
-    <nav class="bg-black p-4 sticky top-0 z-50 border-b border-gray-900">
-        <div class="container mx-auto flex justify-between items-center">
-            <h1 class="text-3xl font-black"><span class="text-blue-500">شيخ</span> ستور</h1>
-            <button onclick="toggleCart()" class="relative btn-blue px-4 py-2 rounded-lg">
-                <i class="fa-solid fa-cart-shopping"></i>
-                <span id="cartCount" class="absolute -top-2 -right-2 bg-red-500 text-xs rounded-full w-5 h-5 flex items-center justify-center">0</span>
+<body>
+    <!-- نافبار فخم -->
+    <nav class="glass sticky top-0 z-50 border-b border-gray-800">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-lg btn-neon-blue flex items-center justify-center">
+                    <i class="fa-solid fa-crown text-xl"></i>
+                </div>
+                <h1 class="text-3xl font-black">شيخ <span class="gradient-text">ستور</span></h1>
+            </div>
+            <button onclick="toggleCart()" class="relative btn-neon-blue px-5 py-3 rounded-xl font-bold">
+                <i class="fa-solid fa-cart-shopping ml-2"></i> السلة
+                <span id="cartCount" class="absolute -top-2 -right-2 bg-gradient-to-r from-red-500 to-pink-500 text-xs rounded-full w-6 h-6 flex items-center justify-center font-black">0</span>
             </button>
         </div>
     </nav>
 
-    <!-- الشركات -->
     <div class="container mx-auto p-6">
-        <h2 class="text-2xl font-bold mb-6 text-center">اختر المتجر</h2>
-        <div id="companiesGrid" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 mb-10"></div>
+        <!-- هيرو -->
+        <div class="text-center mb-12 mt-8">
+            <h2 class="text-5xl font-black mb-4">أفخم <span class="gradient-text">مول إلكتروني</span></h2>
+            <p class="text-gray-400 text-lg">كل المتاجر بمكان واحد.. اختار متجرك وبلش تسوق</p>
+        </div>
+
+        <!-- المتاجر -->
+        <div class="glass rounded-3xl p-8 mb-12">
+            <h3 class="text-2xl font-bold mb-6 flex items-center gap-3">
+                <i class="fa-solid fa-store text-blue-500"></i> المتاجر المتاحة
+            </h3>
+            <div id="companiesGrid" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-5"></div>
+        </div>
 
         <!-- المنتجات -->
-        <h2 id="productsTitle" class="text-2xl font-bold mb-6 hidden">منتجات <span id="currentCompany"></span></h2>
-        <div id="productsGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4"></div>
+        <div id="productsSection" class="hidden">
+            <h3 id="productsTitle" class="text-3xl font-bold mb-8 flex items-center gap-3">
+                <i class="fa-solid fa-box-open text-green-500"></i>
+                منتجات <span id="currentCompany" class="gradient-text"></span>
+            </h3>
+            <div id="productsGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5"></div>
+        </div>
     </div>
 
     <!-- السلة -->
-    <div id="cartSidebar" class="fixed top-0 left-0 w-full md:w-96 h-full bg-black shadow-2xl transform -translate-x-full transition-transform z-50 p-6 overflow-y-auto border-r border-gray-900">
-        <div class="flex justify-between items-center mb-6">
-            <h3 class="text-2xl font-bold">سلة المشتريات</h3>
-            <button onclick="toggleCart()"><i class="fa-solid fa-xmark text-2xl"></i></button>
+    <div id="cartSidebar" class="fixed top-0 left-0 w-full md:w-[420px] h-full glass transform -translate-x-full transition-all duration-500 z-50 p-6 overflow-y-auto">
+        <div class="flex justify-between items-center mb-8">
+            <h3 class="text-3xl font-black gradient-text">سلتك</h3>
+            <button onclick="toggleCart()" class="btn-neon-red w-10 h-10 rounded-xl"><i class="fa-solid fa-xmark"></i></button>
         </div>
-        <div id="cartItems"></div>
-        <div class="border-t border-gray-800 mt-6 pt-4">
-            <div class="flex justify-between text-xl font-bold mb-4">
+        <div id="cartItems" class="space-y-4 mb-6"></div>
+        <div class="glass rounded-2xl p-5 mt-6">
+            <div class="flex justify-between text-2xl font-black mb-5">
                 <span>الإجمالي:</span>
-                <span id="cartTotal" class="text-green-500">0 ل.س</span>
+                <span id="cartTotal" class="text-green-400">0 ل.س</span>
             </div>
-            <input id="customerName" type="text" placeholder="الاسم" class="w-full p-3 mb-3 rounded bg-gray-900 border border-gray-800">
-            <input id="customerPhone" type="tel" placeholder="رقم الموبايل" class="w-full p-3 mb-3 rounded bg-gray-900 border border-gray-800">
-            <textarea id="customerAddress" placeholder="العنوان" class="w-full p-3 mb-3 rounded bg-gray-900 border border-gray-800"></textarea>
-            <button onclick="submitOrder()" class="w-full btn-green p-4 rounded-lg font-bold text-lg">
-                <i class="fa-solid fa-check"></i> تأكيد الطلب
+            <input id="customerName" type="text" placeholder="الاسم الكامل" class="w-full p-4 mb-3 rounded-xl bg-black border border-gray-800 focus:border-blue-500 outline-none">
+            <input id="customerPhone" type="tel" placeholder="09xxxxxxxx" class="w-full p-4 mb-3 rounded-xl bg-black border border-gray-800 focus:border-blue-500 outline-none">
+            <textarea id="customerAddress" placeholder="العنوان بالتفصيل" class="w-full p-4 mb-4 rounded-xl bg-black border border-gray-800 focus:border-blue-500 outline-none"></textarea>
+            <button onclick="submitOrder()" class="w-full btn-neon-green p-4 rounded-xl font-black text-lg">
+                <i class="fa-solid fa-rocket ml-2"></i> تأكيد الطلب الآن
             </button>
         </div>
     </div>
@@ -71,50 +130,51 @@
           messagingSenderId: "123646936115",
           appId: "1:123646936115:web:bb6b3db2cae8340ddc8f46"
         };
-        
+
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
         let cart = [];
         let currentCompanyId = null;
 
-        // تحميل الشركات
         async function loadCompanies() {
             const querySnapshot = await getDocs(collection(db, "sheikh_companies"));
             const grid = document.getElementById('companiesGrid');
             grid.innerHTML = querySnapshot.docs.map(doc => {
                 const c = doc.data();
                 return `
-                    <button onclick="loadCompanyProducts('${doc.id}', '${c.name}')" class="card p-4 rounded-xl text-center">
-                        <img src="${c.logo}" class="w-16 h-16 mx-auto rounded-full mb-2 object-cover">
-                        <p class="font-bold text-sm">${c.name}</p>
+                    <button onclick="loadCompanyProducts('${doc.id}', '${c.name}')" class="card-glow p-5 rounded-2xl text-center group">
+                        <div class="w-20 h-20 mx-auto rounded-2xl overflow-hidden mb-3 border-2 border-gray-800 group-hover:border-blue-500 transition-all">
+                            <img src="${c.logo}" class="w-full h-full object-cover">
+                        </div>
+                        <p class="font-bold text-sm mb-1">${c.name}</p>
                         <p class="text-xs text-gray-500">${c.category}</p>
                     </button>
                 `;
             }).join('');
         }
 
-        // تحميل منتجات شركة محددة
         window.loadCompanyProducts = async (companyId, companyName) => {
             currentCompanyId = companyId;
-            document.getElementById('productsTitle').classList.remove('hidden');
+            document.getElementById('productsSection').classList.remove('hidden');
             document.getElementById('currentCompany').textContent = companyName;
-            
+            window.scrollTo({top: document.getElementById('productsSection').offsetTop - 100, behavior: 'smooth'});
+
             const q = query(collection(db, "sheikh_products"), where("companyId", "==", companyId));
             const querySnapshot = await getDocs(q);
             const grid = document.getElementById('productsGrid');
             grid.innerHTML = querySnapshot.docs.map(doc => {
                 const p = doc.data();
                 return `
-                    <div class="card rounded-xl overflow-hidden">
-                        <img src="${p.image}" class="w-full h-40 object-cover">
-                        <div class="p-3">
-                            <h3 class="font-bold text-sm h-10">${p.name}</h3>
-                            <div class="flex justify-between items-center mt-3">
-                                <span class="text-lg font-bold text-green-500">${p.price}</span>
-                                <button onclick='addToCart(${JSON.stringify({...p, id: doc.id})})' class="btn-blue px-3 py-1 rounded text-sm">
-                                    <i class="fa-solid fa-plus"></i>
-                                </button>
-                            </div>
+                    <div class="card-glow rounded-2xl overflow-hidden group">
+                        <div class="relative overflow-hidden">
+                            <img src="${p.image}" class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500">
+                            <div class="absolute top-3 right-3 btn-neon-green px-3 py-1 rounded-full text-xs font-bold">${p.price} ل.س</div>
+                        </div>
+                        <div class="p-4">
+                            <h3 class="font-bold text-sm h-10 mb-3">${p.name}</h3>
+                            <button onclick='addToCart(${JSON.stringify({...p, id: doc.id})})' class="w-full btn-neon-blue py-2 rounded-xl font-bold text-sm">
+                                <i class="fa-solid fa-plus ml-1"></i> أضف للسلة
+                            </button>
                         </div>
                     </div>
                 `;
@@ -124,7 +184,7 @@
         window.addToCart = (product) => {
             const existing = cart.find(i => i.id === product.id);
             if (existing) existing.qty++;
-            else cart.push({ ...product, qty: 1, companyId: currentCompanyId });
+            else cart.push({...product, qty: 1, companyId: currentCompanyId });
             updateCart();
         }
 
@@ -135,16 +195,16 @@
             cartItems.innerHTML = cart.map(item => {
                 total += item.price * item.qty;
                 return `
-                    <div class="flex justify-between items-center mb-3 card p-3 rounded">
-                        <div>
-                            <p class="font-bold text-sm">${item.name}</p>
+                    <div class="glass rounded-xl p-4 flex justify-between items-center">
+                        <div class="flex-1">
+                            <p class="font-bold">${item.name}</p>
                             <p class="text-xs text-gray-400">${item.price} × ${item.qty}</p>
                         </div>
-                        <span class="font-bold text-green-500">${item.price * item.qty}</span>
+                        <span class="font-black text-xl text-green-400">${item.price * item.qty}</span>
                     </div>
                 `;
             }).join('');
-            document.getElementById('cartTotal').textContent = total + ' ل.س';
+            document.getElementById('cartTotal').textContent = total.toLocaleString() + ' ل.س';
         }
 
         window.toggleCart = () => document.getElementById('cartSidebar').classList.toggle('-translate-x-full');
@@ -153,9 +213,8 @@
             const name = document.getElementById('customerName').value;
             const phone = document.getElementById('customerPhone').value;
             const address = document.getElementById('customerAddress').value;
-            if (!name || !phone || !address || cart.length === 0) return alert('عبي كل البيانات');
+            if (!name ||!phone ||!address || cart.length === 0) return alert('عبي كل البيانات يا وحش');
 
-            // تجميع الطلبات حسب الشركة
             const ordersByCompany = {};
             cart.forEach(item => {
                 if (!ordersByCompany[item.companyId]) ordersByCompany[item.companyId] = [];
@@ -172,11 +231,12 @@
                     createdAt: serverTimestamp()
                 });
             }
-            alert('✅ تم استلام طلبك! رح تتصل فيك كل شركة لتأكيد طلبها');
+            alert('🚀 تم استلام طلبك بنجاح! رح تتواصل معك الشركات للتأكيد');
             cart = []; updateCart(); toggleCart();
         }
 
         loadCompanies();
     </script>
 </body>
-</html>                      
+</html>        
+            
