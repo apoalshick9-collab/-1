@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+   <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
@@ -63,23 +63,33 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
         import { getFirestore, collection, getDocs, addDoc, serverTimestamp, query, where } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-        const firebaseConfig = { /* حط كونفيغ Firebase تبعك */ };
+        const firebaseConfig = {
+          apiKey: "AIzaSyDCH2eWEqV2XHlDzQ4_NN90Fn73gB6qzDA",
+          authDomain: "flutter-ai-playground-55de8.firebaseapp.com",
+          projectId: "flutter-ai-playground-55de8",
+          storageBucket: "flutter-ai-playground-55de8.firebasestorage.app",
+          messagingSenderId: "123646936115",
+          appId: "1:123646936115:web:bb6b3db2cae8340ddc8f46"
+        };
+        
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
         let cart = [];
-        let currentCompanyId = null;// تحميل الشركات
+        let currentCompanyId = null;
+
+        // تحميل الشركات
         async function loadCompanies() {
             const querySnapshot = await getDocs(collection(db, "sheikh_companies"));
             const grid = document.getElementById('companiesGrid');
             grid.innerHTML = querySnapshot.docs.map(doc => {
                 const c = doc.data();
-                return 
+                return `
                     <button onclick="loadCompanyProducts('${doc.id}', '${c.name}')" class="card p-4 rounded-xl text-center">
                         <img src="${c.logo}" class="w-16 h-16 mx-auto rounded-full mb-2 object-cover">
                         <p class="font-bold text-sm">${c.name}</p>
                         <p class="text-xs text-gray-500">${c.category}</p>
                     </button>
-                ;
+                `;
             }).join('');
         }
 
@@ -94,7 +104,7 @@
             const grid = document.getElementById('productsGrid');
             grid.innerHTML = querySnapshot.docs.map(doc => {
                 const p = doc.data();
-                return 
+                return `
                     <div class="card rounded-xl overflow-hidden">
                         <img src="${p.image}" class="w-full h-40 object-cover">
                         <div class="p-3">
@@ -107,7 +117,7 @@
                             </div>
                         </div>
                     </div>
-                ;
+                `;
             }).join('');
         }
 
@@ -124,7 +134,7 @@
             let total = 0;
             cartItems.innerHTML = cart.map(item => {
                 total += item.price * item.qty;
-                return 
+                return `
                     <div class="flex justify-between items-center mb-3 card p-3 rounded">
                         <div>
                             <p class="font-bold text-sm">${item.name}</p>
@@ -132,7 +142,7 @@
                         </div>
                         <span class="font-bold text-green-500">${item.price * item.qty}</span>
                     </div>
-                ;
+                `;
             }).join('');
             document.getElementById('cartTotal').textContent = total + ' ل.س';
         }
@@ -143,7 +153,9 @@
             const name = document.getElementById('customerName').value;
             const phone = document.getElementById('customerPhone').value;
             const address = document.getElementById('customerAddress').value;
-            if (!name  !phone  !address || cart.length === 0) return alert('عبي كل البيانات');// تجميع الطلبات حسب الشركة
+            if (!name || !phone || !address || cart.length === 0) return alert('عبي كل البيانات');
+
+            // تجميع الطلبات حسب الشركة
             const ordersByCompany = {};
             cart.forEach(item => {
                 if (!ordersByCompany[item.companyId]) ordersByCompany[item.companyId] = [];
@@ -167,4 +179,4 @@
         loadCompanies();
     </script>
 </body>
-</html>
+</html>                      
