@@ -1,11 +1,17 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <title>لوحة تحكم الشركة</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
-    <style>body { font-family: "Cairo", sans-serif; background: #000000; }</style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body { font-family: "Cairo", sans-serif; background: #000000; }
+        .btn-green { background: #10B981; }
+        .btn-red { background: #EF4444; }
+        .btn-blue { background: #3B82F6; }
+    </style>
 </head>
 <body class="text-white p-6">
     <div id="loginBox" class="max-w-md mx-auto mt-20 bg-gray-900 p-6 rounded-xl">
@@ -32,7 +38,15 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
         import { getFirestore, collection, onSnapshot, query, where, doc, getDoc, addDoc, deleteDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-        const firebaseConfig = { /* نفس الكونفيغ */ };
+        const firebaseConfig = {
+          apiKey: "AIzaSyDCH2eWEqV2XHlDzQ4_NN90Fn73gB6qzDA",
+          authDomain: "flutter-ai-playground-55de8.firebaseapp.com",
+          projectId: "flutter-ai-playground-55de8",
+          storageBucket: "flutter-ai-playground-55de8.firebasestorage.app",
+          messagingSenderId: "123646936115",
+          appId: "1:123646936115:web:bb6b3db2cae8340ddc8f46"
+        };
+        
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
         const companyId = new URLSearchParams(window.location.search).get('id');
@@ -60,18 +74,19 @@
             onSnapshot(q, (snapshot) => {
                 document.getElementById('ordersList').innerHTML = snapshot.docs.map(docSnap => {
                     const o = docSnap.data();
-                    return 
+                    return `
                         <div class="bg-gray-900 p-4 rounded-xl border-r-4 border-blue-500">
                             <p class="font-bold">${o.customer.name} - ${o.customer.phone}</p>
                             <p class="text-sm text-gray-400">${o.customer.address}</p>
-                            <p class="mt-2">${o.items.map(i => ${i.name} ×${i.qty}`).join(' • ')}</p>
+                            <p class="mt-2">${o.items.map(i => `${i.name} ×${i.qty}`).join(' • ')}</p>
                             <p class="text-green-500 font-bold mt-2">${o.total} ل.س</p>
-                            <select onchange="updateStatus('${docSnap.id}', this.value)" class="bg-black rounded p-1 mt-2 text-sm"><option ${o.status==='طلب جديد'?'selected':''}>طلب جديد</option>
+                            <select onchange="updateStatus('${docSnap.id}', this.value)" class="bg-black rounded p-1 mt-2 text-sm">
+                                <option ${o.status==='طلب جديد'?'selected':''}>طلب جديد</option>
                                 <option ${o.status==='قيد التحضير'?'selected':''}>قيد التحضير</option>
                                 <option ${o.status==='تم التسليم'?'selected':''}>تم التسليم</option>
                             </select>
                         </div>
-                    ;
+                    `;
                 }).join('');
             });
         }
@@ -81,7 +96,7 @@
             onSnapshot(q, (snapshot) => {
                 document.getElementById('productsList').innerHTML = snapshot.docs.map(docSnap => {
                     const p = docSnap.data();
-                    return 
+                    return `
                         <div class="bg-gray-900 rounded-xl overflow-hidden border border-gray-800">
                             <img src="${p.image}" class="w-full h-32 object-cover">
                             <div class="p-3">
@@ -98,6 +113,21 @@
         window.updateStatus = async (id, status) => {
             await updateDoc(doc(db, "sheikh_orders", id), { status });
         }
+
+        window.deleteProduct = async (id) => {
+            if(confirm('متأكد من حذف المنتج؟')) await deleteDoc(doc(db, "sheikh_products", id));
+        }
+
+        window.showAddProduct = () => {
+            const name = prompt('اسم المنتج:');
+            const price = prompt('السعر:');
+            const image = prompt('رابط الصورة:');
+            if(name && price && image) {
+                addDoc(collection(db, "sheikh_products"), {
+                    name, price: Number(price), image, companyId
+                });
+            }
+        }
     </script>
 </body>
-</html>
+</html>                           
