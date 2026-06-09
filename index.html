@@ -9,19 +9,22 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         body { font-family: 'Tajawal', sans-serif; background: #000; color: #fff; }
-     .glass { background: rgba(20, 20, 20, 0.8); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1); }
-     .card-glow { background: linear-gradient(145deg, #111, #0a0a0a); border: 1px solid #222; transition: all 0.3s; cursor: pointer; }
-     .card-glow:hover { border-color: #00a8e8; box-shadow: 0 0 30px rgba(0, 168, 232, 0.3); transform: translateY(-4px); }
-     .btn-neon-blue { background: #00a8e8; box-shadow: 0 0 20px rgba(0, 168, 232, 0.5); }
-     .btn-neon-green { background: #2ecc71; box-shadow: 0 0 20px rgba(46, 204, 113, 0.5); }
-     .btn-neon-red { background: #e63946; box-shadow: 0 0 20px rgba(230, 57, 70, 0.5); }
-     .gradient-text { background: linear-gradient(90deg, #00a8e8, #e63946); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-     .modal { transition: all 0.3s; }
-     .toast { animation: slideIn 0.3s ease-out; }
+    .glass { background: rgba(20, 20, 20, 0.8); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1); }
+    .card-glow { background: linear-gradient(145deg, #111, #0a0a0a); border: 1px solid #222; transition: all 0.3s; cursor: pointer; }
+    .card-glow:hover { border-color: #00a8e8; box-shadow: 0 0 30px rgba(0, 168, 232, 0.3); transform: translateY(-4px); }
+    .btn-neon-blue { background: #00a8e8; box-shadow: 0 0 20px rgba(0, 168, 232, 0.5); }
+    .btn-neon-green { background: #2ecc71; box-shadow: 0 0 20px rgba(46, 204, 113, 0.5); }
+    .btn-neon-red { background: #e63946; box-shadow: 0 0 20px rgba(230, 57, 70, 0.5); }
+    .gradient-text { background: linear-gradient(90deg, #00a8e8, #e63946); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .modal { transition: all 0.3s; }
+    .toast { animation: slideIn 0.3s ease-out; }
         @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
-     .loader { text-align: center; padding: 40px; color: #00a8e8; }
-     .category-chip { background: rgba(0, 168, 232, 0.2); border: 1px solid #00a8e8; padding: 8px 16px; border-radius: 20px; cursor: pointer; transition: 0.3s; }
-     .category-chip:hover,.category-chip.active { background: #00a8e8; color: #000; }
+    .loader { text-align: center; padding: 40px; color: #00a8e8; }
+    .category-chip { background: rgba(0, 168, 232, 0.2); border: 1px solid #00a8e8; padding: 8px 16px; border-radius: 20px; cursor: pointer; transition: 0.3s; }
+    .category-chip:hover,.category-chip.active { background: #00a8e8; color: #000; }
+    .live-indicator { display: inline-flex; align-items: center; gap: 8px; background: rgba(46, 204, 113, 0.2); color: var(--green-accent); padding: 6px 12px; border-radius: 20px; font-size: 12px; }
+    .live-dot { width: 8px; height: 8px; background: #2ecc71; border-radius: 50%; animation: pulse 2s infinite; }
+      @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
     </style>
 </head>
 <body class="min-h-screen">
@@ -41,7 +44,10 @@
                     <span>تتبع طلبي</span>
                 </button>
             </div>
-            <h1 class="text-3xl font-black gradient-text">متجر الشيخ للهواتف</h1>
+            <div class="flex items-center gap-3">
+                <span class="live-indicator"><span class="live-dot"></span> مباشر</span>
+                <h1 class="text-3xl font-black gradient-text">متجر الشيخ للهواتف</h1>
+            </div>
             <button onclick="window.location.href='./company-admin-phones.html'" class="btn-neon-blue px-4 py-2 rounded-xl font-bold">
                 <i class="fa-solid fa-building"></i>
             </button>
@@ -142,7 +148,7 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-        import { getFirestore, collection, getDocs, query, where, addDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+        import { getFirestore, collection, getDocs, query, where, addDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
         const firebaseConfig = {
           apiKey: "AIzaSyCN1ZMiCUkuQiPZUzihRRkRR2tf_AnPqGQ",
@@ -163,21 +169,21 @@
         let currentShamcashAccount = '';
         let currentProducts = [];
         let activeCategory = 'all';
+        let unsubscribeCompanies = null;
+        let unsubscribeCategories = null;
+        let unsubscribeProducts = null;
 
         window.onload = async () => {
             updateCartCount();
-            await loadCompanies();
+            initListeners();
         };
 
-        async function loadCompanies() {
-            try {
-                const snapshot = await getDocs(collection(db, "phone_companies"));
+        function initListeners() {
+            // الشركات - تحديث لحظي
+            unsubscribeCompanies = onSnapshot(collection(db, "phone_companies"), (snapshot) => {
                 allCompanies = snapshot.docs.map(doc => ({ id: doc.id,...doc.data() }));
                 renderCompanies(allCompanies);
-            } catch (error) {
-                showToast('خطأ بتحميل البراندات: ' + error.message, 'error');
-                document.getElementById('companiesGrid').innerHTML = '<p class="col-span-full text-center text-red-500 text-lg py-12">فشل تحميل البراندات</p>';
-            }
+            });
         }
 
         function renderCompanies(companies) {
@@ -217,19 +223,23 @@
             document.getElementById('productsSection').classList.remove('hidden');
             document.getElementById('productsGrid').innerHTML = '<div class="loader col-span-full"><i class="fa-solid fa-spinner fa-spin fa-2x"></i><p class="mt-3">جاري تحميل المنتجات...</p></div>';
 
-            // جلب الأقسام
+            // إلغاء الاشتراكات القديمة
+            if (unsubscribeCategories) unsubscribeCategories();
+            if (unsubscribeProducts) unsubscribeProducts();
+
+            // الأقسام - تحديث لحظي
             const catQuery = query(collection(db, "phone_categories"), where("companyId", "==", companyId));
-            const catSnapshot = await getDocs(catQuery);
-            const categories = catSnapshot.docs.map(doc => doc.data().name);
-            
-            renderCategoriesChips(categories);
+            unsubscribeCategories = onSnapshot(catQuery, (snapshot) => {
+                const categories = snapshot.docs.map(doc => doc.data().name);
+                renderCategoriesChips(categories);
+            });
 
-            // جلب المنتجات
+            // المنتجات - تحديث لحظي
             const q = query(collection(db, "phone_products"), where("companyId", "==", companyId));
-            const snapshot = await getDocs(q);
-            currentProducts = snapshot.docs.map(doc => ({ id: doc.id,...doc.data() }));
-
-            renderProducts(currentProducts);
+            unsubscribeProducts = onSnapshot(q, (snapshot) => {
+                currentProducts = snapshot.docs.map(doc => ({ id: doc.id,...doc.data() }));
+                filterByCategory(activeCategory);
+            });
         };
 
         function renderCategoriesChips(categories) {
@@ -246,8 +256,7 @@
             activeCategory = cat;
             const filtered = cat === 'all'? currentProducts : currentProducts.filter(p => p.category === cat);
             renderProducts(filtered);
-            
-            // تحديث active class
+
             document.querySelectorAll('.category-chip').forEach(chip => {
                 chip.classList.remove('active');
                 if ((cat === 'all' && chip.textContent === 'الكل') || chip.textContent === cat) {
@@ -266,7 +275,7 @@
             grid.innerHTML = products.map(p => {
                 let imgSrc = (p.image || '').trim();
                 if (!imgSrc ||!imgSrc.startsWith('http')) {
-                    imgSrc = 'https://cdn-icons-png.flaticon.com/512/545/545245.png';
+                    imgSrc = 'https://cdn-icons-png.flaticon.com/512/545245.png';
                 }
                 return `
                 <div class="card-glow p-4 rounded-2xl">
@@ -288,6 +297,8 @@
         }
 
         window.backToCompanies = () => {
+            if (unsubscribeCategories) unsubscribeCategories();
+            if (unsubscribeProducts) unsubscribeProducts();
             document.getElementById('productsSection').classList.add('hidden');
             document.getElementById('companiesSection').classList.remove('hidden');
             currentCompanyId = null;
@@ -320,7 +331,7 @@
             } else {
                 items.innerHTML = cart.map((item, idx) => `
                     <div class="glass p-4 rounded-xl flex items-center gap-4">
-                        <img src="${item.image || 'https://cdn-icons-png.flaticon.com/512/545/545245.png'}"
+                        <img src="${item.image || 'https://cdn-icons-png.flaticon.com/512/545245.png'}"
                              class="w-20 h-20 rounded-lg object-cover bg-gray-900"
                              onerror="this.onerror=null; this.src='https://cdn-icons-png.flaticon.com/512/545/545245.png';">
                         <div class="flex-1">
@@ -510,7 +521,7 @@
 
         window.searchAll = async () => {
             const term = document.getElementById('searchInput').value.trim().toLowerCase();
-            if (!term) return loadCompanies();
+            if (!term) return renderCompanies(allCompanies);
 
             const filtered = allCompanies.filter(c =>
                 c.name.toLowerCase().includes(term)
