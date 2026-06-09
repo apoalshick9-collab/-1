@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>متجر الشيخ للهواتف</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body { font-family: 'Tajawal', sans-serif; background: #000; color: #fff; }
+       .glass { background: rgba(20, 20, 20, 0.8); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1); }
+       .card-glow { background: linear-gradient(145deg, #111, #0a0a0a); border: 1px solid #222; transition: all 0.3s; }
+       .card-glow:hover { border-color: #00a8e8; box-shadow: 0 0 30px rgba(0, 168, 232, 0.3); transform: translateY(-4px); }
+       .btn-neon-blue { background: #00a8e8; box-shadow: 0 0 20px rgba(0, 168, 232, 0.5); }
+       .btn-neon-green { background: #2ecc71; box-shadow: 0 0 20px rgba(46, 204, 113, 0.5); }
+       .btn-neon-red { background: #e63946; box-shadow: 0 0 20px rgba(230, 57, 70, 0.5); }
+       .gradient-text { background: linear-gradient(90deg, #00a8e8, #e63946); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+       .modal { transition: all 0.3s; }
+       .toast { animation: slideIn 0.3s ease-out; }
+        @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+    </style>
+</head>
+<body class="min-h-screen">
+
+    <div id="toast" class="fixed top-5 left-5 z-[100] hidden"></div>
+
+    <header class="glass sticky top-0 z-40 p-4">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <div class="flex items-center gap-4">
+                <button onclick="showCart()" class="btn-neon-blue px-4 py-2 rounded-xl font-bold flex items-center gap-2 relative">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 0 000 3z"></path></svg>
+                    <span>السلة</span>
+                    <span id="cartCount" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs w-6 h-6 rounded-full flex items-center justify-center font-bold">0</span>
+                </button>
+                <button onclick="showOrderTracking()" class="btn-neon-green px-4 py-2 rounded-xl font-bold flex items-center gap-2">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                    <span>تتبع طلبي</span>
+                </button>
+            </div>
+            <h1 class="text-3xl font-black gradient-text">متجر الشيخ للهواتف</h1>
+            <button onclick="window.location.href='./company-admin-phones.html'" class="btn-neon-blue px-4 py-2 rounded-xl font-bold">
+                <i class="fa-solid fa-building"></i>
+            </button>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto p-6">
+        <div class="glass p-6 rounded-3xl mb-8">
+            <div class="flex gap-3">
+                <input id="searchInput" type="text" placeholder="ابحث عن براند أو منتج..." class="flex-1 p-4 rounded-xl bg-black border border-gray-800 focus:border-blue-500 outline-none text-lg">
+                <button onclick="searchAll()" class="btn-neon-blue px-8 py-4 rounded-xl font-bold"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
+                </button>
+            </div>
+        </div>
+
+        <div id="companiesSection">
+            <h2 class="text-2xl font-black mb-6 flex items-center gap-3">
+                <span class="gradient-text">البراندات المتاحة</span>
+                <i class="fa-solid fa-mobile-screen-button text-blue-500"></i>
+            </h2>
+            <div id="companiesGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4"></div>
+        </div>
+
+        <div id="productsSection" class="hidden">
+            <div class="flex items-center justify-between mb-6">
+                <button onclick="backToCompanies()" class="btn-neon-blue px-6 py-3 rounded-xl font-bold flex items-center gap-2">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd"></path></svg>
+                    <span>رجوع</span>
+                </button>
+                <h2 id="companyTitle" class="text-2xl font-black gradient-text"></h2>
+            </div>
+            <div id="productsGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"></div>
+        </div>
+    </main>
+
+    <div id="cartModal" class="modal fixed inset-0 bg-black bg-opacity-90 backdrop-blur-sm hidden items-center justify-center z-50 p-6">
+        <div class="glass p-8 rounded-3xl w-full max-w-2xl border border-gray-800 max-h-[90vh] overflow-y-auto">
+            <div class="flex items-center justify-between mb-6">
+                <h3 class="text-3xl font-black gradient-text">سلة المشتريات</h3>
+                <button onclick="closeCart()" class="text-gray-400 hover:text-white">
+                    <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                </button>
+            </div>
+            <div id="cartItems" class="space-y-4 mb-6"></div>
+            <div class="border-t border-gray-800 pt-6">
+                <div class="flex items-center justify-between mb-6">
+                    <span class="text-xl font-bold">المجموع:</span>
+                    <span id="cartTotal" class="text-3xl font-black gradient-text">$0</span>
+                </div>
+                <button onclick="checkout()" class="btn-neon-green w-full p-4 rounded-xl font-bold text-lg">إتمام الطلب</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="checkoutModal" class="modal fixed inset-0 bg-black bg-opacity-90 backdrop-blur-sm hidden items-center justify-center z-50 p-6">
+        <div class="glass p-8 rounded-3xl w-full max-w-md border border-gray-800">
+            <h3 class="text-2xl font-black mb-6 gradient-text">معلومات التوصيل</h3>
+            <input id="customerName" type="text" placeholder="الاسم الكامل" class="w-full p-4 mb-4 rounded-xl bg-black border border-gray-800 focus:border-blue-500 outline-none">
+            <input id="customerPhone" type="tel" placeholder="رقم الهاتف" class="w-full p-4 mb-4 rounded-xl bg-black border border-gray-800 focus:border-blue-500 outline-none">
+            <input id="customerAddress" type="text" placeholder="العنوان بالتفصيل" class="w-full p-4 mb-6 rounded-xl bg-black border border-gray-800 focus:border-blue-500 outline-none"><div class="flex gap-3">
+                <button onclick="submitOrder()" class="btn-neon-green flex-1 p-4 rounded-xl font-bold">تأكيد الطلب</button>
+                <button onclick="closeCheckout()" class="btn-neon-red flex-1 p-4 rounded-xl font-bold">إلغاء</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="trackingModal" class="modal fixed inset-0 bg-black bg-opacity-90 backdrop-blur-sm hidden items-center justify-center z-50 p-6">
+        <div class="glass p-8 rounded-3xl w-full max-w-md border border-gray-800">
+            <h3 class="text-2xl font-black mb-6 gradient-text">تتبع طلبك</h3>
+            <input id="trackingCode" type="text" placeholder="كود الطلب" class="w-full p-4 mb-4 rounded-xl bg-black border border-gray-800 focus:border-blue-500 outline-none">
+            <button onclick="trackOrder()" class="btn-neon-blue w-full p-4 rounded-xl font-bold mb-6">بحث</button>
+            <div id="trackingResult" class="hidden"></div>
+            <button onclick="closeTracking()" class="btn-neon-red w-full p-4 rounded-xl font-bold mt-4">إغلاق</button>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getFirestore, collection, getDocs, query, where, addDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+        const firebaseConfig = {
+          apiKey: "AIzaSyCN1ZMiCUkuQiPZUzihRRkRR2tf_AnPqGQ",
+          authDomain: "apoalshick4store.firebaseapp.com",
+          projectId: "apoalshick4store",
+          storageBucket: "apoalshick4store.firebasestorage.app",
+          messagingSenderId: "973040858310",
+          appId: "1:973040858310:web:eafb4e1a4b6d49cf1913c7",
+          measurementId: "G-6JZ1XS8CK2"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        let cart = JSON.parse(localStorage.getItem('phone_cart') || '[]');
+        let currentCompanyId = null;
+        let allCompanies = [];
+
+        window.onload = async () => {
+            updateCartCount();
+            await loadCompanies();
+        };
+
+        async function loadCompanies() {
+            try {
+                const snapshot = await getDocs(collection(db, "phone_companies"));
+                allCompanies = snapshot.docs.map(doc => ({ id: doc.id,...doc.data() }));
+                renderCompanies(allCompanies);
+            } catch (error) {
+                showToast('خطأ بتحميل البراندات: ' + error.message, 'error');
+            }
+        }
+
+        function renderCompanies(companies) {
+            const grid = document.getElementById('companiesGrid');
+            if (companies.length === 0) {
+                grid.innerHTML = '<p class="col-span-full text-center text-gray-500 text-lg py-12">لا توجد براندات حالياً</p>';
+                return;
+            }
+
+            grid.innerHTML = companies.map(c => {
+                let logoSrc = (c.logo || '').trim();
+                if (!logoSrc ||!logoSrc.startsWith('http')) {
+                    logoSrc = 'https://cdn-icons-png.flaticon.com/512/545/545245.png';
+                }
+
+                return `
+                <button data-id="${c.id}" data-name="${c.name.replace(/"/g, '&quot;')}" onclick="handleCompanyClick(this)" class="card-glow p-5 rounded-2xl text-center group">
+                    <div class="w-20 h-20 mx-auto rounded-2xl overflow-hidden mb-3 border-2 border-gray-800 group-hover:border-blue-500 transition-all bg-gray-900 flex items-center justify-center">
+                        <img src="${logoSrc}"
+                             class="w-full h-full object-cover"
+                             loading="lazy"
+                             onerror="this.onerror=null; this.src='https://cdn-icons-png.flaticon.com/512/545/545245.png';" alt="${c.name}">
+                    </div>
+                    <p class="font-bold text-sm mb-1">${c.name}</p>
+                    <p class="text-xs text-gray-500">هواتف</p>
+                </button>
+                `;
+            }).join('');
+        }
+
+        window.handleCompanyClick = (btn) => {
+            const id = btn.getAttribute('data-id');
+            const name = btn.getAttribute('data-name');
+            loadCompanyProducts(id, name);
+        };
+
+        window.loadCompanyProducts = async (companyId, companyName) => {
+            currentCompanyId = companyId;
+            document.getElementById('companyTitle').textContent = companyName;
+            document.getElementById('companiesSection').classList.add('hidden');
+            document.getElementById('productsSection').classList.remove('hidden');
+
+            const q = query(collection(db, "phone_products"), where("companyId", "==", companyId));
+            const snapshot = await getDocs(q);
+            const products = snapshot.docs.map(doc => ({ id: doc.id,...doc.data() }));
+
+            const grid = document.getElementById('productsGrid');
+            if (products.length === 0) {
+                grid.innerHTML = '<p class="col-span-full text-center text-gray-500 text-lg py-12">لا توجد منتجات حالياً</p>';
+                return;
+            }
+
+            grid.innerHTML = products.map(p => {
+                let imgSrc = (p.image || '').trim();
+                if (!imgSrc || !imgSrc.startsWith('http')) {
+                    imgSrc = 'https://cdn-icons-png.flaticon.com/512/545/545245.png';
+                }
+                return `
+                <div class="card-glow p-4 rounded-2xl">
+                    <div class="w-full h-40 rounded-xl overflow-hidden mb-3 bg-gray-900">
+                        <img src="${imgSrc}"
+                             class="w-full h-full object-cover"
+                             loading="lazy"
+                             onerror="this.onerror=null; this.src='https://cdn-icons-png.flaticon.com/512/545/545245.png';"
+                             alt="${p.name}">
+                    </div>
+                    <h3 class="font-bold text-lg mb-2">${p.name}</h3>
+                    <p class="text-2xl font-black gradient-text mb-3">$${Number(p.price).toLocaleString()}</p>
+                    <button onclick='addToCart(${JSON.stringify(p).replace(/'/g, "&apos;")})' class="btn-neon-blue w-full p-3 rounded-xl font-bold">
+                        أضف للسلة
+                    </button>
+                </div>
+                `;
+            }).join('');
+        };
+
+        window.backToCompanies = () => {
+            document.getElementById('productsSection').classList.add('hidden');
+            document.getElementById('companiesSection').classList.remove('hidden');
+            currentCompanyId = null;
+        };
+
+        window.addToCart = (product) => {
+            const existing = cart.find(item => item.id === product.id);
+            if (existing) {
+                existing.qty++;
+            } else {
+                cart.push(Object.assign({}, product, { qty: 1 }));
+            }
+            localStorage.setItem('phone_cart', JSON.stringify(cart));
+            updateCartCount();
+            showToast('تمت الإضافة للسلة ✓', 'success');
+        };
+
+        function updateCartCount() {
+            const count = cart.reduce((sum, item) => sum + item.qty, 0);
+            document.getElementById('cartCount').textContent = count;
+        }
+
+        window.showCart = () => {
+            const modal = document.getElementById('cartModal');
+            const items = document.getElementById('cartItems');
+
+            if (cart.length === 0) {
+                items.innerHTML = '<p class="text-center text-gray-500 py-12">السلة فارغة</p>';
+            } else {
+                items.innerHTML = cart.map(function(item, idx) {
+                    return '<div class="glass p-4 rounded-xl flex items-center gap-4">' +
+                        '<img src="' + (item.image || 'https://cdn-icons-png.flaticon.com/512/545/545245.png') + '" ' +
+                            'class="w-20 h-20 rounded-lg object-cover bg-gray-900" ' +
+                            'onerror="this.onerror=null; this.src=\'https://cdn-icons-png.flaticon.com/512/545/545245.png\';" />' +
+                        '<div class="flex-1">' +
+                            '<h4 class="font-bold mb-1">' + item.name + '</h4>' +
+                            '<p class="text-blue-400 font-bold">$' + Number(item.price).toLocaleString() + '</p>' +
+                        '</div>' +
+                        '<div class="flex items-center gap-3">' +
+                            '<button onclick="updateQty(' + idx + ', -1)" class="btn-neon-red w-8 h-8 rounded-lg font-bold">-</button>' +
+                            '<span class="font-bold text-lg w-8 text-center">' + item.qty + '</span>' +
+                            '<button onclick="updateQty(' + idx + ', 1)" class="btn-neon-green w-8 h-8 rounded-lg font-bold">+</button>' +
+                        '</div>' +
+                        '<button onclick="removeFromCart(' + idx + ')" class="text-red-500 hover:text-red-400">' +
+                            '<svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>' +
+                        '</button>' +
+                    '</div>';
+                }).join('');
+            }
+
+            const total = cart.reduce((sum, item) => sum + (Number(item.price) * item.qty), 0);
+            document.getElementById('cartTotal').textContent = '$' + total.toLocaleString();
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        };
+
+        window.closeCart = () => {
+            document.getElementById('cartModal').classList.add('hidden');
+            document.getElementById('cartModal').classList.remove('flex');
+        };
+
+        window.updateQty = (idx, change) => {
+            cart[idx].qty += change;
+            if (cart[idx].qty <= 0) {
+                cart.splice(idx, 1);
+            }
+            localStorage.setItem('phone_cart', JSON.stringify(cart));
+            updateCartCount();
+            showCart();
+        };
+
+        window.removeFromCart = (idx) => {
+            cart.splice(idx, 1);
+            localStorage.setItem('phone_cart', JSON.stringify(cart));
+            updateCartCount();
+            showCart();
+        };
+
+        window.checkout = () => {
+            if (cart.length === 0) return showToast('السلة فارغة', 'error');
+            closeCart();
+            document.getElementById('checkoutModal').classList.remove('hidden');
+            document.getElementById('checkoutModal').classList.add('flex');
+        };
+
+        window.closeCheckout = () => {
+            document.getElementById('checkoutModal').classList.add('hidden');
+            document.getElementById('checkoutModal').classList.remove('flex');
+        };
+
+        window.submitOrder = async () => {
+            const name = document.getElementById('customerName').value;
+            const phone = document.getElementById('customerPhone').value;
+            const address = document.getElementById('customerAddress').value;
+
+            if (!name || !phone || !address) {
+                return showToast('الرجاء ملء جميع الحقول', 'error');
+            }
+
+            const total = cart.reduce((sum, item) => sum + (Number(item.price) * item.qty), 0);
+            const code = 'PH' + Math.random().toString(36).substr(2, 6).toUpperCase();
+
+            // نحدد companyId من أول منتج بالسلة
+            const companyId = cart[0]?.companyId || '';
+            const companyName = cart[0]?.companyName || '';
+            await addDoc(collection(db, "phone_orders"), {
+                code,
+                customer: { name, phone, address },
+                items: cart,
+                total,
+                status: 'جديد',
+                companyId,
+                companyName,
+                date: new Date().toISOString()
+            });
+
+            cart = [];
+            localStorage.setItem('phone_cart', JSON.stringify(cart));
+            updateCartCount();
+            closeCheckout();
+            showToast(`تم الطلب بنجاح! كود التتبع: ${code}`, 'success');
+
+            document.getElementById('customerName').value = '';
+            document.getElementById('customerPhone').value = '';
+            document.getElementById('customerAddress').value = '';
+        };
+
+        window.showOrderTracking = () => {
+            document.getElementById('trackingModal').classList.remove('hidden');
+            document.getElementById('trackingModal').classList.add('flex');
+        };
+
+        window.closeTracking = () => {
+            document.getElementById('trackingModal').classList.add('hidden');
+            document.getElementById('trackingModal').classList.remove('flex');
+            document.getElementById('trackingResult').classList.add('hidden');
+            document.getElementById('trackingCode').value = '';
+        };
+
+        window.trackOrder = async () => {
+            const code = document.getElementById('trackingCode').value.trim().toUpperCase();
+            if (!code) return showToast('أدخل كود الطلب', 'error');
+
+            const q = query(collection(db, "phone_orders"), where("code", "==", code));
+            const snapshot = await getDocs(q);
+
+            if (snapshot.empty) {
+                return showToast('لم يتم العثور على الطلب', 'error');
+            }
+
+            const order = snapshot.docs[0].data();
+            const result = document.getElementById('trackingResult');
+
+            const statusColors = {
+                'جديد': 'bg-blue-500',
+                'قيد التجهيز': 'bg-yellow-500',
+                'تم التوصيل': 'bg-green-500'
+            };
+
+            result.innerHTML = 
+                <div class="glass p-6 rounded-xl">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-sm text-gray-400">كود الطلب</span>
+                        <span class="font-bold text-lg">${order.code}</span>
+                    </div>
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-sm text-gray-400">الحالة</span>
+                        <span class="px-4 py-2 rounded-lg font-bold ${statusColors[order.status] || 'bg-gray-500'} text-white">${order.status}</span>
+                    </div>
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-sm text-gray-400">المجموع</span>
+                        <span class="font-bold text-lg gradient-text">$${Number(order.total).toLocaleString()}</span>
+                    </div>
+                    <div class="border-t border-gray-800 pt-4">
+                        <p class="text-sm text-gray-400 mb-2">المنتجات:</p>
+                        ${order.items.map(item => 
+                            <div class="flex justify-between text-sm mb-1">
+                                <span>${item.name} × ${item.qty}</span>
+                                <span>$${(Number(item.price) * item.qty).toLocaleString()}</span>
+                            </div>
+                        ).join('')}
+                    </div>
+                </div>
+            ;
+            result.classList.remove('hidden');
+        };
+
+        window.searchAll = async () => {
+            const term = document.getElementById('searchInput').value.trim().toLowerCase();
+            if (!term) return loadCompanies();
+
+            const filtered = allCompanies.filter(c =>
+                c.name.toLowerCase().includes(term)
+            );
+            renderCompanies(filtered);
+        };function showToast(msg, type = 'success') {
+            const toast = document.getElementById('toast');
+            const colors = { success: 'bg-green-500', error: 'bg-red-500', info: 'bg-blue-500' };
+            toast.innerHTML = <div class="toast ${colors[type]} text-white px-6 py-4 rounded-xl font-bold shadow-lg">${msg}</div>;
+            toast.classList.remove('hidden');
+            setTimeout(() => toast.classList.add('hidden'), 3000);
+        }
+
+        document.getElementById('searchInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') searchAll();
+        });
+    </script>
+</body>
+</html>
