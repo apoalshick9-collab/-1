@@ -1,4 +1,4 @@
-           <!DOCTYPE html>
+       <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
@@ -8,15 +8,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Tajawal', sans-serif; background: #000; color: #fff; }
-    .glass { background: rgba(20, 20, 20, 0.8); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1); }
-    .card-glow { background: linear-gradient(145deg, #111, #0a0a0a); border: 1px solid #222; transition: all 0.3s; }
-    .card-glow:hover { border-color: #3b82f6; box-shadow: 0 0 30px rgba(59, 130, 246, 0.3); transform: translateY(-4px); }
-    .btn-neon-blue { background: #3b82f6; box-shadow: 0 0 20px rgba(59, 130, 246, 0.5); }
-    .btn-neon-green { background: #10b981; box-shadow: 0 0 20px rgba(16, 185, 129, 0.5); }
-    .btn-neon-red { background: #ef4444; box-shadow: 0 0 20px rgba(239, 68, 68, 0.5); }
-    .gradient-text { background: linear-gradient(90deg, #3b82f6, #8b5cf6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-    .modal { transition: all 0.3s; }
-    .toast { animation: slideIn 0.3s ease-out; }
+   .glass { background: rgba(20, 20, 20, 0.8); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1); }
+   .card-glow { background: linear-gradient(145deg, #111, #0a0a0a); border: 1px solid #222; transition: all 0.3s; }
+   .card-glow:hover { border-color: #3b82f6; box-shadow: 0 0 30px rgba(59, 130, 246, 0.3); transform: translateY(-4px); }
+   .btn-neon-blue { background: #3b82f6; box-shadow: 0 0 20px rgba(59, 130, 246, 0.5); }
+   .btn-neon-green { background: #10b981; box-shadow: 0 0 20px rgba(16, 185, 129, 0.5); }
+   .btn-neon-red { background: #ef4444; box-shadow: 0 0 20px rgba(239, 68, 68, 0.5); }
+   .gradient-text { background: linear-gradient(90deg, #3b82f6, #8b5cf6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+   .modal { transition: all 0.3s; }
+   .toast { animation: slideIn 0.3s ease-out; }
         @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
     </style>
 </head>
@@ -39,12 +39,10 @@
             </div>
             <h1 class="text-3xl font-black gradient-text">شيخ ستور</h1>
             <button onclick="window.location.href='./super-admin.html'" class="btn-neon-blue px-4 py-2 rounded-xl font-bold">
-                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"></path></svg>
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"></path></svg>
             </button>
         </div>
-    </header>
-
-    <main class="max-w-7xl mx-auto p-6">
+    </header>  <main class="max-w-7xl mx-auto p-6">
         <div class="glass p-6 rounded-3xl mb-8">
             <div class="flex gap-3">
                 <input id="searchInput" type="text" placeholder="ابحث عن متجر أو منتج..." class="flex-1 p-4 rounded-xl bg-black border border-gray-800 focus:border-blue-500 outline-none text-lg">
@@ -79,7 +77,7 @@
             <div class="flex items-center justify-between mb-6">
                 <h3 class="text-3xl font-black gradient-text">سلة المشتريات</h3>
                 <button onclick="closeCart()" class="text-gray-400 hover:text-white">
-                    <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                    <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                 </button>
             </div>
             <div id="cartItems" class="space-y-4 mb-6"></div>
@@ -94,8 +92,7 @@
     </div>
 
     <div id="checkoutModal" class="modal fixed inset-0 bg-black bg-opacity-90 backdrop-blur-sm hidden items-center justify-center z-50 p-6">
-        <div class="glass p-8 rounded-3xl w-full max-w-md border border-gray-800">
-            <h3 class="text-2xl font-black mb-6 gradient-text">معلومات التوصيل</h3>
+        <div class="glass p-8 rounded-3xl w-full max-w-md border border-gray-800"><h3 class="text-2xl font-black mb-6 gradient-text">معلومات التوصيل</h3>
             <input id="customerName" type="text" placeholder="الاسم الكامل" class="w-full p-4 mb-4 rounded-xl bg-black border border-gray-800 focus:border-blue-500 outline-none">
             <input id="customerPhone" type="tel" placeholder="رقم الهاتف" class="w-full p-4 mb-4 rounded-xl bg-black border border-gray-800 focus:border-blue-500 outline-none">
             <input id="customerAddress" type="text" placeholder="العنوان بالتفصيل" class="w-full p-4 mb-6 rounded-xl bg-black border border-gray-800 focus:border-blue-500 outline-none">
@@ -121,12 +118,12 @@
         import { getFirestore, collection, getDocs, query, where, addDoc, doc, getDoc, orderBy, limit } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
         const firebaseConfig = {
-            apiKey: "AIzaSyBXXfFQh5m8KEWzmtPsyF8rdgp1U-_XozY",
-            authDomain: "a9test-9473a.firebaseapp.com",
-            projectId: "a9test-9473a",
-            storageBucket: "a9test-9473a.appspot.com",
-            messagingSenderId: "580658637186",
-            appId: "1:580658637186:web:a243a1862b875dca69d024"
+          apiKey: "AIzaSyDCH2eWEqV2XHlDzQ4_NN90Fn73gB6qzDA",
+          authDomain: "flutter-ai-playground-55de8.firebaseapp.com",
+          projectId: "flutter-ai-playground-55de8",
+          storageBucket: "flutter-ai-playground-55de8.firebasestorage.app",
+          messagingSenderId: "123646936115",
+          appId: "1:123646936115:web:bb6b3db2cae8340ddc8f46"
         };
 
         const app = initializeApp(firebaseConfig);
@@ -150,12 +147,12 @@
             } catch (error) {
                 console.error('Error loading companies:', error);
                 showToast('خطأ بتحميل المتاجر: ' + error.message, 'error');
-                document.getElementById('companiesGrid').innerHTML = `
+                document.getElementById('companiesGrid').innerHTML = 
                     <div class="col-span-full text-center py-20">
                         <p class="text-2xl text-red-500 font-bold mb-4">خطأ بالاتصال</p>
                         <p class="text-gray-400 text-sm">${error.message}</p>
                     </div>
-                `;
+                ;
             }
         }
 
@@ -164,16 +161,13 @@
             if (companies.length === 0) {
                 grid.innerHTML = '<p class="col-span-full text-center text-gray-500 text-lg py-12">لا توجد متاجر حالياً</p>';
                 return;
-            }
-
-            grid.innerHTML = companies.map(c => {
-                let logoSrc = (c.logo || c.logoUrl || c.image || c.icon || '').trim();
+            }grid.innerHTML = companies.map(c => {
+                let logoSrc = (c.logo  c.logoUrl  c.image  c.icon  '').trim();
                 if (!logoSrc ||!logoSrc.startsWith('http')) {
                     logoSrc = 'https://cdn-icons-png.flaticon.com/512/3081/3081559.png';
                 }
 
-                // نستخدم data attributes مشان ما نكسر الجافاسكربت
-                return `
+                return 
                 <button data-id="${c.id}" data-name="${c.name.replace(/"/g, '&quot;')}" onclick="handleCompanyClick(this)" class="card-glow p-5 rounded-2xl text-center group">
                     <div class="w-20 h-20 mx-auto rounded-2xl overflow-hidden mb-3 border-2 border-gray-800 group-hover:border-blue-500 transition-all bg-gray-900 flex items-center justify-center">
                         <img src="${logoSrc}"
@@ -185,7 +179,7 @@
                     <p class="font-bold text-sm mb-1">${c.name}</p>
                     <p class="text-xs text-gray-500">${c.category || 'متجر'}</p>
                 </button>
-                `;
+                ;
             }).join('');
         }
 
@@ -212,11 +206,11 @@
             }
 
             grid.innerHTML = products.map(p => {
-                let imgSrc = (p.image || p.imageUrl || '').trim();
+                let imgSrc = (p.image  p.imageUrl  '').trim();
                 if (!imgSrc ||!imgSrc.startsWith('http')) {
                     imgSrc = 'https://cdn-icons-png.flaticon.com/512/3081/3081559.png';
                 }
-                return `
+                return 
                 <div class="card-glow p-4 rounded-2xl">
                     <div class="w-full h-40 rounded-xl overflow-hidden mb-3 bg-gray-900">
                         <img src="${imgSrc}"
@@ -231,16 +225,14 @@
                         أضف للسلة
                     </button>
                 </div>
-            `}).join('');
+            }).join('');
         };
 
         window.backToCompanies = () => {
             document.getElementById('productsSection').classList.add('hidden');
             document.getElementById('companiesSection').classList.remove('hidden');
             currentCompanyId = null;
-        };
-
-        window.addToCart = (product) => {
+        };window.addToCart = (product) => {
             const existing = cart.find(item => item.id === product.id);
             if (existing) {
                 existing.qty++;
@@ -264,7 +256,7 @@
             if (cart.length === 0) {
                 items.innerHTML = '<p class="text-center text-gray-500 py-12">السلة فارغة</p>';
             } else {
-                items.innerHTML = cart.map((item, idx) => `
+                items.innerHTML = cart.map((item, idx) => 
                     <div class="glass p-4 rounded-xl flex items-center gap-4">
                         <img src="${item.image || item.imageUrl || 'https://cdn-icons-png.flaticon.com/512/3081/3081559.png'}"
                              class="w-20 h-20 rounded-lg object-cover bg-gray-900"
@@ -282,7 +274,7 @@
                             <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>
                         </button>
                     </div>
-                `).join('');
+                ).join('');
             }
 
             const total = cart.reduce((sum, item) => sum + (Number(item.price) * item.qty), 0);
@@ -318,9 +310,7 @@
             closeCart();
             document.getElementById('checkoutModal').classList.remove('hidden');
             document.getElementById('checkoutModal').classList.add('flex');
-        };
-
-        window.closeCheckout = () => {
+        };window.closeCheckout = () => {
             document.getElementById('checkoutModal').classList.add('hidden');
             document.getElementById('checkoutModal').classList.remove('flex');
         };
@@ -330,7 +320,7 @@
             const phone = document.getElementById('customerPhone').value;
             const address = document.getElementById('customerAddress').value;
 
-            if (!name ||!phone ||!address) {
+            if (!name !phone !address) {
                 return showToast('الرجاء ملء جميع الحقول', 'error');
             }
 
@@ -350,7 +340,7 @@
             localStorage.setItem('sheikh_cart', JSON.stringify(cart));
             updateCartCount();
             closeCheckout();
-            showToast(`تم الطلب بنجاح! كود التتبع: ${code}`, 'success');
+            showToast(تم الطلب بنجاح! كود التتبع: ${code}, 'success');
 
             document.getElementById('customerName').value = '';
             document.getElementById('customerPhone').value = '';
@@ -403,19 +393,18 @@
                     </div>
                     <div class="flex items-center justify-between mb-4">
                         <span class="text-sm text-gray-400">المجموع</span>
-                        <span class="font-bold text-lg gradient-text">${Number(order.total).toLocaleString()} ل.س</span>
-                    </div>
+                        <span class="font-bold text-lg gradient-text">${Number(order.total).toLocaleString()} ل.س</span></div>
                     <div class="border-t border-gray-800 pt-4">
                         <p class="text-sm text-gray-400 mb-2">المنتجات:</p>
-                        ${order.items.map(item => `
+                        ${order.items.map(item => 
                             <div class="flex justify-between text-sm mb-1">
                                 <span>${item.name} × ${item.qty}</span>
                                 <span>${(Number(item.price) * item.qty).toLocaleString()} ل.س</span>
                             </div>
-                        `).join('')}
+                        ).join('')}
                     </div>
                 </div>
-            `;
+            ;
             result.classList.remove('hidden');
         };
 
@@ -433,7 +422,7 @@
         function showToast(msg, type = 'success') {
             const toast = document.getElementById('toast');
             const colors = { success: 'bg-green-500', error: 'bg-red-500', info: 'bg-blue-500' };
-            toast.innerHTML = `<div class="toast ${colors[type]} text-white px-6 py-4 rounded-xl font-bold shadow-lg">${msg}</div>`;
+            toast.innerHTML = <div class="toast ${colors[type]} text-white px-6 py-4 rounded-xl font-bold shadow-lg">${msg}</div>`;
             toast.classList.remove('hidden');
             setTimeout(() => toast.classList.add('hidden'), 3000);
         }
@@ -443,4 +432,4 @@
         });
     </script>
 </body>
-</html>                                           
+</html>
