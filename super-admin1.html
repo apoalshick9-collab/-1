@@ -13,25 +13,28 @@
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: "Cairo", sans-serif; background-color: var(--bg-dark); color: var(--text-main); min-height: 100vh; }
-    .login-container { display: flex; justify-content: center; align-items: center; min-height: 100vh; }
-    .login-box { background: var(--bg-card); padding: 40px; border-radius: 16px; border: 1px solid #222; width: 90%; max-width: 400px; text-align: center; }
-    .login-box h1 { font-family: "Tajawal", sans-serif; color: var(--blue-accent); margin-bottom: 30px; }
-    .dashboard { display: none; padding: 20px; }
+     .login-container { display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+     .login-box { background: var(--bg-card); padding: 40px; border-radius: 16px; border: 1px solid #222; width: 90%; max-width: 400px; text-align: center; }
+     .login-box h1 { font-family: "Tajawal", sans-serif; color: var(--blue-accent); margin-bottom: 30px; }
+     .dashboard { display: none; padding: 20px; }
         nav { background: linear-gradient(90deg, #000, #1a1a1a); padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--red-accent); margin-bottom: 30px; }
-    .logo { font-family: "Tajawal", sans-serif; font-size: 24px; font-weight: 900; color: var(--blue-accent); }
-    .container { max-width: 1400px; margin: 0 auto; }
-    .section { background: var(--bg-card); padding: 30px; border-radius: 16px; border: 1px solid #222; margin-bottom: 20px; }
+     .logo { font-family: "Tajawal", sans-serif; font-size: 24px; font-weight: 900; color: var(--blue-accent); display: flex; align-items: center; gap: 12px; }
+     .container { max-width: 1400px; margin: 0 auto; }
+     .section { background: var(--bg-card); padding: 30px; border-radius: 16px; border: 1px solid #222; margin-bottom: 20px; }
         h2 { font-family: "Tajawal", sans-serif; color: var(--blue-accent); margin-bottom: 20px; font-size: 28px; }
-    .form-group { margin-bottom: 20px; text-align: right; }
+     .form-group { margin-bottom: 20px; text-align: right; }
         label { display: block; margin-bottom: 8px; color: var(--blue-accent); font-weight: 700; }
         input { width: 100%; padding: 12px; background: #1a1a1a; border: 1px solid #333; border-radius: 8px; color: var(--text-main); font-size: 16px; }
-    .btn { display: inline-block; background: linear-gradient(45deg, var(--red-accent), var(--blue-accent)); color: white; padding: 12px 25px; border-radius: 8px; font-weight: 700; font-size: 16px; border: none; cursor: pointer; }
-    .btn-red { background: var(--red-accent); }
-    .btn-sm { padding: 8px 15px; font-size: 14px; }
+     .btn { display: inline-block; background: linear-gradient(45deg, var(--red-accent), var(--blue-accent)); color: white; padding: 12px 25px; border-radius: 8px; font-weight: 700; font-size: 16px; border: none; cursor: pointer; }
+     .btn-red { background: var(--red-accent); }
+     .btn-sm { padding: 8px 15px; font-size: 14px; }
         table { width: 100%; border-collapse: collapse; margin-top: 20px; }
         th, td { padding: 15px; text-align: right; border-bottom: 1px solid #222; }
         th { background: #1a1a1a; color: var(--blue-accent); font-weight: 700; }
-    .company-logo { width: 50px; height: 50px; object-fit: cover; border-radius: 6px; }
+     .company-logo { width: 50px; height: 50px; object-fit: cover; border-radius: 6px; }
+     .live-indicator { display: inline-flex; align-items: center; gap: 8px; background: rgba(46, 204, 113, 0.2); color: var(--green-accent); padding: 6px 12px; border-radius: 20px; font-size: 12px; }
+     .live-dot { width: 8px; height: 8px; background: var(--green-accent); border-radius: 50%; animation: pulse 2s infinite; }
+      @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
     </style>
 </head>
 <body>
@@ -47,7 +50,10 @@
 
     <div class="dashboard" id="dashboard">
         <nav>
-            <div class="logo"><i class="fa-solid fa-bolt"></i> سوبر أدمن - متجر الشيخ</div>
+            <div class="logo">
+                <i class="fa-solid fa-bolt"></i> سوبر أدمن - متجر الشيخ
+                <span class="live-indicator"><span class="live-dot"></span> مباشر</span>
+            </div>
             <button class="btn btn-red" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> خروج</button>
         </nav>
         <div class="container">
@@ -99,7 +105,7 @@
 
     <script type="module">
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
-        import { getFirestore, collection, getDocs, addDoc, deleteDoc, doc, query, where } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+        import { getFirestore, collection, getDocs, addDoc, deleteDoc, doc, query, where, onSnapshot } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
 
         const firebaseConfig = {
           apiKey: "AIzaSyCN1ZMiCUkuQiPZUzihRRkRR2tf_AnPqGQ",
@@ -114,26 +120,46 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
         const ADMIN_PASSWORD = "kali";
+        let unsubscribeCompanies = null;
+
+        // تحقق من تسجيل الدخول المحفوظ
+        window.onload = function() {
+            const saved = localStorage.getItem('super_admin_login');
+            if (saved === 'true') {
+                document.getElementById('loginContainer').style.display = 'none';
+                document.getElementById('dashboard').style.display = 'block';
+                initListener();
+            }
+        }
 
         window.checkLogin = function() {
             if(document.getElementById('passwordInput').value === ADMIN_PASSWORD) {
+                localStorage.setItem('super_admin_login', 'true');
                 document.getElementById('loginContainer').style.display = 'none';
                 document.getElementById('dashboard').style.display = 'block';
-                loadCompanies();
+                initListener();
             } else {
                 alert('كلمة السر غلط');
             }
         }
 
         window.logout = function() {
+            if (unsubscribeCompanies) unsubscribeCompanies();
+            localStorage.removeItem('super_admin_login');
             document.getElementById('loginContainer').style.display = 'flex';
             document.getElementById('dashboard').style.display = 'none';
             document.getElementById('passwordInput').value = '';
         }
 
-        async function loadCompanies() {
+        function initListener() {
+            // تحديث لحظي للشركات
+            unsubscribeCompanies = onSnapshot(collection(db, "phone_companies"), (snapshot) => {
+                renderCompanies(snapshot);
+            });
+        }
+
+        function renderCompanies(snapshot) {
             const tbody = document.querySelector('#companiesTable tbody');
-            const snapshot = await getDocs(collection(db, "phone_companies"));
             tbody.innerHTML = '';
             snapshot.forEach(docSnap => {
                 const c = docSnap.data();
@@ -161,7 +187,6 @@
             await addDoc(collection(db, "phone_companies"), { name, logo, email, password, shamcash, category: 'هواتف' });
             alert('تمت إضافة الشركة');
             this.reset();
-            loadCompanies();
         });
 
         window.deleteCompany = async function(id) {
@@ -173,8 +198,13 @@
                 await deleteDoc(doc(db, "phone_products", p.id));
             }
 
+            const categoriesQuery = query(collection(db, "phone_categories"), where("companyId", "==", id));
+            const categoriesSnapshot = await getDocs(categoriesQuery);
+            for (const c of categoriesSnapshot.docs) {
+                await deleteDoc(doc(db, "phone_categories", c.id));
+            }
+
             await deleteDoc(doc(db, "phone_companies", id));
-            loadCompanies();
         }
     </script>
 </body>
