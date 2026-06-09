@@ -1,123 +1,120 @@
-       <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>شيخ ستور | متاجرنا</title>
+    <title>شيخ ستور - المول الإلكتروني الفخم</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        body { font-family: 'Tajawal', sans-serif; background: #000; color: #fff; }
-   .glass { background: rgba(20, 20, 20, 0.8); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1); }
-   .card-glow { background: linear-gradient(145deg, #111, #0a0a0a); border: 1px solid #222; transition: all 0.3s; }
-   .card-glow:hover { border-color: #3b82f6; box-shadow: 0 0 30px rgba(59, 130, 246, 0.3); transform: translateY(-4px); }
-   .btn-neon-blue { background: #3b82f6; box-shadow: 0 0 20px rgba(59, 130, 246, 0.5); }
-   .btn-neon-green { background: #10b981; box-shadow: 0 0 20px rgba(16, 185, 129, 0.5); }
-   .btn-neon-red { background: #ef4444; box-shadow: 0 0 20px rgba(239, 68, 68, 0.5); }
-   .gradient-text { background: linear-gradient(90deg, #3b82f6, #8b5cf6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-   .modal { transition: all 0.3s; }
-   .toast { animation: slideIn 0.3s ease-out; }
-        @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+        * { font-family: "Cairo", sans-serif; }
+        body { background: #000000; color: #fff; }
+      .glass { background: rgba(17, 17, 17, 0.7); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1); }
+      .btn-neon-green { background: linear-gradient(135deg, #10B981, #059669); box-shadow: 0 0 20px rgba(16, 185, 129, 0.4); transition: all 0.3s; }
+      .btn-neon-green:hover { box-shadow: 0 0 30px rgba(16, 185, 129, 0.7); transform: translateY(-2px); }
+      .btn-neon-blue { background: linear-gradient(135deg, #3B82F6, #1D4ED8); box-shadow: 0 0 20px rgba(59, 130, 246, 0.4); transition: all 0.3s; }
+      .btn-neon-blue:hover { box-shadow: 0 0 30px rgba(59, 130, 246, 0.7); transform: translateY(-2px); }
+      .btn-neon-red { background: linear-gradient(135deg, #EF4444, #DC2626); box-shadow: 0 0 20px rgba(239, 68, 68, 0.4); transition: all 0.3s; }
+      .card-glow { background: linear-gradient(145deg, #111111, #0A0A0A); border: 1px solid #1F1F1F; transition: all 0.4s ease; }
+      .card-glow:hover { border-color: #3B82F6; box-shadow: 0 10px 40px rgba(59, 130, 246, 0.2); transform: translateY(-8px); }
+      .gradient-text { background: linear-gradient(90deg, #3B82F6, #10B981); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+      .status-new { color: #3B82F6; }
+      .status-prep { color: #F59E0B; }
+      .status-done { color: #10B981; }
     </style>
 </head>
-<body class="min-h-screen">
-
-    <div id="toast" class="fixed top-5 left-5 z-[100] hidden"></div>
-
-    <header class="glass sticky top-0 z-40 p-4">
-        <div class="max-w-7xl mx-auto flex items-center justify-between">
-            <div class="flex items-center gap-4">
-                <button onclick="showCart()" class="btn-neon-blue px-4 py-2 rounded-xl font-bold flex items-center gap-2 relative">
-                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 0 000 3z"></path></svg>
-                    <span>السلة</span>
-                    <span id="cartCount" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs w-6 h-6 rounded-full flex items-center justify-center font-bold">0</span>
-                </button>
-                <button onclick="showOrderTracking()" class="btn-neon-green px-4 py-2 rounded-xl font-bold flex items-center gap-2">
-                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
-                    <span>تتبع طلبي</span>
-                </button>
+<body>
+    <nav class="glass sticky top-0 z-50 border-b border-gray-800">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-lg btn-neon-blue flex items-center justify-center">
+                    <i class="fa-solid fa-crown text-xl"></i>
+                </div>
+                <h1 class="text-3xl font-black">شيخ <span class="gradient-text">ستور</span></h1>
             </div>
-            <h1 class="text-3xl font-black gradient-text">شيخ ستور</h1>
-            <button onclick="window.location.href='./super-admin.html'" class="btn-neon-blue px-4 py-2 rounded-xl font-bold">
-                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"></path></svg>
-            </button>
-        </div>
-    </header>  <main class="max-w-7xl mx-auto p-6">
-        <div class="glass p-6 rounded-3xl mb-8">
             <div class="flex gap-3">
-                <input id="searchInput" type="text" placeholder="ابحث عن متجر أو منتج..." class="flex-1 p-4 rounded-xl bg-black border border-gray-800 focus:border-blue-500 outline-none text-lg">
-                <button onclick="searchAll()" class="btn-neon-blue px-8 py-4 rounded-xl font-bold">
-                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
+                <button onclick="showTrackOrder()" class="btn-neon-green px-4 py-3 rounded-xl font-bold">
+                    <i class="fa-solid fa-truck-fast ml-2"></i> تتبع طلبي
+                </button>
+                <button onclick="toggleCart()" class="relative btn-neon-blue px-5 py-3 rounded-xl font-bold">
+                    <i class="fa-solid fa-cart-shopping ml-2"></i> السلة
+                    <span id="cartCount" class="absolute -top-2 -right-2 bg-gradient-to-r from-red-500 to-pink-500 text-xs rounded-full w-6 h-6 flex items-center justify-center font-black">0</span>
                 </button>
             </div>
         </div>
+    </nav>
 
-        <div id="companiesSection">
-            <h2 class="text-2xl font-black mb-6 flex items-center gap-3">
-                <span class="gradient-text">المتاجر المتاحة</span>
-                <svg class="w-7 h-7 text-blue-500" fill="currentColor" viewBox="0 0 20 20"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>
-            </h2>
-            <div id="companiesGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4"></div>
+    <div class="container mx-auto p-6">
+        <div class="text-center mb-8 mt-8">
+            <h2 class="text-5xl font-black mb-4">أفخم <span class="gradient-text">مول إلكتروني</span></h2>
+            <p class="text-gray-400 text-lg mb-6">كل المتاجر بمكان واحد.. اختار متجرك وبلش تسوق</p>
+            <!-- شريط البحث -->
+            <div class="glass rounded-2xl p-2 max-w-2xl mx-auto flex gap-2">
+                <input id="searchInput" oninput="searchItems()" type="text" placeholder="ابحث عن متجر أو منتج..." class="flex-1 p-4 rounded-xl bg-black border border-gray-800 focus:border-blue-500 outline-none">
+                <button class="btn-neon-blue px-6 rounded-xl"><i class="fa-solid fa-search"></i></button>
+            </div>
+        </div><div class="glass rounded-3xl p-8 mb-12">
+            <h3 class="text-2xl font-bold mb-6 flex items-center gap-3">
+                <i class="fa-solid fa-store text-blue-500"></i> المتاجر المتاحة
+            </h3>
+            <div id="companiesGrid" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-5"></div>
         </div>
 
         <div id="productsSection" class="hidden">
-            <div class="flex items-center justify-between mb-6">
-                <button onclick="backToCompanies()" class="btn-neon-blue px-6 py-3 rounded-xl font-bold flex items-center gap-2">
-                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd"></path></svg>
-                    <span>رجوع</span>
-                </button>
-                <h2 id="companyTitle" class="text-2xl font-black gradient-text"></h2>
-            </div>
-            <div id="productsGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"></div>
-        </div>
-    </main>
-
-    <div id="cartModal" class="modal fixed inset-0 bg-black bg-opacity-90 backdrop-blur-sm hidden items-center justify-center z-50 p-6">
-        <div class="glass p-8 rounded-3xl w-full max-w-2xl border border-gray-800 max-h- overflow-y-auto">
-            <div class="flex items-center justify-between mb-6">
-                <h3 class="text-3xl font-black gradient-text">سلة المشتريات</h3>
-                <button onclick="closeCart()" class="text-gray-400 hover:text-white">
-                    <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-                </button>
-            </div>
-            <div id="cartItems" class="space-y-4 mb-6"></div>
-            <div class="border-t border-gray-800 pt-6">
-                <div class="flex items-center justify-between mb-6">
-                    <span class="text-xl font-bold">المجموع:</span>
-                    <span id="cartTotal" class="text-3xl font-black gradient-text">0 ل.س</span>
-                </div>
-                <button onclick="checkout()" class="btn-neon-green w-full p-4 rounded-xl font-bold text-lg">إتمام الطلب</button>
-            </div>
+            <h3 id="productsTitle" class="text-3xl font-bold mb-8 flex items-center gap-3">
+                <i class="fa-solid fa-box-open text-green-500"></i>
+                منتجات <span id="currentCompany" class="gradient-text"></span>
+            </h3>
+            <div id="productsGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5"></div>
         </div>
     </div>
 
-    <div id="checkoutModal" class="modal fixed inset-0 bg-black bg-opacity-90 backdrop-blur-sm hidden items-center justify-center z-50 p-6">
-        <div class="glass p-8 rounded-3xl w-full max-w-md border border-gray-800"><h3 class="text-2xl font-black mb-6 gradient-text">معلومات التوصيل</h3>
-            <input id="customerName" type="text" placeholder="الاسم الكامل" class="w-full p-4 mb-4 rounded-xl bg-black border border-gray-800 focus:border-blue-500 outline-none">
-            <input id="customerPhone" type="tel" placeholder="رقم الهاتف" class="w-full p-4 mb-4 rounded-xl bg-black border border-gray-800 focus:border-blue-500 outline-none">
-            <input id="customerAddress" type="text" placeholder="العنوان بالتفصيل" class="w-full p-4 mb-6 rounded-xl bg-black border border-gray-800 focus:border-blue-500 outline-none">
-            <div class="flex gap-3">
-                <button onclick="submitOrder()" class="btn-neon-green flex-1 p-4 rounded-xl font-bold">تأكيد الطلب</button>
-                <button onclick="closeCheckout()" class="btn-neon-red flex-1 p-4 rounded-xl font-bold">إلغاء</button>
+    <!-- السلة -->
+    <div id="cartSidebar" class="fixed top-0 left-0 w-full md:w-[420px] h-full glass transform -translate-x-full transition-all duration-500 z-50 p-6 overflow-y-auto">
+        <div class="flex justify-between items-center mb-8">
+            <h3 class="text-3xl font-black gradient-text">سلتك</h3>
+            <button onclick="toggleCart()" class="btn-neon-red w-10 h-10 rounded-xl"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div id="cartItems" class="space-y-4 mb-6"></div>
+        <div class="glass rounded-2xl p-5 mt-6">
+            <div class="flex justify-between text-2xl font-black mb-5">
+                <span>الإجمالي:</span>
+                <span id="cartTotal" class="text-green-400">0 ل.س</span>
             </div>
+            <input id="customerName" type="text" placeholder="الاسم الكامل" class="w-full p-4 mb-3 rounded-xl bg-black border border-gray-800 focus:border-blue-500 outline-none">
+            <input id="customerPhone" type="tel" placeholder="09xxxxxxxx" class="w-full p-4 mb-3 rounded-xl bg-black border border-gray-800 focus:border-blue-500 outline-none">
+            <textarea id="customerAddress" placeholder="العنوان بالتفصيل" class="w-full p-4 mb-4 rounded-xl bg-black border border-gray-800 focus:border-blue-500 outline-none"></textarea>
+
+            <!-- شام كاش -->
+            <div class="bg-black rounded-xl p-4 mb-4 border border-gray-800">
+                <label class="flex items-center gap-3 mb-3 cursor-pointer">
+                    <input id="shamCashCheck" type="checkbox" class="w-5 h-5 accent-green-500">
+                    <span class="font-bold"><i class="fa-solid fa-wallet text-green-500 ml-2"></i>دفع عبر شام كاش</span>
+                </label>
+                <input id="shamCashCode" type="text" placeholder="أدخل كود التحويل" class="w-full p-3 rounded-lg bg-gray-900 border border-gray-800 hidden">
+            </div>
+
+            <button onclick="submitOrder()" class="w-full btn-neon-green p-4 rounded-xl font-black text-lg">
+                <i class="fa-solid fa-rocket ml-2"></i> تأكيد الطلب الآن
+            </button>
         </div>
     </div>
 
-    <div id="trackingModal" class="modal fixed inset-0 bg-black bg-opacity-90 backdrop-blur-sm hidden items-center justify-center z-50 p-6">
-        <div class="glass p-8 rounded-3xl w-full max-w-md border border-gray-800">
+    <!-- نافذة تتبع الطلب -->
+    <div id="trackOrderModal" class="fixed inset-0 bg-black bg-opacity-90 backdrop-blur-sm hidden items-center justify-center z-50 p-6">
+        <div class="glass p-8 rounded-3xl w-full max-w-lg border border-gray-800">
             <h3 class="text-2xl font-black mb-6 gradient-text">تتبع طلبك</h3>
-            <input id="trackingCode" type="text" placeholder="كود الطلب" class="w-full p-4 mb-4 rounded-xl bg-black border border-gray-800 focus:border-blue-500 outline-none">
-            <button onclick="trackOrder()" class="btn-neon-blue w-full p-4 rounded-xl font-bold mb-6">بحث</button>
-            <div id="trackingResult" class="hidden"></div>
-            <button onclick="closeTracking()" class="btn-neon-red w-full p-4 rounded-xl font-bold mt-4">إغلاق</button>
+            <input id="trackPhone" type="tel" placeholder="أدخل رقم الموبايل اللي طلبت فيه" class="w-full p-4 mb-4 rounded-xl bg-black border border-gray-800 focus:border-blue-500 outline-none">
+            <button onclick="trackOrder()" class="btn-neon-blue w-full p-4 rounded-xl font-bold mb-4">بحث عن الطلب</button>
+            <div id="trackResults" class="space-y-3"></div>
+            <button onclick="closeTrackModal()" class="btn-neon-red w-full p-3 rounded-xl font-bold mt-4">إغلاق</button>
         </div>
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-        import { getFirestore, collection, getDocs, query, where, addDoc, doc, getDoc, orderBy, limit } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-        const firebaseConfig = {
+        import { getFirestore, collection, getDocs, addDoc, serverTimestamp, query, where, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";const firebaseConfig = {
           apiKey: "AIzaSyDCH2eWEqV2XHlDzQ4_NN90Fn73gB6qzDA",
           authDomain: "flutter-ai-playground-55de8.firebaseapp.com",
           projectId: "flutter-ai-playground-55de8",
@@ -128,308 +125,175 @@
 
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
-
-        let cart = JSON.parse(localStorage.getItem('sheikh_cart') || '[]');
+        let cart = [];
         let currentCompanyId = null;
         let allCompanies = [];
+        let allProducts = [];
 
-        window.onload = async () => {
-            updateCartCount();
-            await loadCompanies();
-        };
+        // شام كاش checkbox
+        document.getElementById('shamCashCheck').addEventListener('change', (e) => {
+            document.getElementById('shamCashCode').classList.toggle('hidden',!e.target.checked);
+        });
 
         async function loadCompanies() {
-            try {
-                const snapshot = await getDocs(collection(db, "sheikh_companies"));
-                allCompanies = snapshot.docs.map(doc => ({ id: doc.id,...doc.data() }));
-                console.log('Companies loaded:', allCompanies.length);
-                renderCompanies(allCompanies);
-            } catch (error) {
-                console.error('Error loading companies:', error);
-                showToast('خطأ بتحميل المتاجر: ' + error.message, 'error');
-                document.getElementById('companiesGrid').innerHTML = 
-                    <div class="col-span-full text-center py-20">
-                        <p class="text-2xl text-red-500 font-bold mb-4">خطأ بالاتصال</p>
-                        <p class="text-gray-400 text-sm">${error.message}</p>
-                    </div>
-                ;
-            }
+            const querySnapshot = await getDocs(collection(db, "sheikh_companies"));
+            allCompanies = querySnapshot.docs.map(doc => ({ id: doc.id,...doc.data() }));
+            renderCompanies(allCompanies);
         }
 
         function renderCompanies(companies) {
             const grid = document.getElementById('companiesGrid');
-            if (companies.length === 0) {
-                grid.innerHTML = '<p class="col-span-full text-center text-gray-500 text-lg py-12">لا توجد متاجر حالياً</p>';
-                return;
-            }grid.innerHTML = companies.map(c => {
-                let logoSrc = (c.logo  c.logoUrl  c.image  c.icon  '').trim();
-                if (!logoSrc ||!logoSrc.startsWith('http')) {
-                    logoSrc = 'https://cdn-icons-png.flaticon.com/512/3081/3081559.png';
-                }
-
-                return 
-                <button data-id="${c.id}" data-name="${c.name.replace(/"/g, '&quot;')}" onclick="handleCompanyClick(this)" class="card-glow p-5 rounded-2xl text-center group">
-                    <div class="w-20 h-20 mx-auto rounded-2xl overflow-hidden mb-3 border-2 border-gray-800 group-hover:border-blue-500 transition-all bg-gray-900 flex items-center justify-center">
-                        <img src="${logoSrc}"
-                             class="w-full h-full object-cover"
-                             loading="lazy"
-                             onerror="this.onerror=null; this.src='https://cdn-icons-png.flaticon.com/512/3081/3081559.png';"
-                             alt="${c.name}">
+            grid.innerHTML = companies.map(c => 
+                <button onclick="loadCompanyProducts('${c.id}', '${c.name}')" class="card-glow p-5 rounded-2xl text-center group">
+                    <div class="w-20 h-20 mx-auto rounded-2xl overflow-hidden mb-3 border-2 border-gray-800 group-hover:border-blue-500 transition-all">
+                        <img src="${c.logo}" class="w-full h-full object-cover">
                     </div>
                     <p class="font-bold text-sm mb-1">${c.name}</p>
-                    <p class="text-xs text-gray-500">${c.category || 'متجر'}</p>
+                    <p class="text-xs text-gray-500">${c.category}</p>
                 </button>
-                ;
-            }).join('');
+            ).join('');
         }
-
-        window.handleCompanyClick = (btn) => {
-            const id = btn.getAttribute('data-id');
-            const name = btn.getAttribute('data-name');
-            loadCompanyProducts(id, name);
-        };
 
         window.loadCompanyProducts = async (companyId, companyName) => {
             currentCompanyId = companyId;
-            document.getElementById('companyTitle').textContent = companyName;
-            document.getElementById('companiesSection').classList.add('hidden');
             document.getElementById('productsSection').classList.remove('hidden');
+            document.getElementById('currentCompany').textContent = companyName;
+            window.scrollTo({top: document.getElementById('productsSection').offsetTop - 100, behavior: 'smooth'});
 
             const q = query(collection(db, "sheikh_products"), where("companyId", "==", companyId));
-            const snapshot = await getDocs(q);
-            const products = snapshot.docs.map(doc => ({ id: doc.id,...doc.data() }));
-
-            const grid = document.getElementById('productsGrid');
-            if (products.length === 0) {
-                grid.innerHTML = '<p class="col-span-full text-center text-gray-500 text-lg py-12">لا توجد منتجات حالياً</p>';
-                return;
-            }
-
-            grid.innerHTML = products.map(p => {
-                let imgSrc = (p.image  p.imageUrl  '').trim();
-                if (!imgSrc ||!imgSrc.startsWith('http')) {
-                    imgSrc = 'https://cdn-icons-png.flaticon.com/512/3081/3081559.png';
-                }
-                return 
-                <div class="card-glow p-4 rounded-2xl">
-                    <div class="w-full h-40 rounded-xl overflow-hidden mb-3 bg-gray-900">
-                        <img src="${imgSrc}"
-                             class="w-full h-full object-cover"
-                             loading="lazy"
-                             onerror="this.onerror=null; this.src='https://cdn-icons-png.flaticon.com/512/3081/3081559.png';"
-                             alt="${p.name}">
-                    </div>
-                    <h3 class="font-bold text-lg mb-2">${p.name}</h3>
-                    <p class="text-2xl font-black gradient-text mb-3">${Number(p.price).toLocaleString()} ل.س</p>
-                    <button onclick='addToCart(${JSON.stringify(p).replace(/'/g, "&apos;")})' class="btn-neon-blue w-full p-3 rounded-xl font-bold">
-                        أضف للسلة
-                    </button>
-                </div>
-            }).join('');
-        };
-
-        window.backToCompanies = () => {
-            document.getElementById('productsSection').classList.add('hidden');
-            document.getElementById('companiesSection').classList.remove('hidden');
-            currentCompanyId = null;
-        };window.addToCart = (product) => {
-            const existing = cart.find(item => item.id === product.id);
-            if (existing) {
-                existing.qty++;
-            } else {
-                cart.push({...product, qty: 1 });
-            }
-            localStorage.setItem('sheikh_cart', JSON.stringify(cart));
-            updateCartCount();
-            showToast('تمت الإضافة للسلة ✓', 'success');
-        };
-
-        function updateCartCount() {
-            const count = cart.reduce((sum, item) => sum + item.qty, 0);
-            document.getElementById('cartCount').textContent = count;
+            const querySnapshot = await getDocs(q);
+            allProducts = querySnapshot.docs.map(doc => ({ id: doc.id,...doc.data() }));
+            renderProducts(allProducts);
         }
 
-        window.showCart = () => {
-            const modal = document.getElementById('cartModal');
-            const items = document.getElementById('cartItems');
-
-            if (cart.length === 0) {
-                items.innerHTML = '<p class="text-center text-gray-500 py-12">السلة فارغة</p>';
-            } else {
-                items.innerHTML = cart.map((item, idx) => 
-                    <div class="glass p-4 rounded-xl flex items-center gap-4">
-                        <img src="${item.image || item.imageUrl || 'https://cdn-icons-png.flaticon.com/512/3081/3081559.png'}"
-                             class="w-20 h-20 rounded-lg object-cover bg-gray-900"
-                             onerror="this.onerror=null; this.src='https://cdn-icons-png.flaticon.com/512/3081/3081559.png';">
-                        <div class="flex-1">
-                            <h4 class="font-bold mb-1">${item.name}</h4>
-                            <p class="text-blue-400 font-bold">${Number(item.price).toLocaleString()} ل.س</p>
-                        </div>
-                        <div class="flex items-center gap-3">
-                            <button onclick="updateQty(${idx}, -1)" class="btn-neon-red w-8 h-8 rounded-lg font-bold">-</button>
-                            <span class="font-bold text-lg w-8 text-center">${item.qty}</span>
-                            <button onclick="updateQty(${idx}, 1)" class="btn-neon-green w-8 h-8 rounded-lg font-bold">+</button>
-                        </div>
-                        <button onclick="removeFromCart(${idx})" class="text-red-500 hover:text-red-400">
-                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"></path></svg>
+        function renderProducts(products) {
+            const grid = document.getElementById('productsGrid');
+            grid.innerHTML = products.map(p => 
+                <div class="card-glow rounded-2xl overflow-hidden group">
+                    <div class="relative overflow-hidden">
+                        <img src="${p.image}" class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute top-3 right-3 btn-neon-green px-3 py-1 rounded-full text-xs font-bold">${p.price} ل.س</div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-sm h-10 mb-3">${p.name}</h3>
+                        <button onclick='addToCart(${JSON.stringify({...p})})' class="w-full btn-neon-blue py-2 rounded-xl font-bold text-sm">
+                            <i class="fa-solid fa-plus ml-1"></i> أضف للسلة
                         </button>
                     </div>
-                ).join('');
-            }
+                </div>
+            ).join('');
+        }
 
-            const total = cart.reduce((sum, item) => sum + (Number(item.price) * item.qty), 0);
+        window.searchItems = () => {
+            const term = document.getElementById('searchInput').value.toLowerCase();
+            if (!term) {
+                renderCompanies(allCompanies);renderProducts(allProducts);
+                return;
+            }
+            const filteredCompanies = allCompanies.filter(c => c.name.toLowerCase().includes(term) || c.category.toLowerCase().includes(term));
+            const filteredProducts = allProducts.filter(p => p.name.toLowerCase().includes(term));
+            renderCompanies(filteredCompanies);
+            renderProducts(filteredProducts);
+        }
+
+        window.addToCart = (product) => {
+            const existing = cart.find(i => i.id === product.id);
+            if (existing) existing.qty++;
+            else cart.push({...product, qty: 1, companyId: currentCompanyId });
+            updateCart();
+        }
+
+        function updateCart() {
+            document.getElementById('cartCount').textContent = cart.reduce((a,b) => a + b.qty, 0);
+            const cartItems = document.getElementById('cartItems');
+            let total = 0;
+            cartItems.innerHTML = cart.map(item => {
+                total += item.price * item.qty;
+                return 
+                    <div class="glass rounded-xl p-4 flex justify-between items-center">
+                        <div class="flex-1">
+                            <p class="font-bold">${item.name}</p>
+                            <p class="text-xs text-gray-400">${item.price} × ${item.qty}</p>
+                        </div>
+                        <span class="font-black text-xl text-green-400">${item.price * item.qty}</span>
+                    </div>
+                ;
+            }).join('');
             document.getElementById('cartTotal').textContent = total.toLocaleString() + ' ل.س';
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
-        };
+        }
 
-        window.closeCart = () => {
-            document.getElementById('cartModal').classList.add('hidden');
-            document.getElementById('cartModal').classList.remove('flex');
-        };
-
-        window.updateQty = (idx, change) => {
-            cart[idx].qty += change;
-            if (cart[idx].qty <= 0) {
-                cart.splice(idx, 1);
-            }
-            localStorage.setItem('sheikh_cart', JSON.stringify(cart));
-            updateCartCount();
-            showCart();
-        };
-
-        window.removeFromCart = (idx) => {
-            cart.splice(idx, 1);
-            localStorage.setItem('sheikh_cart', JSON.stringify(cart));
-            updateCartCount();
-            showCart();
-        };
-
-        window.checkout = () => {
-            if (cart.length === 0) return showToast('السلة فارغة', 'error');
-            closeCart();
-            document.getElementById('checkoutModal').classList.remove('hidden');
-            document.getElementById('checkoutModal').classList.add('flex');
-        };window.closeCheckout = () => {
-            document.getElementById('checkoutModal').classList.add('hidden');
-            document.getElementById('checkoutModal').classList.remove('flex');
-        };
+        window.toggleCart = () => document.getElementById('cartSidebar').classList.toggle('-translate-x-full');
 
         window.submitOrder = async () => {
             const name = document.getElementById('customerName').value;
             const phone = document.getElementById('customerPhone').value;
             const address = document.getElementById('customerAddress').value;
+            const shamCashPaid = document.getElementById('shamCashCheck').checked;
+            const shamCashCode = document.getElementById('shamCashCode').value;
 
-            if (!name !phone !address) {
-                return showToast('الرجاء ملء جميع الحقول', 'error');
-            }
+            if (!name !phone !address || cart.length === 0) return alert('عبي كل البيانات يا وحش');
+            if (shamCashPaid &&!shamCashCode) return alert('أدخل كود تحويل شام كاش');
 
-            const total = cart.reduce((sum, item) => sum + (Number(item.price) * item.qty), 0);
-            const code = 'SHK' + Math.random().toString(36).substr(2, 6).toUpperCase();
-
-            await addDoc(collection(db, "sheikh_orders"), {
-                code,
-                customer: { name, phone, address },
-                items: cart,
-                total,
-                status: 'جديد',
-                createdAt: new Date().toISOString()
+            const ordersByCompany = {};
+            cart.forEach(item => {
+                if (!ordersByCompany[item.companyId]) ordersByCompany[item.companyId] = [];
+                ordersByCompany[item.companyId].push(item);
             });
 
-            cart = [];
-            localStorage.setItem('sheikh_cart', JSON.stringify(cart));
-            updateCartCount();
-            closeCheckout();
-            showToast(تم الطلب بنجاح! كود التتبع: ${code}, 'success');
-
-            document.getElementById('customerName').value = '';
-            document.getElementById('customerPhone').value = '';
-            document.getElementById('customerAddress').value = '';
-        };
-
-        window.showOrderTracking = () => {
-            document.getElementById('trackingModal').classList.remove('hidden');
-            document.getElementById('trackingModal').classList.add('flex');
-        };
-
-        window.closeTracking = () => {
-            document.getElementById('trackingModal').classList.add('hidden');
-            document.getElementById('trackingModal').classList.remove('flex');
-            document.getElementById('trackingResult').classList.add('hidden');
-            document.getElementById('trackingCode').value = '';
-        };
-
-        window.trackOrder = async () => {
-            const code = document.getElementById('trackingCode').value.trim().toUpperCase();
-            if (!code) return showToast('أدخل كود الطلب', 'error');
-
-            const q = query(collection(db, "sheikh_orders"), where("code", "==", code), limit(1));
-            const snapshot = await getDocs(q);
-
-            if (snapshot.empty) {
-                return showToast('لم يتم العثور على الطلب', 'error');
+            for (const [companyId, items] of Object.entries(ordersByCompany)) {
+                await addDoc(collection(db, "sheikh_orders"), {
+                    customer: { name, phone, address },
+                    items: items,
+                    total: items.reduce((a,b) => a + b.price * b.qty, 0),
+                    status: "طلب جديد",
+                    companyId: companyId,
+                    paymentMethod: shamCashPaid? 'شام كاش' : 'كاش عند التسليم',
+                    paymentCode: shamCashPaid? shamCashCode : null,
+                    createdAt: serverTimestamp()
+                });
             }
-
-            const order = snapshot.docs[0].data();
-            const result = document.getElementById('trackingResult');
-
-            const statusColors = {
-                'جديد': 'bg-blue-500',
-                'قيد التجهيز': 'bg-yellow-500',
-                'قيد التوصيل': 'bg-purple-500',
-                'تم التوصيل': 'bg-green-500',
-                'ملغي': 'bg-red-500'
-            };
-
-            result.innerHTML = `
-                <div class="glass p-6 rounded-xl">
-                    <div class="flex items-center justify-between mb-4">
-                        <span class="text-sm text-gray-400">كود الطلب</span>
-                        <span class="font-bold text-lg">${order.code}</span>
-                    </div>
-                    <div class="flex items-center justify-between mb-4">
-                        <span class="text-sm text-gray-400">الحالة</span>
-                        <span class="px-4 py-2 rounded-lg font-bold ${statusColors[order.status] || 'bg-gray-500'} text-white">${order.status}</span>
-                    </div>
-                    <div class="flex items-center justify-between mb-4">
-                        <span class="text-sm text-gray-400">المجموع</span>
-                        <span class="font-bold text-lg gradient-text">${Number(order.total).toLocaleString()} ل.س</span></div>
-                    <div class="border-t border-gray-800 pt-4">
-                        <p class="text-sm text-gray-400 mb-2">المنتجات:</p>
-                        ${order.items.map(item => 
-                            <div class="flex justify-between text-sm mb-1">
-                                <span>${item.name} × ${item.qty}</span>
-                                <span>${(Number(item.price) * item.qty).toLocaleString()} ل.س</span>
-                            </div>
-                        ).join('')}
-                    </div>
-                </div>
-            ;
-            result.classList.remove('hidden');
-        };
-
-        window.searchAll = async () => {
-            const term = document.getElementById('searchInput').value.trim().toLowerCase();
-            if (!term) return loadCompanies();
-
-            const filtered = allCompanies.filter(c =>
-                c.name.toLowerCase().includes(term) ||
-                (c.category && c.category.toLowerCase().includes(term))
-            );
-            renderCompanies(filtered);
-        };
-
-        function showToast(msg, type = 'success') {
-            const toast = document.getElementById('toast');
-            const colors = { success: 'bg-green-500', error: 'bg-red-500', info: 'bg-blue-500' };
-            toast.innerHTML = <div class="toast ${colors[type]} text-white px-6 py-4 rounded-xl font-bold shadow-lg">${msg}</div>`;
-            toast.classList.remove('hidden');
-            setTimeout(() => toast.classList.add('hidden'), 3000);
+            alert('🚀 تم استلام طلبك بنجاح! احفظ رقمك لتتبع الطلب');
+            cart = []; updateCart(); toggleCart();
         }
 
-        document.getElementById('searchInput').addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') searchAll();
-        });
+        window.showTrackOrder = () => document.getElementById('trackOrderModal').classList.remove('hidden');
+        window.closeTrackModal = () => document.getElementById('trackOrderModal').classList.add('hidden');
+
+        window.trackOrder = async () => {
+            const phone = document.getElementById('trackPhone').value;
+            if (!phone) return alert('أدخل رقم الموبايل');
+
+            const q = query(collection(db, "sheikh_orders"), where("customer.phone", "==", phone));
+            const querySnapshot = await getDocs(q);
+            const results = document.getElementById('trackResults');if (querySnapshot.empty) {
+                results.innerHTML = <p class="text-center text-gray-500 py-8">ما في طلبات على هالرقم</p>;
+                return;
+            }
+
+            results.innerHTML = querySnapshot.docs.map(doc => {
+                const o = doc.data();
+                let statusClass = 'status-new';
+                let statusIcon = 'fa-hourglass-start';
+                if (o.status === 'قيد التحضير') { statusClass = 'status-prep'; statusIcon = 'fa-fire'; }
+                if (o.status === 'تم التسليم') { statusClass = 'status-done'; statusIcon = 'fa-check-circle'; }
+
+                return 
+                    <div class="glass rounded-xl p-4">
+                        <div class="flex justify-between items-center mb-3">
+                            <p class="font-bold">طلب #${doc.id.slice(-6)}</p>
+                            <span class="${statusClass} font-bold"><i class="fa-solid ${statusIcon} ml-1"></i>${o.status}</span>
+                        </div>
+                        <p class="text-sm text-gray-400 mb-2">${o.items.map(i => ${i.name} ×${i.qty}).join(' • ')}</p>
+                        <div class="flex justify-between text-sm">
+                            <span>الإجمالي: ${o.total.toLocaleString()} ل.س</span>
+                            <span class="text-blue-400">${o.paymentMethod}</span>
+                        </div>
+                    </div>
+                ;
+            }).join('');
+        }
+
+        loadCompanies();
     </script>
 </body>
 </html>
