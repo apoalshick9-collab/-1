@@ -13,25 +13,25 @@
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: "Cairo", sans-serif; background-color: var(--bg-dark); color: var(--text-main); min-height: 100vh; }
-       .login-container { display: flex; justify-content: center; align-items: center; min-height: 100vh; }
-       .login-box { background: var(--bg-card); padding: 40px; border-radius: 16px; border: 1px solid #222; width: 90%; max-width: 400px; text-align: center; }
-       .login-box h1 { font-family: "Tajawal", sans-serif; color: var(--blue-accent); margin-bottom: 30px; }
-       .dashboard { display: none; padding: 20px; }
+    .login-container { display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+    .login-box { background: var(--bg-card); padding: 40px; border-radius: 16px; border: 1px solid #222; width: 90%; max-width: 400px; text-align: center; }
+    .login-box h1 { font-family: "Tajawal", sans-serif; color: var(--blue-accent); margin-bottom: 30px; }
+    .dashboard { display: none; padding: 20px; }
         nav { background: linear-gradient(90deg, #000, #1a1a1a); padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--red-accent); margin-bottom: 30px; }
-       .logo { font-family: "Tajawal", sans-serif; font-size: 24px; font-weight: 900; color: var(--blue-accent); }
-       .container { max-width: 1400px; margin: 0 auto; }
-       .section { background: var(--bg-card); padding: 30px; border-radius: 16px; border: 1px solid #222; margin-bottom: 20px; }
+    .logo { font-family: "Tajawal", sans-serif; font-size: 24px; font-weight: 900; color: var(--blue-accent); }
+    .container { max-width: 1400px; margin: 0 auto; }
+    .section { background: var(--bg-card); padding: 30px; border-radius: 16px; border: 1px solid #222; margin-bottom: 20px; }
         h2 { font-family: "Tajawal", sans-serif; color: var(--blue-accent); margin-bottom: 20px; font-size: 28px; }
-       .form-group { margin-bottom: 20px; text-align: right; }
+    .form-group { margin-bottom: 20px; text-align: right; }
         label { display: block; margin-bottom: 8px; color: var(--blue-accent); font-weight: 700; }
         input { width: 100%; padding: 12px; background: #1a1a1a; border: 1px solid #333; border-radius: 8px; color: var(--text-main); font-size: 16px; }
-       .btn { display: inline-block; background: linear-gradient(45deg, var(--red-accent), var(--blue-accent)); color: white; padding: 12px 25px; border-radius: 8px; font-weight: 700; font-size: 16px; border: none; cursor: pointer; }
-       .btn-red { background: var(--red-accent); }
-       .btn-sm { padding: 8px 15px; font-size: 14px; }
+    .btn { display: inline-block; background: linear-gradient(45deg, var(--red-accent), var(--blue-accent)); color: white; padding: 12px 25px; border-radius: 8px; font-weight: 700; font-size: 16px; border: none; cursor: pointer; }
+    .btn-red { background: var(--red-accent); }
+    .btn-sm { padding: 8px 15px; font-size: 14px; }
         table { width: 100%; border-collapse: collapse; margin-top: 20px; }
         th, td { padding: 15px; text-align: right; border-bottom: 1px solid #222; }
         th { background: #1a1a1a; color: var(--blue-accent); font-weight: 700; }
-       .company-logo { width: 50px; height: 50px; object-fit: cover; border-radius: 6px; }
+    .company-logo { width: 50px; height: 50px; object-fit: cover; border-radius: 6px; }
     </style>
 </head>
 <body>
@@ -53,7 +53,8 @@
         <div class="container">
             <div class="section">
                 <h2>إضافة شركة / براند جديد</h2>
-                <form id="companyForm"><div class="form-group">
+                <form id="companyForm">
+                    <div class="form-group">
                         <label>اسم الشركة</label>
                         <input type="text" id="companyName" required>
                     </div>
@@ -69,6 +70,10 @@
                         <label>كلمة سر أدمن الشركة</label>
                         <input type="text" id="companyPassword" required>
                     </div>
+                    <div class="form-group">
+                        <label>رقم شام كاش - اختياري</label>
+                        <input type="text" id="companyShamcash" placeholder="09xxxxxxxx">
+                    </div>
                     <button type="submit" class="btn"><i class="fa-solid fa-plus"></i> إضافة شركة</button>
                 </form>
             </div>
@@ -82,6 +87,7 @@
                             <th>الاسم</th>
                             <th>إيميل الأدمن</th>
                             <th>كلمة السر</th>
+                            <th>شام كاش</th>
                             <th>حذف</th>
                         </tr>
                     </thead>
@@ -137,18 +143,22 @@
                         <td>${c.name}</td>
                         <td>${c.email}</td>
                         <td>${c.password}</td>
+                        <td>${c.shamcash || '-'}</td>
                         <td><button class="btn btn-red btn-sm" onclick="deleteCompany('${docSnap.id}')"><i class="fa-solid fa-trash"></i></button></td>
                     </tr>
                 `;
             });
-        }document.getElementById('companyForm').addEventListener('submit', async function(e) {
+        }
+
+        document.getElementById('companyForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             const name = document.getElementById('companyName').value.trim();
             const logo = document.getElementById('companyLogo').value.trim();
             const email = document.getElementById('companyEmail').value.trim();
             const password = document.getElementById('companyPassword').value.trim();
-            
-            await addDoc(collection(db, "phone_companies"), { name, logo, email, password, category: 'هواتف' });
+            const shamcash = document.getElementById('companyShamcash').value.trim();
+
+            await addDoc(collection(db, "phone_companies"), { name, logo, email, password, shamcash, category: 'هواتف' });
             alert('تمت إضافة الشركة');
             this.reset();
             loadCompanies();
@@ -156,12 +166,13 @@
 
         window.deleteCompany = async function(id) {
             if(!confirm('متأكد من حذف الشركة؟ رح تنحذف كل منتجاتها وطلباتها')) return;
-            
-            // حذف منتجات الشركة
+
             const productsQuery = query(collection(db, "phone_products"), where("companyId", "==", id));
             const productsSnapshot = await getDocs(productsQuery);
-            productsSnapshot.forEach(async (p) => await deleteDoc(doc(db, "phone_products", p.id)));
-            
+            for (const p of productsSnapshot.docs) {
+                await deleteDoc(doc(db, "phone_products", p.id));
+            }
+
             await deleteDoc(doc(db, "phone_companies", id));
             loadCompanies();
         }
