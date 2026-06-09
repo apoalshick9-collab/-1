@@ -9,17 +9,17 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         body { font-family: 'Tajawal', sans-serif; background: #000; color: #fff; }
-     .glass { background: rgba(20, 20, 20, 0.8); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1); }
-     .card-glow { background: linear-gradient(145deg, #111, #0a0a0a); border: 1px solid #222; transition: all 0.3s; cursor: pointer; }
-     .card-glow:hover { border-color: #00a8e8; box-shadow: 0 0 30px rgba(0, 168, 232, 0.3); transform: translateY(-4px); }
-     .btn-neon-blue { background: #00a8e8; box-shadow: 0 0 20px rgba(0, 168, 232, 0.5); }
-     .btn-neon-green { background: #2ecc71; box-shadow: 0 0 20px rgba(46, 204, 113, 0.5); }
-     .btn-neon-red { background: #e63946; box-shadow: 0 0 20px rgba(230, 57, 70, 0.5); }
-     .gradient-text { background: linear-gradient(90deg, #00a8e8, #e63946); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-     .modal { transition: all 0.3s; }
-     .toast { animation: slideIn 0.3s ease-out; }
+       .glass { background: rgba(20, 20, 20, 0.8); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1); }
+       .card-glow { background: linear-gradient(145deg, #111, #0a0a0a); border: 1px solid #222; transition: all 0.3s; cursor: pointer; }
+       .card-glow:hover { border-color: #00a8e8; box-shadow: 0 0 30px rgba(0, 168, 232, 0.3); transform: translateY(-4px); }
+       .btn-neon-blue { background: #00a8e8; box-shadow: 0 0 20px rgba(0, 168, 232, 0.5); }
+       .btn-neon-green { background: #2ecc71; box-shadow: 0 0 20px rgba(46, 204, 113, 0.5); }
+       .btn-neon-red { background: #e63946; box-shadow: 0 0 20px rgba(230, 57, 70, 0.5); }
+       .gradient-text { background: linear-gradient(90deg, #00a8e8, #e63946); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+       .modal { transition: all 0.3s; }
+       .toast { animation: slideIn 0.3s ease-out; }
         @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
-     .loader { text-align: center; padding: 40px; color: #00a8e8; }
+       .loader { text-align: center; padding: 40px; color: #00a8e8; }
     </style>
 </head>
 <body class="min-h-screen">
@@ -81,7 +81,7 @@
     </main>
 
     <div id="cartModal" class="modal fixed inset-0 bg-black bg-opacity-90 backdrop-blur-sm hidden items-center justify-center z-50 p-6">
-        <div class="glass p-8 rounded-3xl w-full max-w-2xl border border-gray-800 max-h-[90vh] overflow-y-auto">
+        <div class="glass p-8 rounded-3xl w-full max-w-2xl border border-gray-800 max-h- overflow-y-auto">
             <div class="flex items-center justify-between mb-6">
                 <h3 class="text-3xl font-black gradient-text">سلة المشتريات</h3>
                 <button onclick="closeCart()" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark fa-2x"></i></button>
@@ -98,11 +98,26 @@
     </div>
 
     <div id="checkoutModal" class="modal fixed inset-0 bg-black bg-opacity-90 backdrop-blur-sm hidden items-center justify-center z-50 p-6">
-        <div class="glass p-8 rounded-3xl w-full max-w-md border border-gray-800">
+        <div class="glass p-8 rounded-3xl w-full max-w-md border border-gray-800 max-h- overflow-y-auto">
             <h3 class="text-2xl font-black mb-6 gradient-text">معلومات التوصيل</h3>
             <input id="customerName" type="text" placeholder="الاسم الكامل" class="w-full p-4 mb-4 rounded-xl bg-black border border-gray-800 focus:border-blue-500 outline-none">
             <input id="customerPhone" type="tel" placeholder="رقم الهاتف" class="w-full p-4 mb-4 rounded-xl bg-black border border-gray-800 focus:border-blue-500 outline-none">
-            <input id="customerAddress" type="text" placeholder="العنوان بالتفصيل" class="w-full p-4 mb-6 rounded-xl bg-black border border-gray-800 focus:border-blue-500 outline-none">
+            <input id="customerAddress" type="text" placeholder="العنوان بالتفصيل" class="w-full p-4 mb-4 rounded-xl bg-black border border-gray-800 focus:border-blue-500 outline-none">
+
+            <div class="border-t border-gray-800 pt-4 mb-4">
+                <label class="flex items-center gap-3 mb-3 cursor-pointer">
+                    <input type="checkbox" id="useShamcash" onchange="toggleShamcash()" class="w-5 h-5">
+                    <span class="font-bold">الدفع عبر شام كاش</span>
+                </label>
+                <div id="shamcashBox" class="hidden">
+                    <div class="bg-black p-4 rounded-xl mb-3 border border-green-500">
+                        <p class="text-sm text-gray-400 mb-1">حول المبلغ إلى:</p>
+                        <p id="shamcashNumber" class="text-xl font-black text-green-500"></p>
+                    </div>
+                    <input id="shamcashCode" type="text" placeholder="كود عملية الدفع من شام كاش" class="w-full p-4 mb-3 rounded-xl bg-black border border-gray-800 focus:border-green-500 outline-none">
+                </div>
+            </div>
+
             <div class="flex gap-3">
                 <button onclick="submitOrder()" class="btn-neon-green flex-1 p-4 rounded-xl font-bold">تأكيد الطلب</button>
                 <button onclick="closeCheckout()" class="btn-neon-red flex-1 p-4 rounded-xl font-bold">إلغاء</button>
@@ -140,6 +155,7 @@
         let cart = JSON.parse(localStorage.getItem('phone_cart') || '[]');
         let currentCompanyId = null;
         let allCompanies = [];
+        let currentShamcashAccount = '';
 
         window.onload = async () => {
             updateCartCount();
@@ -308,6 +324,13 @@
         window.checkout = () => {
             if (cart.length === 0) return showToast('السلة فارغة', 'error');
             closeCart();
+            const companyId = cart[0]?.companyId;
+            const company = allCompanies.find(c => c.id === companyId);
+            currentShamcashAccount = company?.shamcash || '';
+            document.getElementById('shamcashNumber').textContent = currentShamcashAccount || 'غير متوفر';
+            document.getElementById('useShamcash').checked = false;
+            document.getElementById('shamcashBox').classList.add('hidden');
+            document.getElementById('shamcashCode').value = '';
             document.getElementById('checkoutModal').classList.remove('hidden');
             document.getElementById('checkoutModal').classList.add('flex');
         };
@@ -317,13 +340,30 @@
             document.getElementById('checkoutModal').classList.remove('flex');
         };
 
+        window.toggleShamcash = () => {
+            const box = document.getElementById('shamcashBox');
+            const checked = document.getElementById('useShamcash').checked;
+            if (checked &&!currentShamcashAccount) {
+                showToast('هذه الشركة لا تدعم شام كاش', 'error');
+                document.getElementById('useShamcash').checked = false;
+                return;
+            }
+            box.classList.toggle('hidden',!checked);
+        };
+
         window.submitOrder = async () => {
             const name = document.getElementById('customerName').value;
             const phone = document.getElementById('customerPhone').value;
             const address = document.getElementById('customerAddress').value;
+            const useShamcash = document.getElementById('useShamcash').checked;
+            const shamcashCode = document.getElementById('shamcashCode').value.trim();
 
             if (!name ||!phone ||!address) {
                 return showToast('الرجاء ملء جميع الحقول', 'error');
+            }
+
+            if (useShamcash &&!shamcashCode) {
+                return showToast('الرجاء إدخال كود عملية شام كاش', 'error');
             }
 
             const total = cart.reduce((sum, item) => sum + (Number(item.price) * item.qty), 0);
@@ -340,7 +380,9 @@
                 status: 'جديد',
                 companyId,
                 companyName,
-                date: new Date().toISOString()
+                date: new Date().toISOString(),
+                paymentMethod: useShamcash? 'شام كاش' : 'عند الاستلام',
+                shamcashCode: useShamcash? shamcashCode : null
             });
 
             cart = [];
@@ -399,6 +441,10 @@
                     <div class="flex items-center justify-between mb-4">
                         <span class="text-sm text-gray-400">المجموع</span>
                         <span class="font-bold text-lg gradient-text">$${Number(order.total).toLocaleString()}</span>
+                    </div>
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-sm text-gray-400">طريقة الدفع</span>
+                        <span class="font-bold ${order.paymentMethod === 'شام كاش'? 'text-green-500' : 'text-gray-400'}">${order.paymentMethod}${order.shamcashCode? ' - ' + order.shamcashCode : ''}</span>
                     </div>
                     <div class="border-t border-gray-800 pt-4">
                         <p class="text-sm text-gray-400 mb-2">المنتجات:</p>
