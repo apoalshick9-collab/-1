@@ -2,186 +2,211 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>متجر الشيخ للهواتف</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        body { font-family: 'Tajawal', sans-serif; background: #000; color: #fff; touch-action: manipulation; }
-.glass { background: rgba(20, 20, 20, 0.8); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1); }
-.card-glow { background: linear-gradient(145deg, #111, #0a0a0a); border: 1px solid #222; transition: all 0.3s; cursor: pointer; }
-.card-glow:hover { border-color: #00a8e8; box-shadow: 0 0 30px rgba(0, 168, 232, 0.3); transform: translateY(-4px); }
-.btn-neon-blue { background: #00a8e8; box-shadow: 0 0 20px rgba(0, 168, 232, 0.5); }
-.btn-neon-green { background: #2ecc71; box-shadow: 0 0 20px rgba(46, 204, 113, 0.5); }
-.btn-neon-red { background: #e63946; box-shadow: 0 0 20px rgba(230, 57, 70, 0.5); }
-.btn-neon-purple { background: #9b59b6; box-shadow: 0 0 20px rgba(155, 89, 182, 0.5); }
-.gradient-text { background: linear-gradient(90deg, #00a8e8, #e63946); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-.modal { transition: all 0.3s; }
-.toast { animation: slideIn 0.3s ease-out; }
+        body { font-family: 'Tajawal', sans-serif; background: #000; color: #fff; }
+  .glass { background: rgba(20, 20, 20, 0.8); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.1); }
+  .card-glow { background: linear-gradient(145deg, #111, #0a0a0a); border: 1px solid #222; transition: all 0.3s; cursor: pointer; }
+  .card-glow:hover { border-color: #00a8e8; box-shadow: 0 0 30px rgba(0, 168, 232, 0.3); transform: translateY(-4px); }
+  .btn-neon-blue { background: #00a8e8; box-shadow: 0 0 20px rgba(0, 168, 232, 0.5); }
+  .btn-neon-green { background: #2ecc71; box-shadow: 0 0 20px rgba(46, 204, 113, 0.5); }
+  .btn-neon-red { background: #e63946; box-shadow: 0 0 20px rgba(230, 57, 70, 0.5); }
+  .btn-neon-purple { background: #9b59b6; box-shadow: 0 0 20px rgba(155, 89, 182, 0.5); }
+  .gradient-text { background: linear-gradient(90deg, #00a8e8, #e63946); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .gradient-animated { background: linear-gradient(90deg, #e63946, #00a8e8, #e63946); background-size: 200% 100%; animation: gradientMove 3s ease infinite; }
+        @keyframes gradientMove { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+  .modal { transition: all 0.3s; }
+  .toast { animation: slideIn 0.3s ease-out; }
         @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
-.loader { text-align: center; padding: 40px; color: #00a8e8; }
-.category-chip { background: rgba(0, 168, 232, 0.2); border: 1px solid #00a8e8; padding: 8px 16px; border-radius: 20px; cursor: pointer; transition: 0.3s; }
-.category-chip:hover,.category-chip.active { background: linear-gradient(90deg, #e63946, #00a8e8); color: #fff; border-color: transparent; }
-.live-indicator { display: inline-flex; align-items: center; gap: 8px; background: rgba(46, 204, 113, 0.2); color: #2ecc71; padding: 6px 12px; border-radius: 20px; font-size: 12px; }
-.live-dot { width: 8px; height: 8px; background: #2ecc71; border-radius: 50%; animation: pulse 2s infinite; }
+  .loader { text-align: center; padding: 40px; color: #00a8e8; }
+  .category-chip { background: rgba(0, 168, 232, 0.2); border: 1px solid #00a8e8; padding: 8px 16px; border-radius: 20px; cursor: pointer; transition: 0.3s; }
+  .category-chip:hover,.category-chip.active { background: linear-gradient(90deg, #e63946, #00a8e8); color: #fff; border-color: transparent; }
+  .live-indicator { display: inline-flex; align-items: center; gap: 8px; background: rgba(46, 204, 113, 0.2); color: #2ecc71; padding: 6px 12px; border-radius: 20px; font-size: 12px; }
+  .live-dot { width: 8px; height: 8px; background: #2ecc71; border-radius: 50%; animation: pulse 2s infinite; }
         @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
-.discount-badge { position: absolute; top: 10px; left: 10px; background: #e63946; color: white; padding: 6px 12px; border-radius: 8px; font-size: 14px; font-weight: 900; z-index: 10; box-shadow: 0 0 15px rgba(230, 57, 70, 0.6); }
-.price-old { text-decoration: line-through; color: #666; font-size: 18px; }
-.price-new { color: #2ecc71; font-size: 28px; font-weight: 900; }
-.product-modal-content { background: #121212; padding: 0; border-radius: 20px; border: 1px solid #222; max-width: 700px; width: 100%; overflow: hidden; position: relative; }
-.product-modal-img { width: 100%; height: 400px; object-fit: cover; background: #000; }
-.product-modal-body { padding: 30px; }
-.border-neon { border: 1px solid transparent; background: linear-gradient(#000, #000) padding-box, linear-gradient(90deg, #e63946, #00a8e8) border-box; }
-.points-badge { background: rgba(155, 89, 182, 0.2); color: #9b59b6; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; display: inline-flex; gap: 5px; align-items: center; }
-.btn-google { background: white; color: #000; }
- @media (max-width: 768px) {.product-modal-img { height: 250px; }.product-modal-body { padding: 20px; } }
+  .discount-badge { position: absolute; top: 10px; left: 10px; background: #e63946; color: white; padding: 6px 12px; border-radius: 8px; font-size: 14px; font-weight: 900; z-index: 10; box-shadow: 0 0 15px rgba(230, 57, 70, 0.6); }
+  .price-old { text-decoration: line-through; color: #666; font-size: 18px; }
+  .price-new { color: #2ecc71; font-size: 28px; font-weight: 900; }
+  .product-modal-content { background: #121212; padding: 0; border-radius: 20px; border: 1px solid #222; max-width: 700px; width: 100%; overflow: hidden; position: relative; }
+  .product-modal-img { width: 100%; height: 400px; object-fit: cover; background: #000; }
+  .product-modal-body { padding: 30px; }
+  .border-neon { border: 1px solid transparent; background: linear-gradient(#000, #000) padding-box, linear-gradient(90deg, #e63946, #00a8e8) border-box; }
+  .points-badge { background: rgba(155, 89, 182, 0.2); color: #9b59b6; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; display: inline-flex; gap: 5px; align-items: center; }
     </style>
 </head>
 <body class="min-h-screen">
 
-    <div id="loginScreen" class="fixed inset-0 bg-black z-[200] flex items-center justify-center p-6">
-        <div class="glass p-8 rounded-3xl w-full max-w-md text-center border-neon">
-            <h1 class="text-3xl font-black gradient-text mb-6">مرحبا بمتجر الشيخ</h1>
-            <p class="text-gray-400 mb-8">سجل دخولك بجوجل لحتى تنحفظ نقاطك</p>
-            <button onclick="loginWithGoogle()" class="btn-google w-full p-4 rounded-xl font-bold flex items-center justify-center gap-3">
-                <i class="fa-brands fa-google text-red-500"></i> تسجيل الدخول بجوجل
+    <div id="toast" class="fixed top-5 left-5 z-[100] hidden"></div>
+
+    <header class="glass sticky top-0 z-40 p-4">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <div class="flex items-center gap-4">
+                <button onclick="showPoints()" class="btn-neon-purple px-4 py-2 rounded-xl font-bold flex items-center gap-2">
+                    <i class="fa-solid fa-gift"></i>
+                    <span>نقاطي</span>
+                </button>
+                <button onclick="showCart()" class="btn-neon-blue px-4 py-2 rounded-xl font-bold flex items-center gap-2 relative">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    <span>السلة</span>
+                    <span id="cartCount" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs w-6 h-6 rounded-full flex items-center justify-center font-bold">0</span>
+                </button>
+                <button onclick="showOrderTracking()" class="btn-neon-green px-4 py-2 rounded-xl font-bold flex items-center gap-2">
+                    <i class="fa-solid fa-truck-fast"></i>
+                    <span>تتبع طلبي</span>
+                </button>
+            </div>
+            <div class="flex items-center gap-3">
+                <span class="live-indicator"><span class="live-dot"></span> مباشر</span>
+                <h1 class="text-3xl font-black gradient-text">متجر الشيخ للهواتف</h1>
+            </div>
+            <button onclick="window.location.href='./company-admin-phones.html'" class="btn-neon-blue px-4 py-2 rounded-xl font-bold">
+                <i class="fa-solid fa-building"></i>
             </button>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto p-6">
+        <div class="glass p-6 rounded-3xl mb-8 border-neon">
+            <div class="flex gap-3">
+                <input id="searchInput" type="text" placeholder="ابحث عن براند أو منتج..." class="flex-1 p-4 rounded-xl bg-black border-gray-800 focus:border-blue-500 outline-none text-lg">
+                <button onclick="searchAll()" class="btn-neon-blue px-8 py-4 rounded-xl font-bold">
+                    <i class="fa-solid fa-search"></i>
+                </button>
+            </div>
+        </div>
+
+        <div id="companiesSection">
+            <h2 class="text-2xl font-black mb-6 flex items-center gap-3">
+                <span class="gradient-text">البراندات المتاحة</span>
+                <i class="fa-solid fa-mobile-screen-button text-blue-500"></i>
+            </h2>
+            <div id="companiesGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+                <div class="loader col-span-full"><i class="fa-solid fa-spinner fa-spin fa-2x"></i><p class="mt-3">جاري تحميل البراندات...</p></div>
+            </div>
+        </div>
+
+        <div id="productsSection" class="hidden">
+            <div class="flex items-center justify-between mb-6">
+                <button onclick="backToCompanies()" class="btn-neon-blue px-6 py-3 rounded-xl font-bold flex items-center gap-2">
+                    <i class="fa-solid fa-arrow-right"></i>
+                    <span>رجوع</span>
+                </button>
+                <h2 id="companyTitle" class="text-2xl font-black gradient-text"></h2>
+            </div>
+
+            <div id="categoriesChips" class="flex gap-3 mb-6 flex-wrap"></div>
+
+            <div id="productsGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                <div class="loader col-span-full"><i class="fa-solid fa-spinner fa-spin fa-2x"></i><p class="mt-3">جاري تحميل المنتجات...</p></div>
+            </div>
+        </div>
+    </main>
+
+    <div id="cartModal" class="modal fixed inset-0 bg-black bg-opacity-90 backdrop-blur-sm hidden items-center justify-center z-50 p-6">
+        <div class="glass p-8 rounded-3xl w-full max-w-2xl border-gray-800 max-h- overflow-y-auto">
+            <div class="flex items-center justify-between mb-6">
+                <h3 class="text-3xl font-black gradient-text">سلة المشتريات</h3>
+                <button onclick="closeCart()" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark fa-2x"></i></button>
+            </div>
+            <div id="cartItems" class="space-y-4 mb-6"></div>
+            <div class="border-t border-gray-800 pt-6">
+                <div class="flex items-center justify-between mb-2">
+                    <span class="text-xl font-bold">المجموع:</span>
+                    <span id="cartTotal" class="text-3xl font-black gradient-text">$0</span>
+                </div>
+                <div class="flex items-center justify-between mb-6">
+                    <span class="text-lg font-bold text-purple-400">النقاط اللي رح تربحها:</span>
+                    <span id="cartPoints" class="text-2xl font-black text-purple-400">0 <i class="fa-solid fa-gift"></i></span>
+                </div>
+                <button onclick="checkout()" class="btn-neon-green w-full p-4 rounded-xl font-bold text-lg">إتمام الطلب</button>
+            </div>
         </div>
     </div>
 
-    <div id="appContent" class="hidden">
-        <div id="toast" class="fixed top-5 left-5 z-[100] hidden"></div>
+    <div id="checkoutModal" class="modal fixed inset-0 bg-black bg-opacity-90 backdrop-blur-sm hidden items-center justify-center z-50 p-6">
+        <div class="glass p-8 rounded-3xl w-full max-w-md border-gray-800 max-h- overflow-y-auto">
+            <h3 class="text-2xl font-black mb-6 gradient-text">معلومات التوصيل</h3>
+            <input id="customerName" type="text" placeholder="الاسم الكامل" class="w-full p-4 mb-4 rounded-xl bg-black border-gray-800 focus:border-blue-500 outline-none">
+            <input id="customerPhone" type="tel" placeholder="رقم الهاتف" class="w-full p-4 mb-4 rounded-xl bg-black border border-gray-800 focus:border-blue-500 outline-none">
+            <input id="customerAddress" type="text" placeholder="العنوان بالتفصيل" class="w-full p-4 mb-4 rounded-xl bg-black border-gray-800 focus:border-blue-500 outline-none">
 
-        <header class="glass sticky top-0 z-40 p-4">
-            <div class="max-w-7xl mx-auto flex items-center justify-between">
-                <div class="flex items-center gap-2 md:gap-4">
-                    <button onclick="showPoints()" class="btn-neon-purple px-3 md:px-4 py-2 rounded-xl font-bold flex items-center gap-2 text-sm">
-                        <i class="fa-solid fa-gift"></i>
-                        <span class="hidden sm:inline">نقاطي</span>
-                    </button>
-                    <button onclick="showCart()" class="btn-neon-blue px-3 md:px-4 py-2 rounded-xl font-bold flex items-center gap-2 relative text-sm">
-                        <i class="fa-solid fa-cart-shopping"></i>
-                        <span class="hidden sm:inline">السلة</span>
-                        <span id="cartCount" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs w-6 h-6 rounded-full flex items-center justify-center font-bold">0</span>
-                    </button>
-                    <button onclick="logout()" class="btn-neon-red px-3 py-2 rounded-xl font-bold text-sm">
-                        <i class="fa-solid fa-right-from-bracket"></i>
-                    </button>
-                </div>
-                <div class="flex items-center gap-2">
-                    <span class="live-indicator text-xs"><span class="live-dot"></span> مباشر</span>
-                    <h1 class="text-xl md:text-3xl font-black gradient-text">متجر الشيخ</h1>
-                </div>
-            </div>
-        </header>
-
-        <main class="max-w-7xl mx-auto p-4 md:p-6">
-            <div class="glass p-4 md:p-6 rounded-3xl mb-8 border-neon">
-                <div class="flex gap-3">
-                    <input id="searchInput" type="text" placeholder="ابحث عن براند أو منتج..." class="flex-1 p-3 md:p-4 rounded-xl bg-black border-gray-800 focus:border-blue-500 outline-none text-base">
-                    <button onclick="searchAll()" class="btn-neon-blue px-4 md:px-8 py-3 md:py-4 rounded-xl font-bold">
-                        <i class="fa-solid fa-search"></i>
-                    </button>
-                </div>
-            </div>
-
-            <div id="companiesSection">
-                <h2 class="text-xl md:text-2xl font-black mb-6 flex items-center gap-3">
-                    <span class="gradient-text">البراندات المتاحة</span>
-                    <i class="fa-solid fa-mobile-screen-button text-blue-500"></i>
-                </h2>
-                <div id="companiesGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 md:gap-4">
-                    <div class="loader col-span-full"><i class="fa-solid fa-spinner fa-spin fa-2x"></i><p class="mt-3">جاري التحميل...</p></div>
-                </div>
-            </div>
-
-            <div id="productsSection" class="hidden">
-                <div class="flex items-center justify-between mb-6">
-                    <button onclick="backToCompanies()" class="btn-neon-blue px-4 md:px-6 py-2 md:py-3 rounded-xl font-bold flex items-center gap-2 text-sm">
-                        <i class="fa-solid fa-arrow-right"></i>
-                        <span>رجوع</span>
-                    </button>
-                    <h2 id="companyTitle" class="text-lg md:text-2xl font-black gradient-text"></h2>
-                </div>
-                <div id="categoriesChips" class="flex gap-3 mb-6 flex-wrap overflow-x-auto pb-2"></div>
-                <div id="productsGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4"></div>
-            </div>
-        </main>
-
-        <div id="cartModal" class="modal fixed inset-0 bg-black bg-opacity-90 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
-            <div class="glass p-6 md:p-8 rounded-3xl w-full max-w-2xl border-gray-800 max-h- overflow-y-auto">
-                <div class="flex items-center justify-between mb-6">
-                    <h3 class="text-2xl md:text-3xl font-black gradient-text">سلة المشتريات</h3>
-                    <button onclick="closeCart()" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark fa-2x"></i></button>
-                </div>
-                <div id="cartItems" class="space-y-4 mb-6"></div>
-                <div class="border-t border-gray-800 pt-6">
-                    <div class="flex items-center justify-between mb-2">
-                        <span class="text-lg md:text-xl font-bold">المجموع:</span>
-                        <span id="cartTotal" class="text-2xl md:text-3xl font-black gradient-text">$0</span>
+            <div class="border-t border-gray-800 pt-4 mb-4">
+                <label class="flex items-center gap-3 mb-3 cursor-pointer">
+                    <input type="checkbox" id="useShamcash" onchange="toggleShamcash()" class="w-5 h-5">
+                    <span class="font-bold">الدفع عبر شام كاش</span>
+                </label>
+                <div id="shamcashBox" class="hidden">
+                    <div class="bg-black p-4 rounded-xl mb-3 border-green-500">
+                        <p class="text-sm text-gray-400 mb-1">حول المبلغ إلى:</p>
+                        <p id="shamcashNumber" class="text-xl font-black text-green-500"></p>
                     </div>
-                    <div class="flex items-center justify-between mb-6">
-                        <span class="text-base md:text-lg font-bold text-purple-400">النقاط اللي رح تربحها:</span>
-                        <span id="cartPoints" class="text-xl md:text-2xl font-black text-purple-400">0 <i class="fa-solid fa-gift"></i></span>
-                    </div>
-                    <div class="flex gap-3">
-                        <button onclick="checkout()" class="btn-neon-green flex-1 p-3 md:p-4 rounded-xl font-bold text-base">ادفع فلوس</button>
-                        <button onclick="checkoutWithPoints()" class="btn-neon-purple flex-1 p-3 md:p-4 rounded-xl font-bold text-base">ادفع بالنقاط</button>
-                    </div>
+                    <input id="shamcashCode" type="text" placeholder="كود عملية الدفع من شام كاش" class="w-full p-4 mb-3 rounded-xl bg-black border-gray-800 focus:border-green-500 outline-none">
                 </div>
+            </div>
+
+            <div class="flex gap-3">
+                <button onclick="submitOrder()" class="btn-neon-green flex-1 p-4 rounded-xl font-bold">تأكيد الطلب</button>
+                <button onclick="closeCheckout()" class="btn-neon-red flex-1 p-4 rounded-xl font-bold">إلغاء</button>
             </div>
         </div>
+    </div>
 
-        <div id="checkoutModal" class="modal fixed inset-0 bg-black bg-opacity-90 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
-            <div class="glass p-6 md:p-8 rounded-3xl w-full max-w-md border-gray-800 max-h- overflow-y-auto">
-                <h3 class="text-xl md:text-2xl font-black mb-6 gradient-text">معلومات التوصيل</h3>
-                <input id="customerPhone" type="tel" placeholder="رقم الهاتف" class="w-full p-3 md:p-4 mb-4 rounded-xl bg-black border-gray-800 focus:border-blue-500 outline-none">
-                <input id="customerAddress" type="text" placeholder="العنوان بالتفصيل" class="w-full p-3 md:p-4 mb-4 rounded-xl bg-black border-gray-800 focus:border-blue-500 outline-none">
-
-                <div id="paymentSection" class="border-t border-gray-800 pt-4 mb-4">
-                    <label class="flex items-center gap-3 mb-3 cursor-pointer">
-                        <input type="checkbox" id="useShamcash" onchange="toggleShamcash()" class="w-5 h-5">
-                        <span class="font-bold">الدفع عبر شام كاش</span>
-                    </label>
-                    <div id="shamcashBox" class="hidden">
-                        <div class="bg-black p-4 rounded-xl mb-3 border-green-500">
-                            <p class="text-sm text-gray-400 mb-1">حول المبلغ إلى:</p>
-                            <p id="shamcashNumber" class="text-lg md:text-xl font-black text-green-500"></p>
-                        </div>
-                        <input id="shamcashCode" type="text" placeholder="كود عملية الدفع من شام كاش" class="w-full p-3 md:p-4 mb-3 rounded-xl bg-black border-gray-800 focus:border-green-500 outline-none">
-                    </div>
-                </div>
-
-                <div id="pointsWarning" class="hidden bg-purple-900 bg-opacity-30 p-4 rounded-xl mb-4 border-purple-500">
-                    <p class="text-purple-400 font-bold"><i class="fa-solid fa-info-circle"></i> رح يتخصم <span id="pointsToDeduct"></span> نقطة من رصيدك</p>
-                </div>
-
-                <div class="flex gap-3">
-                    <button onclick="submitOrder()" class="btn-neon-green flex-1 p-3 md:p-4 rounded-xl font-bold">تأكيد الطلب</button>
-                    <button onclick="closeCheckout()" class="btn-neon-red flex-1 p-3 md:p-4 rounded-xl font-bold">إلغاء</button>
-                </div>
-            </div>
+    <div id="trackingModal" class="modal fixed inset-0 bg-black bg-opacity-90 backdrop-blur-sm hidden items-center justify-center z-50 p-6">
+        <div class="glass p-8 rounded-3xl w-full max-w-2xl border-gray-800 max-h- overflow-y-auto">
+            <h3 class="text-2xl font-black mb-6 gradient-text">تتبع طلباتك</h3>
+            <input id="trackingPhone" type="tel" placeholder="أدخل رقم جوالك" class="w-full p-4 mb-4 rounded-xl bg-black border-gray-800 focus:border-blue-500 outline-none">
+            <button onclick="trackOrder()" class="btn-neon-blue w-full p-4 rounded-xl font-bold mb-6">بحث</button>
+            <div id="trackingResult" class="hidden space-y-4"></div>
+            <button onclick="closeTracking()" class="btn-neon-red w-full p-4 rounded-xl font-bold mt-4">إغلاق</button>
         </div>
+    </div>
 
-        <div id="pointsModal" class="modal fixed inset-0 bg-black bg-opacity-90 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
-            <div class="glass p-6 md:p-8 rounded-3xl w-full max-w-md border-gray-800">
-                <h3 class="text-xl md:text-2xl font-black mb-6 gradient-text text-center"><i class="fa-solid fa-gift"></i> رصيد نقاطي</h3>
-                <div id="pointsResult" class="text-center">
-                    <p class="text-gray-400 mb-2">مرحبا <span id="customerNameShow"></span></p>
-                    <p class="text-4xl md:text-5xl font-black text-purple-400 mb-2" id="customerPoints">0</p>
-                    <p class="text-gray-400">نقطة</p>
-                    <p class="text-sm text-gray-500 mt-4">النقاط مربوطة بحساب جوجل تبعك</p>
+    <div id="pointsModal" class="modal fixed inset-0 bg-black bg-opacity-90 backdrop-blur-sm hidden items-center justify-center z-50 p-6">
+        <div class="glass p-8 rounded-3xl w-full max-w-md border-gray-800">
+            <h3 class="text-2xl font-black mb-6 gradient-text text-center"><i class="fa-solid fa-gift"></i> رصيد نقاطي</h3>
+            <input id="pointsPhone" type="tel" placeholder="أدخل رقم جوالك لعرض النقاط" class="w-full p-4 mb-4 rounded-xl bg-black border-gray-800 focus:border-purple-500 outline-none">
+            <button onclick="checkPoints()" class="btn-neon-purple w-full p-4 rounded-xl font-bold mb-4">عرض النقاط</button>
+            <div id="pointsResult" class="hidden text-center">
+                <p class="text-gray-400 mb-2">مرحبا <span id="customerNameShow"></span></p>
+                <p class="text-5xl font-black text-purple-400 mb-2" id="customerPoints">0</p>
+                <p class="text-gray-400">نقطة</p>
+                <p class="text-sm text-gray-500 mt-4">النقاط بتضاف لحسابك بعد ما يتم توصيل الطلب</p>
+            </div>
+            <button onclick="closePoints()" class="btn-neon-red w-full p-4 rounded-xl font-bold mt-4">إغلاق</button>
+        </div>
+    </div>
+
+    <div id="productModal" class="modal fixed inset-0 bg-black bg-opacity-90 backdrop-blur-sm hidden items-center justify-center z-50 p-6">
+        <div class="product-modal-content">
+            <button onclick="closeProductModal()" class="absolute top-4 right-4 text-white bg-black bg-opacity-50 rounded-full w-10 h-10 flex items-center justify-center hover:bg-opacity-80 z-10">
+                <i class="fa-solid fa-xmark fa-lg"></i>
+            </button>
+            <div class="relative">
+                <img id="modalProductImg" src="" class="product-modal-img" alt="">
+                <div id="modalDiscountBadge" class="discount-badge hidden"></div>
+            </div>
+            <div class="product-modal-body">
+                <h2 id="modalProductName" class="text-3xl font-black mb-2"></h2>
+                <p id="modalProductCategory" class="text-sm text-gray-400 mb-4"></p>
+                <div class="mb-6">
+                    <div id="modalPriceOld" class="price-old hidden"></div>
+                    <div id="modalPriceNew" class="price-new"></div>
                 </div>
-                <button onclick="closePoints()" class="btn-neon-red w-full p-3 md:p-4 rounded-xl font-bold mt-4">إغلاق</button>
+                <div id="modalPoints" class="points-badge mb-4 hidden"><i class="fa-solid fa-gift"></i> <span></span> نقطة</div>
+                <button id="modalAddToCart" class="btn-neon-blue w-full p-4 rounded-xl font-bold text-lg">
+                    <i class="fa-solid fa-cart-plus"></i> أضف للسلة
+                </button>
             </div>
         </div>
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-        import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-        import { getFirestore, collection, getDocs, query, where, addDoc, onSnapshot, updateDoc, doc, increment, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+        import { getFirestore, collection, getDocs, query, where, addDoc, onSnapshot, updateDoc, doc, increment } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
         const firebaseConfig = {
           apiKey: "AIzaSyCN1ZMiCUkuQiPZUzihRRkRR2tf_AnPqGQ",
@@ -195,66 +220,25 @@
 
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
-        const auth = getAuth(app);
-        const provider = new GoogleAuthProvider();
 
-        let currentUser = null;
-        let cart = [];
+        let cart = JSON.parse(localStorage.getItem('phone_cart') || '[]');
         let currentCompanyId = null;
         let allCompanies = [];
         let currentShamcashAccount = '';
         let currentProducts = [];
         let activeCategory = 'all';
-        let payWithPoints = false;
+        let unsubscribeCompanies = null;
+        let unsubscribeCategories = null;
+        let unsubscribeProducts = null;
+        let selectedProduct = null;
 
-        // التعديل المهم هون: اول ما يسجل دخول بنعمل reload
-        onAuthStateChanged(auth, async (user) => {
-            if (user) {
-                currentUser = user;
-
-                // انشاء حساب نقاط لو اول مرة
-                const userRef = doc(db, "phone_customers", user.uid);
-                const userSnap = await getDoc(userRef);
-                if (!userSnap.exists()) {
-                    await setDoc(userRef, {
-                        name: user.displayName,
-                        email: user.email,
-                        points: 0,
-                        createdAt: new Date()
-                    });
-                }
-
-                document.getElementById('loginScreen').classList.add('hidden');
-                document.getElementById('appContent').classList.remove('hidden');
-                cart = JSON.parse(localStorage.getItem('phone_cart_' + user.uid) || '[]');
-                updateCartCount();
-                initListeners();
-            } else {
-                document.getElementById('loginScreen').classList.remove('hidden');
-                document.getElementById('appContent').classList.add('hidden');
-            }
-        });
-
-        // التعديل التاني: بعد تسجيل الدخول بنعمل reload عشان ما تعلق
-        window.loginWithGoogle = async () => {
-            try {
-                await signInWithPopup(auth, provider);
-                window.location.reload(); // هاد السطر بحل مشكلة الشاشة البيضا
-            } catch (error) {
-                console.error(error);
-                showToast('فشل تسجيل الدخول: ' + error.message, 'error');
-            }
-        };
-
-        window.logout = async () => {
-            await signOut(auth);
-            cart = [];
-            localStorage.clear();
-            window.location.reload(); // reload بعد تسجيل الخروج
+        window.onload = async () => {
+            updateCartCount();
+            initListeners();
         };
 
         function initListeners() {
-            onSnapshot(collection(db, "phone_companies"), (snapshot) => {
+            unsubscribeCompanies = onSnapshot(collection(db, "phone_companies"), (snapshot) => {
                 allCompanies = snapshot.docs.map(doc => ({ id: doc.id,...doc.data() }));
                 renderCompanies(allCompanies);
             });
@@ -269,7 +253,7 @@
             grid.innerHTML = companies.map(c => {
                 let logoSrc = (c.logo || '').trim();
                 if (!logoSrc ||!logoSrc.startsWith('http')) logoSrc = 'https://cdn-icons-png.flaticon.com/512/545/545245.png';
-                return `<div onclick="loadCompanyProducts('${c.id}', '${c.name.replace(/'/g, "\\'")}')" class="card-glow p-4 md:p-5 rounded-2xl text-center group"><div class="w-16 h-16 md:w-20 md:h-20 mx-auto rounded-2xl overflow-hidden mb-3 border-2 border-gray-800 group-hover:border-blue-500 transition-all bg-gray-900 flex items-center justify-center"><img src="${logoSrc}" class="w-full h-full object-cover" loading="lazy" onerror="this.src='https://cdn-icons-png.flaticon.com/512/545/545245.png';" alt="${c.name}"></div><p class="font-bold text-xs md:text-sm mb-1">${c.name}</p><p class="text-xs text-gray-500">هواتف</p></div>`;
+                return `<div onclick="loadCompanyProducts('${c.id}', '${c.name.replace(/'/g, "\\'")}')" class="card-glow p-5 rounded-2xl text-center group"><div class="w-20 h-20 mx-auto rounded-2xl overflow-hidden mb-3 border-2 border-gray-800 group-hover:border-blue-500 transition-all bg-gray-900 flex items-center justify-center"><img src="${logoSrc}" class="w-full h-full object-cover" loading="lazy" onerror="this.src='https://cdn-icons-png.flaticon.com/512/545/545245.png';" alt="${c.name}"></div><p class="font-bold text-sm mb-1">${c.name}</p><p class="text-xs text-gray-500">هواتف</p></div>`;
             }).join('');
         }
 
@@ -278,13 +262,13 @@
             document.getElementById('companyTitle').textContent = companyName;
             document.getElementById('companiesSection').classList.add('hidden');
             document.getElementById('productsSection').classList.remove('hidden');
-            document.getElementById('productsGrid').innerHTML = '<div class="loader col-span-full"><i class="fa-solid fa-spinner fa-spin fa-2x"></i><p class="mt-3">جاري التحميل...</p></div>';
-
+            document.getElementById('productsGrid').innerHTML = '<div class="loader col-span-full"><i class="fa-solid fa-spinner fa-spin fa-2x"></i><p class="mt-3">جاري تحميل المنتجات...</p></div>';
+            if (unsubscribeCategories) unsubscribeCategories();
+            if (unsubscribeProducts) unsubscribeProducts();
             const catQuery = query(collection(db, "phone_categories"), where("companyId", "==", companyId));
-            onSnapshot(catQuery, (snapshot) => { renderCategoriesChips(snapshot.docs.map(doc => doc.data().name)); });
-
+            unsubscribeCategories = onSnapshot(catQuery, (snapshot) => { renderCategoriesChips(snapshot.docs.map(doc => doc.data().name)); });
             const q = query(collection(db, "phone_products"), where("companyId", "==", companyId));
-            onSnapshot(q, (snapshot) => { currentProducts = snapshot.docs.map(doc => ({ id: doc.id,...doc.data() })); filterByCategory(activeCategory); });
+            unsubscribeProducts = onSnapshot(q, (snapshot) => { currentProducts = snapshot.docs.map(doc => ({ id: doc.id,...doc.data() })); filterByCategory(activeCategory); });
         };
 
         function renderCategoriesChips(categories) {
@@ -294,108 +278,105 @@
 
         window.filterByCategory = (cat) => {
             activeCategory = cat; const filtered = cat === 'all'? currentProducts : currentProducts.filter(p => p.category === cat); renderProducts(filtered);
+            document.querySelectorAll('.category-chip').forEach(chip => { chip.classList.remove('active'); if ((cat === 'all' && chip.textContent === 'الكل') || chip.textContent === cat) chip.classList.add('active'); });
         };
 
         function renderProducts(products) {
             const grid = document.getElementById('productsGrid');
-            if (products.length === 0) { grid.innerHTML = '<p class="col-span-full text-center text-gray-500 text-lg py-12">لا توجد منتجات</p>'; return; }
+            if (products.length === 0) { grid.innerHTML = '<p class="col-span-full text-center text-gray-500 text-lg py-12">لا توجد منتجات في هذا القسم</p>'; return; }
             grid.innerHTML = products.map(p => {
                 let imgSrc = (p.image || '').trim(); if (!imgSrc ||!imgSrc.startsWith('http')) imgSrc = 'https://cdn-icons-png.flaticon.com/512/545/545245.png';
-                const finalPrice = p.price;
-                return `<div class="card-glow p-3 md:p-4 rounded-2xl relative" onclick='addToCart(${JSON.stringify(p).replace(/'/g, "&apos;")})'><div class="w-full h-32 md:h-40 rounded-xl overflow-hidden mb-3 bg-gray-900"><img src="${imgSrc}" class="w-full h-full object-cover" loading="lazy" onerror="this.src='https://cdn-icons-png.flaticon.com/512/545/545245.png';" alt="${p.name}"></div><h3 class="font-bold text-sm md:text-lg mb-1">${p.name}</h3><p class="text-xs text-gray-400 mb-2">${p.category || ''}</p>${p.pointsEarned? `<div class="points-badge mb-2"><i class="fa-solid fa-gift"></i> ${p.pointsEarned} نقطة</div>` : ''}<p class="text-xl md:text-2xl font-black gradient-text">$${Number(finalPrice).toLocaleString()}</p></div>`;
+                const hasDiscount = p.discount && p.discount > 0; const finalPrice = hasDiscount? p.price * (1 - p.discount / 100) : p.price;
+                return `<div class="card-glow p-4 rounded-2xl relative" onclick='showProductModal(${JSON.stringify(p).replace(/'/g, "&apos;")})'>${hasDiscount? `<div class="discount-badge">-${p.discount}%</div>` : ''}<div class="w-full h-40 rounded-xl overflow-hidden mb-3 bg-gray-900"><img src="${imgSrc}" class="w-full h-full object-cover" loading="lazy" onerror="this.src='https://cdn-icons-png.flaticon.com/512/545/545245.png';" alt="${p.name}"></div><h3 class="font-bold text-lg mb-1">${p.name}</h3><p class="text-xs text-gray-400 mb-2">${p.category || ''}</p>${p.points? `<div class="points-badge mb-2"><i class="fa-solid fa-gift"></i> ${p.points} نقطة</div>` : ''}<div>${hasDiscount? `<p class="text-sm" style="text-decoration:line-through;color:#666">$${Number(p.price).toLocaleString()}</p>` : ''}<p class="text-2xl font-black gradient-text">$${finalPrice.toLocaleString()}</p></div></div>`;
             }).join('');
         }
 
-        window.backToCompanies = () => { document.getElementById('productsSection').classList.add('hidden'); document.getElementById('companiesSection').classList.remove('hidden'); currentCompanyId = null; currentProducts = []; };
-        window.addToCart = (product) => { const existing = cart.find(item => item.id === product.id); if (existing) existing.qty++; else cart.push({...product, qty: 1 }); localStorage.setItem('phone_cart_' + currentUser.uid, JSON.stringify(cart)); updateCartCount(); showToast('تمت الإضافة للسلة ✓', 'success'); };
+        window.showProductModal = (product) => {
+            selectedProduct = product; document.getElementById('modalProductImg').src = product.image || 'https://cdn-icons-png.flaticon.com/512/545/545245.png'; document.getElementById('modalProductName').textContent = product.name; document.getElementById('modalProductCategory').textContent = product.category || '';
+            const hasDiscount = product.discount && product.discount > 0; const finalPrice = hasDiscount? product.price * (1 - product.discount / 100) : product.price;
+            if (hasDiscount) { document.getElementById('modalPriceOld').textContent = `$${Number(product.price).toLocaleString()}`; document.getElementById('modalPriceOld').classList.remove('hidden'); document.getElementById('modalDiscountBadge').textContent = `-${product.discount}%`; document.getElementById('modalDiscountBadge').classList.remove('hidden'); } else { document.getElementById('modalPriceOld').classList.add('hidden'); document.getElementById('modalDiscountBadge').classList.add('hidden'); }
+            document.getElementById('modalPriceNew').textContent = `$${finalPrice.toLocaleString()}`;
+            if(product.points) { document.getElementById('modalPoints').classList.remove('hidden'); document.getElementById('modalPoints').querySelector('span').textContent = product.points; } else { document.getElementById('modalPoints').classList.add('hidden'); }
+            document.getElementById('productModal').classList.remove('hidden'); document.getElementById('productModal').classList.add('flex');
+        };
+        window.closeProductModal = () => { document.getElementById('productModal').classList.add('hidden'); document.getElementById('productModal').classList.remove('flex'); selectedProduct = null; };
+        document.getElementById('modalAddToCart').onclick = () => { if (selectedProduct) { addToCart(selectedProduct); closeProductModal(); } };
+        window.backToCompanies = () => { if (unsubscribeCategories) unsubscribeCategories(); if (unsubscribeProducts) unsubscribeProducts(); document.getElementById('productsSection').classList.add('hidden'); document.getElementById('companiesSection').classList.remove('hidden'); currentCompanyId = null; currentProducts = []; };
+        window.addToCart = (product) => { const existing = cart.find(item => item.id === product.id); const finalPrice = product.discount? product.price * (1 - product.discount / 100) : product.price; if (existing) existing.qty++; else cart.push({...product, price: finalPrice, originalPrice: product.price, qty: 1 }); localStorage.setItem('phone_cart', JSON.stringify(cart)); updateCartCount(); showToast('تمت الإضافة للسلة ✓', 'success'); };
         function updateCartCount() { document.getElementById('cartCount').textContent = cart.reduce((sum, item) => sum + item.qty, 0); }
-        function calculateCartPoints() { return cart.reduce((sum, item) => sum + ((item.pointsEarned || 0) * item.qty), 0); }
-        function calculateCartPointsCost() { return cart.reduce((sum, item) => sum + ((item.pointsCost || 0) * item.qty), 0); }
-
+        function calculateCartPoints() { return cart.reduce((sum, item) => sum + ((item.points || 0) * item.qty), 0); }
         window.showCart = () => {
             const modal = document.getElementById('cartModal'); const items = document.getElementById('cartItems');
             if (cart.length === 0) items.innerHTML = '<p class="text-center text-gray-500 py-12">السلة فارغة</p>';
-            else items.innerHTML = cart.map((item, idx) => `<div class="glass p-3 md:p-4 rounded-xl flex items-center gap-3"><img src="${item.image}" class="w-16 h-16 md:w-20 md:h-20 rounded-lg object-cover bg-gray-900"><div class="flex-1"><h4 class="font-bold text-sm md:text-base mb-1">${item.name}</h4><p class="text-blue-400 font-bold">$${Number(item.price).toLocaleString()}</p>${item.pointsEarned? `<p class="text-purple-400 text-xs"><i class="fa-solid fa-gift"></i> ${item.pointsEarned * item.qty} نقطة</p>` : ''}</div><div class="flex items-center gap-2"><button onclick="updateQty(${idx}, -1)" class="btn-neon-red w-7 h-7 md:w-8 md:h-8 rounded-lg font-bold text-sm">-</button><span class="font-bold text-base w-6 text-center">${item.qty}</span><button onclick="updateQty(${idx}, 1)" class="btn-neon-green w-7 h-7 md:w-8 md:h-8 rounded-lg font-bold text-sm">+</button></div><button onclick="removeFromCart(${idx})" class="text-red-500 hover:text-red-400"><i class="fa-solid fa-trash"></i></button></div>`).join('');
+            else items.innerHTML = cart.map((item, idx) => `<div class="glass p-4 rounded-xl flex items-center gap-4"><img src="${item.image || 'https://cdn-icons-png.flaticon.com/512/545/545245.png'}" class="w-20 h-20 rounded-lg object-cover bg-gray-900" onerror="this.src='https://cdn-icons-png.flaticon.com/512/545/545245.png';"><div class="flex-1"><h4 class="font-bold mb-1">${item.name}</h4><p class="text-blue-400 font-bold">$${Number(item.price).toLocaleString()}</p>${item.points? `<p class="text-purple-400 text-sm"><i class="fa-solid fa-gift"></i> ${item.points * item.qty} نقطة</p>` : ''}</div><div class="flex items-center gap-3"><button onclick="updateQty(${idx}, -1)" class="btn-neon-red w-8 h-8 rounded-lg font-bold">-</button><span class="font-bold text-lg w-8 text-center">${item.qty}</span><button onclick="updateQty(${idx}, 1)" class="btn-neon-green w-8 h-8 rounded-lg font-bold">+</button></div><button onclick="removeFromCart(${idx})" class="text-red-500 hover:text-red-400"><i class="fa-solid fa-trash"></i></button></div>`).join('');
             document.getElementById('cartTotal').textContent = '$' + cart.reduce((sum, item) => sum + (Number(item.price) * item.qty), 0).toLocaleString(); document.getElementById('cartPoints').innerHTML = calculateCartPoints() + ' <i class="fa-solid fa-gift"></i>'; modal.classList.remove('hidden'); modal.classList.add('flex');
         };
         window.closeCart = () => { document.getElementById('cartModal').classList.add('hidden'); document.getElementById('cartModal').classList.remove('flex'); };
-        window.updateQty = (idx, change) => { cart[idx].qty += change; if (cart[idx].qty <= 0) cart.splice(idx, 1); localStorage.setItem('phone_cart_' + currentUser.uid, JSON.stringify(cart)); updateCartCount(); showCart(); };
-        window.removeFromCart = (idx) => { cart.splice(idx, 1); localStorage.setItem('phone_cart_' + currentUser.uid, JSON.stringify(cart)); updateCartCount(); showCart(); };
-
-        window.checkout = () => { if (cart.length === 0) return showToast('السلة فارغة', 'error'); payWithPoints = false; openCheckoutModal(); };
-        window.checkoutWithPoints = () => { if (cart.length === 0) return showToast('السلة فارغة', 'error'); payWithPoints = true; openCheckoutModal(); };
-
-        async function openCheckoutModal() {
-            closeCart();
-            const companyId = cart[0]?.companyId;
-            const company = allCompanies.find(c => c.id === companyId);
-            currentShamcashAccount = company?.shamcash || '';
-            document.getElementById('shamcashNumber').textContent = currentShamcashAccount || 'غير متوفر';
-            document.getElementById('useShamcash').checked = false;
-            document.getElementById('shamcashBox').classList.add('hidden');
-
-            const pointsCost = calculateCartPointsCost();
-            document.getElementById('pointsWarning').classList.toggle('hidden',!payWithPoints);
-            document.getElementById('pointsToDeduct').textContent = pointsCost;
-            document.getElementById('paymentSection').classList.toggle('hidden', payWithPoints);
-            document.getElementById('customerPhone').value = currentUser.phoneNumber || '';
-            document.getElementById('checkoutModal').classList.remove('hidden');
-            document.getElementById('checkoutModal').classList.add('flex');
-        }
-
+        window.updateQty = (idx, change) => { cart[idx].qty += change; if (cart[idx].qty <= 0) cart.splice(idx, 1); localStorage.setItem('phone_cart', JSON.stringify(cart)); updateCartCount(); showCart(); };
+        window.removeFromCart = (idx) => { cart.splice(idx, 1); localStorage.setItem('phone_cart', JSON.stringify(cart)); updateCartCount(); showCart(); };
+        window.checkout = () => { if (cart.length === 0) return showToast('السلة فارغة', 'error'); closeCart(); const companyId = cart[0]?.companyId; const company = allCompanies.find(c => c.id === companyId); currentShamcashAccount = company?.shamcash || ''; document.getElementById('shamcashNumber').textContent = currentShamcashAccount || 'غير متوفر'; document.getElementById('useShamcash').checked = false; document.getElementById('shamcashBox').classList.add('hidden'); document.getElementById('shamcashCode').value = ''; document.getElementById('checkoutModal').classList.remove('hidden'); document.getElementById('checkoutModal').classList.add('flex'); };
         window.closeCheckout = () => { document.getElementById('checkoutModal').classList.add('hidden'); document.getElementById('checkoutModal').classList.remove('flex'); };
-        window.toggleShamcash = () => { const box = document.getElementById('shamcashBox'); const checked = document.getElementById('useShamcash').checked; box.classList.toggle('hidden',!checked); };
+        window.toggleShamcash = () => { const box = document.getElementById('shamcashBox'); const checked = document.getElementById('useShamcash').checked; if (checked &&!currentShamcashAccount) { showToast('هذه الشركة لا تدعم شام كاش', 'error'); document.getElementById('useShamcash').checked = false; return; } box.classList.toggle('hidden',!checked); };
 
         window.submitOrder = async () => {
-            const phone = document.getElementById('customerPhone').value;
-            const address = document.getElementById('customerAddress').value;
-            const useShamcash = document.getElementById('useShamcash').checked;
-            const shamcashCode = document.getElementById('shamcashCode').value.trim();
-
-            if (!phone ||!address) return showToast('الرجاء ملء جميع الحقول', 'error');
-            if (!payWithPoints && useShamcash &&!shamcashCode) return showToast('الرجاء إدخال كود عملية شام كاش', 'error');
-
-            const total = cart.reduce((sum, item) => sum + (Number(item.price) * item.qty), 0);
-            const pointsEarned = calculateCartPoints();
-            const pointsToDeduct = calculateCartPointsCost();
-            const code = 'PH' + Math.random().toString(36).substr(2, 6).toUpperCase();
-            const companyId = cart[0]?.companyId || '';
-            const companyName = cart[0]?.companyName || '';
-
-            const customerRef = doc(db, "phone_customers", currentUser.uid);
-            const customerSnap = await getDoc(customerRef);
-            let currentPoints = customerSnap.exists()? customerSnap.data().points || 0 : 0;
-
-            if(payWithPoints) {
-                if(currentPoints < pointsToDeduct) return showToast(`رصيدك ${currentPoints} نقطة. تحتاج ${pointsToDeduct}`, 'error');
-                await updateDoc(customerRef, { points: increment(-pointsToDeduct) });
-            }
-
-            await addDoc(collection(db, "phone_orders"), {
-                code, customer: { name: currentUser.displayName, email: currentUser.email, phone, address, uid: currentUser.uid },
-                items: cart, total, pointsEarned, pointsDeducted: payWithPoints? pointsToDeduct : 0,
-                status: 'جديد', companyId, companyName, date: new Date().toISOString(),
-                paymentMethod: payWithPoints? 'بالنقاط' : useShamcash? 'شام كاش' : 'عند الاستلام',
-                shamcashCode: useShamcash? shamcashCode : null, paidWithPoints: payWithPoints
-            });
-
-            if(!customerSnap.exists()) {
-                await setDoc(customerRef, { name: currentUser.displayName, email: currentUser.email, phone, points: 0, companyId });
-            }
-            if(!payWithPoints && pointsEarned > 0) {
-                await updateDoc(customerRef, { points: increment(pointsEarned) });
-            }
-
-            cart = []; localStorage.setItem('phone_cart_' + currentUser.uid, JSON.stringify(cart)); updateCartCount(); closeCheckout();
-            showToast(`تم الطلب بنجاح! ${payWithPoints? 'تم خصم ' + pointsToDeduct + ' نقطة' : 'رح تربح ' + pointsEarned + ' نقطة'}`, 'success');
-            document.getElementById('customerPhone').value = ''; document.getElementById('customerAddress').value = '';
+            const name = document.getElementById('customerName').value; const phone = document.getElementById('customerPhone').value; const address = document.getElementById('customerAddress').value; const useShamcash = document.getElementById('useShamcash').checked; const shamcashCode = document.getElementById('shamcashCode').value.trim();
+            if (!name ||!phone ||!address) return showToast('الرجاء ملء جميع الحقول', 'error');
+            if (useShamcash &&!shamcashCode) return showToast('الرجاء إدخال كود عملية شام كاش', 'error');
+            const total = cart.reduce((sum, item) => sum + (Number(item.price) * item.qty), 0); const pointsEarned = calculateCartPoints(); const code = 'PH' + Math.random().toString(36).substr(2, 6).toUpperCase(); const companyId = cart[0]?.companyId || ''; const companyName = cart[0]?.companyName || '';
+            await addDoc(collection(db, "phone_orders"), { code, customer: { name, phone, address }, items: cart, total, pointsEarned, status: 'جديد', companyId, companyName, date: new Date().toISOString(), paymentMethod: useShamcash? 'شام كاش' : 'عند الاستلام', shamcashCode: useShamcash? shamcashCode : null });
+            const customerQuery = query(collection(db, "phone_customers"), where("phone", "==", phone), where("companyId", "==", companyId)); const customerSnap = await getDocs(customerQuery);
+            if(customerSnap.empty) await addDoc(collection(db, "phone_customers"), { name, phone, points: 0, companyId });
+            cart = []; localStorage.setItem('phone_cart', JSON.stringify(cart)); updateCartCount(); closeCheckout(); showToast(`تم الطلب بنجاح! رح تربح ${pointsEarned} نقطة عند التوصيل`, 'success'); document.getElementById('customerName').value = ''; document.getElementById('customerPhone').value = ''; document.getElementById('customerAddress').value = '';
         };
 
-        window.showPoints = async () => {
-            const customerRef = doc(db, "phone_customers", currentUser.uid);
-            const snap = await getDoc(customerRef);
-            document.getElementById('customerNameShow').textContent = currentUser.displayName;
-            document.getElementById('customerPoints').textContent = snap.exists()? snap.data().points || 0 : 0;
+        window.showOrderTracking = () => { document.getElementById('trackingModal').classList.remove('hidden'); document.getElementById('trackingModal').classList.add('flex'); };
+        window.closeTracking = () => { document.getElementById('trackingModal').classList.add('hidden'); document.getElementById('trackingModal').classList.remove('flex'); document.getElementById('trackingResult').classList.add('hidden'); document.getElementById('trackingPhone').value = ''; };
+        window.trackOrder = async () => {
+            const phone = document.getElementById('trackingPhone').value.trim(); if (!phone) return showToast('أدخل رقم الجوال', 'error');
+            const q = query(collection(db, "phone_orders"), where("customer.phone", "==", phone)); const snapshot = await getDocs(q); if (snapshot.empty) return showToast('لا توجد طلبات لهذا الرقم', 'error');
+            const result = document.getElementById('trackingResult'); const statusColors = { 'جديد': 'bg-blue-500', 'قيد التجهيز': 'gradient-animated', 'تم التوصيل': 'bg-green-500', 'تم الرفض': 'bg-red-500' };
+            result.innerHTML = '';snapshot.forEach(docSnap => {
+                const order = docSnap.data();
+                result.innerHTML += `
+                    <div class="glass p-6 rounded-xl mb-4">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-sm text-gray-400">كود الطلب</span>
+                            <span class="font-bold text-lg">${order.code}</span>
+                        </div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-sm text-gray-400">الحالة</span>
+                            <span class="px-4 py-2 rounded-lg font-bold ${statusColors[order.status] || 'bg-gray-500'} text-white">${order.status}</span>
+                        </div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-sm text-gray-400">المجموع</span>
+                            <span class="font-bold text-lg gradient-text">$${Number(order.total).toLocaleString()}</span>
+                        </div>
+                        ${order.pointsEarned? `
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-sm text-gray-400">النقاط المكتسبة</span>
+                            <span class="font-bold text-purple-400"><i class="fa-solid fa-gift"></i> ${order.pointsEarned} نقطة</span>
+                        </div>
+                        ` : ''}
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-sm text-gray-400">طريقة الدفع</span>
+                            <span class="font-bold ${order.paymentMethod === 'شام كاش'? 'text-green-500' : 'text-gray-400'}">${order.paymentMethod}${order.shamcashCode? ' - ' + order.shamcashCode : ''}</span>
+                        </div>
+                        <div class="border-t border-gray-800 pt-4">
+                            <p class="text-sm text-gray-400 mb-2">المنتجات:</p>
+                            ${order.items.map(item => `
+                                <div class="flex justify-between text-sm mb-1">
+                                    <span>${item.name} × ${item.qty}</span>
+                                    <span>$${(Number(item.price) * item.qty).toLocaleString()}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            });
+            result.classList.remove('hidden');
+        };
+
+        window.showPoints = () => {
             document.getElementById('pointsModal').classList.remove('hidden');
             document.getElementById('pointsModal').classList.add('flex');
         };
@@ -403,6 +384,26 @@
         window.closePoints = () => {
             document.getElementById('pointsModal').classList.add('hidden');
             document.getElementById('pointsModal').classList.remove('flex');
+            document.getElementById('pointsResult').classList.add('hidden');
+            document.getElementById('pointsPhone').value = '';
+        };
+
+        window.checkPoints = async () => {
+            const phone = document.getElementById('pointsPhone').value.trim();
+            if (!phone) return showToast('أدخل رقم الجوال', 'error');
+
+            const q = query(collection(db, "phone_customers"), where("phone", "==", phone));
+            const snapshot = await getDocs(q);
+
+            if (snapshot.empty) {
+                document.getElementById('customerNameShow').textContent = 'زبون جديد';
+                document.getElementById('customerPoints').textContent = '0';
+            } else {
+                const customer = snapshot.docs[0].data();
+                document.getElementById('customerNameShow').textContent = customer.name || 'زبون';
+                document.getElementById('customerPoints').textContent = customer.points || 0;
+            }
+            document.getElementById('pointsResult').classList.remove('hidden');
         };
 
         window.searchAll = async () => {
@@ -419,6 +420,10 @@
             toast.classList.remove('hidden');
             setTimeout(() => toast.classList.add('hidden'), 3000);
         }
+
+        document.getElementById('searchInput').addEventListener('keyup', (e) => {
+            if (e.key === 'Enter') searchAll();
+        });
     </script>
 </body>
 </html>
