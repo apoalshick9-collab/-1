@@ -110,7 +110,7 @@
         </main>
 
         <div id="cartModal" class="modal fixed inset-0 bg-black bg-opacity-90 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
-            <div class="glass p-6 md:p-8 rounded-3xl w-full max-w-2xl border-gray-800 max-h-[90vh] overflow-y-auto">
+            <div class="glass p-6 md:p-8 rounded-3xl w-full max-w-2xl border-gray-800 max-h- overflow-y-auto">
                 <div class="flex items-center justify-between mb-6">
                     <h3 class="text-2xl md:text-3xl font-black gradient-text">سلة المشتريات</h3>
                     <button onclick="closeCart()" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark fa-2x"></i></button>
@@ -134,7 +134,7 @@
         </div>
 
         <div id="checkoutModal" class="modal fixed inset-0 bg-black bg-opacity-90 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
-            <div class="glass p-6 md:p-8 rounded-3xl w-full max-w-md border-gray-800 max-h-[90vh] overflow-y-auto">
+            <div class="glass p-6 md:p-8 rounded-3xl w-full max-w-md border-gray-800 max-h- overflow-y-auto">
                 <h3 class="text-xl md:text-2xl font-black mb-6 gradient-text">معلومات التوصيل</h3>
                 <input id="customerPhone" type="tel" placeholder="رقم الهاتف" class="w-full p-3 md:p-4 mb-4 rounded-xl bg-black border-gray-800 focus:border-blue-500 outline-none">
                 <input id="customerAddress" type="text" placeholder="العنوان بالتفصيل" class="w-full p-3 md:p-4 mb-4 rounded-xl bg-black border-gray-800 focus:border-blue-500 outline-none">
@@ -207,9 +207,23 @@
         let activeCategory = 'all';
         let payWithPoints = false;
 
-        onAuthStateChanged(auth, (user) => {
+        // التعديل المهم هون: اول ما يسجل دخول بنعمل reload
+        onAuthStateChanged(auth, async (user) => {
             if (user) {
                 currentUser = user;
+
+                // انشاء حساب نقاط لو اول مرة
+                const userRef = doc(db, "phone_customers", user.uid);
+                const userSnap = await getDoc(userRef);
+                if (!userSnap.exists()) {
+                    await setDoc(userRef, {
+                        name: user.displayName,
+                        email: user.email,
+                        points: 0,
+                        createdAt: new Date()
+                    });
+                }
+
                 document.getElementById('loginScreen').classList.add('hidden');
                 document.getElementById('appContent').classList.remove('hidden');
                 cart = JSON.parse(localStorage.getItem('phone_cart_' + user.uid) || '[]');
@@ -221,11 +235,14 @@
             }
         });
 
+        // التعديل التاني: بعد تسجيل الدخول بنعمل reload عشان ما تعلق
         window.loginWithGoogle = async () => {
             try {
                 await signInWithPopup(auth, provider);
+                window.location.reload(); // هاد السطر بحل مشكلة الشاشة البيضا
             } catch (error) {
-                showToast('فشل تسجيل الدخول', 'error');
+                console.error(error);
+                showToast('فشل تسجيل الدخول: ' + error.message, 'error');
             }
         };
 
@@ -233,6 +250,7 @@
             await signOut(auth);
             cart = [];
             localStorage.clear();
+            window.location.reload(); // reload بعد تسجيل الخروج
         };
 
         function initListeners() {
