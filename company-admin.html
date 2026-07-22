@@ -9,7 +9,7 @@
     <style>
         :root {
             --bg-dark: #0a0a0a; --bg-card: #121212; --red-accent: #e63946;
-            --blue-accent: #00a8e8; --green-accent: #2ecc71; --orange-accent: #f39c12; --text-main: #f1f1f1;
+            --blue-accent: #00a8e8; --green-accent: #2ecc71; --orange-accent: #f39c12; --purple-accent: #9b59b6; --text-main: #f1f1f1;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: "Cairo", sans-serif; background-color: var(--bg-dark); color: var(--text-main); min-height: 100vh; }
@@ -34,12 +34,11 @@
 .form-group { margin-bottom: 20px; text-align: right; }
         label { display: block; margin-bottom: 8px; color: var(--blue-accent); font-weight: 700; }
         input, textarea, select { width: 100%; padding: 12px; background: #1a1a1a; border: 1px solid #333; border-radius: 8px; color: var(--text-main); font-size: 16px; }
-.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
 .btn { display: inline-block; background: linear-gradient(45deg, var(--red-accent), var(--blue-accent)); color: white; padding: 12px 25px; border-radius: 8px; font-weight: 700; font-size: 16px; border: none; cursor: pointer; }
 .btn-green { background: var(--green-accent); }
 .btn-red { background: var(--red-accent); }
-.btn-blue { background: var(--blue-accent); }
 .btn-sm { padding: 8px 15px; font-size: 14px; }
+.btn-purple { background: var(--purple-accent); }
         table { width: 100%; border-collapse: collapse; margin-top: 20px; }
         th, td { padding: 15px; text-align: right; border-bottom: 1px solid #222; }
         th { background: #1a1a1a; color: var(--blue-accent); font-weight: 700; }
@@ -49,25 +48,18 @@
 .status-processing { background: rgba(243, 156, 18, 0.2); color: var(--orange-accent); }
 .status-done { background: rgba(0, 168, 232, 0.2); color: var(--blue-accent); }
 .status-rejected { background: rgba(230, 57, 70, 0.2); color: var(--red-accent); }
-.export-bar { margin-bottom: 20px; display: flex; gap: 10px; }
+.export-bar { margin-bottom: 20px; display: flex; gap: 10px; align-items: center; justify-content: space-between; flex-wrap: wrap; }
+.filter-buttons { display: flex; gap: 10px; flex-wrap: wrap; }
+.filter-btn { padding: 8px 16px; border-radius: 8px; border: 1px solid #333; background: #1a1a1a; color: var(--text-main); cursor: pointer; font-weight: 700; }
+.filter-btn.active { background: linear-gradient(45deg, var(--red-accent), var(--blue-accent)); border-color: transparent; }
 .loader { text-align: center; padding: 40px; color: var(--green-accent); }
 .category-tag { background: rgba(0, 168, 232, 0.2); color: var(--blue-accent); padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; }
+.points-badge { background: rgba(155, 89, 182, 0.2); color: var(--purple-accent); padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 700; }
 .categories-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px; margin-bottom: 20px; }
 .category-card { background: #1a1a1a; padding: 15px; border-radius: 8px; border: 1px solid #333; display: flex; justify-content: space-between; align-items: center; }
 .live-indicator { display: inline-flex; align-items: center; gap: 8px; background: rgba(46, 204, 113, 0.2); color: var(--green-accent); padding: 6px 12px; border-radius: 20px; font-size: 12px; }
 .live-dot { width: 8px; height: 8px; background: var(--green-accent); border-radius: 50%; animation: pulse 2s infinite; }
-    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
-.filter-chips { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
-.filter-chip { background: #1a1a1a; border: 1px solid #333; padding: 8px 16px; border-radius: 20px; cursor: pointer; transition: 0.3s; font-size: 14px; }
-.filter-chip:hover,.filter-chip.active { background: var(--blue-accent); color: #000; border-color: var(--blue-accent); }
-.modal { position: fixed; inset: 0; background: rgba(0,0,0,0.9); backdrop-filter: blur(10px); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 20px; }
-.modal.active { display: flex; }
-.modal-content { background: var(--bg-card); padding: 30px; border-radius: 16px; border: 1px solid #222; max-width: 600px; width: 100%; max-height: 90vh; overflow-y: auto; }
-.modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-.close-modal { background: none; border: none; color: #999; font-size: 24px; cursor: pointer; }
-.close-modal:hover { color: var(--red-accent); }
-.order-item { background: #1a1a1a; padding: 12px; border-radius: 8px; margin-bottom: 10px; display: flex; justify-content: space-between; }
-.discount-badge { background: var(--red-accent); color: white; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; margin-right: 5px; }
+     @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
     </style>
 </head>
 <body>
@@ -96,6 +88,7 @@
                 <button onclick="showSection('categories', this)">الأقسام</button>
                 <button onclick="showSection('products', this)">المنتجات</button>
                 <button onclick="showSection('orders', this)">الطلبات</button>
+                <button onclick="showSection('customers', this)">الزبائن</button>
                 <button onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> خروج</button>
             </div>
         </nav>
@@ -119,9 +112,9 @@
                         <p>مبيعاتي</p>
                     </div>
                     <div class="stat-card">
-                        <i class="fa-solid fa-clock" style="color: var(--orange-accent);"></i>
-                        <h3 id="newOrders">0</h3>
-                        <p>طلبات جديدة</p>
+                        <i class="fa-solid fa-gift" style="color: var(--purple-accent);"></i>
+                        <h3 id="totalPoints">0</h3>
+                        <p>نقاط تم توزيعها</p>
                     </div>
                 </div>
             </div>
@@ -153,14 +146,20 @@
                             <option value="">اختر القسم</option>
                         </select>
                     </div>
-                    <div class="form-row">
+                    <div class="form-group">
+                        <label>السعر $</label>
+                        <input type="number" id="productPrice" step="0.01" required>
+                    </div>
+                    <div class="grid grid-cols-2 gap-3">
                         <div class="form-group">
-                            <label>السعر $</label>
-                            <input type="number" id="productPrice" step="0.01" required>
+                            <label>سعر المنتج بالنقاط <i class="fa-solid fa-gift"></i></label>
+                            <input type="number" id="productPointsCost" placeholder="مثال: 50000" required>
+                            <small style="color:#999">الزبون بدفع هالعدد اذا اختار بالنقاط</small>
                         </div>
                         <div class="form-group">
-                            <label>نسبة الحسم % - اختياري</label>
-                            <input type="number" id="productDiscount" min="0" max="100" step="1" placeholder="0">
+                            <label>نقاط المكافأة <i class="fa-solid fa-star"></i></label>
+                            <input type="number" id="productPointsEarned" placeholder="مثال: 50" required>
+                            <small style="color:#999">الزبون بيربحها اذا دفع فلوس</small>
                         </div>
                     </div>
                     <div class="form-group">
@@ -176,37 +175,8 @@
                             <th>الاسم</th>
                             <th>القسم</th>
                             <th>السعر</th>
-                            <th>الحسم</th>
-                            <th>إجراءات</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr><td colspan="6" class="loader"><i class="fa-solid fa-spinner fa-spin"></i> جاري التحميل...</td></tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="section" id="orders">
-                <h2>طلبات متجري</h2>
-                <div class="filter-chips">
-                    <div class="filter-chip active" onclick="filterOrders('all', this)">الكل</div>
-                    <div class="filter-chip" onclick="filterOrders('جديد', this)">جديدة</div>
-                    <div class="filter-chip" onclick="filterOrders('قيد التجهيز', this)">قيد التجهيز</div>
-                    <div class="filter-chip" onclick="filterOrders('تم التوصيل', this)">تم التوصيل</div>
-                    <div class="filter-chip" onclick="filterOrders('تم الرفض', this)">تم الرفض</div>
-                </div>
-                <div class="export-bar">
-                    <button class="btn btn-green" onclick="exportToExcel()"><i class="fa-solid fa-file-excel"></i> تصدير Excel</button>
-                </div>
-                <table id="ordersTable">
-                    <thead>
-                        <tr>
-                            <th>التاريخ</th>
-                            <th>الزبون</th>
-                            <th>الجوال</th>
-                            <th>المجموع</th>
-                            <th>الدفع</th>
-                            <th>الحالة</th>
+                            <th>سعر بالنقاط</th>
+                            <th>نقاط مكافأة</th>
                             <th>إجراءات</th>
                         </tr>
                     </thead>
@@ -215,22 +185,62 @@
                     </tbody>
                 </table>
             </div>
-        </div>
-    </div>
 
-    <div class="modal" id="orderModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 style="margin:0">تفاصيل الطلب</h2>
-                <button class="close-modal" onclick="closeOrderModal()"><i class="fa-solid fa-xmark"></i></button>
+            <div class="section" id="orders">
+                <h2>طلبات متجري</h2>
+                <div class="export-bar">
+                    <div class="filter-buttons">
+                        <button class="filter-btn active" onclick="filterOrders('all', this)">الكل <span id="count-all"></span></button>
+                        <button class="filter-btn" onclick="filterOrders('جديد', this)">جديد <span id="count-جديد"></span></button>
+                        <button class="filter-btn" onclick="filterOrders('قيد التجهيز', this)">قيد التجهيز <span id="count-قيد التجهيز"></span></button>
+                        <button class="filter-btn" onclick="filterOrders('تم التوصيل', this)">تم التوصيل <span id="count-تم التوصيل"></span></button>
+                        <button class="filter-btn" onclick="filterOrders('تم الرفض', this)">مرفوض <span id="count-تم الرفض"></span></button>
+                    </div>
+                    <button class="btn btn-green" onclick="exportToExcel()"><i class="fa-solid fa-file-excel"></i> تصدير Excel</button>
+                </div>
+                <input id="searchOrderPhone" type="text" placeholder="ابحث برقم جوال الزبون او كود الطلب..." class="w-full p-3 mb-4 rounded-xl bg-black border-gray-800 outline-none" onkeyup="renderOrders()">
+                <table id="ordersTable">
+                    <thead>
+                        <tr>
+                            <th>التاريخ</th>
+                            <th>الزبون</th>
+                            <th>الجوال</th>
+                            <th>المجموع</th>
+                            <th>نقاط المكافأة</th>
+                            <th>طريقة الدفع</th>
+                            <th>الحالة</th>
+                            <th>تحديث</th>
+                            <th>حذف</th> <!-- زر الحذف الجديد -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td colspan="9" class="loader"><i class="fa-solid fa-spinner fa-spin"></i> جاري التحميل...</td></tr>
+                    </tbody>
+                </table>
             </div>
-            <div id="orderDetails"></div>
+
+            <div class="section" id="customers">
+                <h2>إدارة نقاط الزبائن</h2>
+                <table id="customersTable">
+                    <thead>
+                        <tr>
+                            <th>اسم الزبون</th>
+                            <th>الجوال</th>
+                            <th>إجمالي النقاط</th>
+                            <th>إجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td colspan="4" class="loader"><i class="fa-solid fa-spinner fa-spin"></i> جاري التحميل...</td></tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 
     <script type="module">
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
-        import { getFirestore, collection, getDocs, addDoc, deleteDoc, doc, updateDoc, query, where, onSnapshot } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+        import { getFirestore, collection, getDocs, addDoc, deleteDoc, doc, updateDoc, query, where, onSnapshot, increment } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
 
         const firebaseConfig = {
           apiKey: "AIzaSyCN1ZMiCUkuQiPZUzihRRkRR2tf_AnPqGQ",
@@ -246,11 +256,12 @@
         const db = getFirestore(app);
         let currentCompanyId = null;
         let currentCompanyName = '';
+        let allOrders = [];
+        let currentOrderFilter = 'all';
         let unsubscribeProducts = null;
         let unsubscribeOrders = null;
         let unsubscribeCategories = null;
-        let allOrders = [];
-        let currentFilter = 'all';
+        let unsubscribeCustomers = null;
 
         window.onload = function() {
             const saved = localStorage.getItem('company_login');
@@ -290,13 +301,11 @@
                 const companyDoc = snapshot.docs[0];
                 currentCompanyId = companyDoc.id;
                 currentCompanyName = companyDoc.data().name;
-
                 localStorage.setItem('company_login', JSON.stringify({ id: currentCompanyId, name: currentCompanyName }));
 
                 document.getElementById('companyNameNav').textContent = currentCompanyName;
                 document.getElementById('loginContainer').style.display = 'none';
                 document.getElementById('dashboard').style.display = 'block';
-
                 initListeners();
             } catch (error) {
                 errorMsg.textContent = 'خطأ: ' + error.message;
@@ -308,7 +317,7 @@
             if (unsubscribeProducts) unsubscribeProducts();
             if (unsubscribeOrders) unsubscribeOrders();
             if (unsubscribeCategories) unsubscribeCategories();
-
+            if (unsubscribeCustomers) unsubscribeCustomers();
             localStorage.removeItem('company_login');
             document.getElementById('loginContainer').style.display = 'flex';
             document.getElementById('dashboard').style.display = 'none';
@@ -333,49 +342,58 @@
 
             const ordersQuery = query(collection(db, "phone_orders"), where("companyId", "==", currentCompanyId));
             unsubscribeOrders = onSnapshot(ordersQuery, (snapshot) => {
-                allOrders = [];
-                snapshot.forEach(doc => {
-                    allOrders.push({ id: doc.id,...doc.data() });
-                });
-                
-                document.getElementById('totalOrders').textContent = snapshot.size;
-                let revenue = 0, newCount = 0;
-                snapshot.forEach(doc => {
-                    const order = doc.data();
-                    revenue += order.total || 0;
-                    if(order.status === 'جديد') newCount++;
+                allOrders = snapshot.docs.map(d => ({id: d.id,...d.data()}));
+                document.getElementById('totalOrders').textContent = allOrders.length;
+                let revenue = 0, totalPoints = 0;
+                allOrders.forEach(order => {
+                    if(order.paymentMethod!== 'بالنقاط') revenue += order.total || 0;
+                    totalPoints += order.pointsEarned || 0;
                 });
                 document.getElementById('totalRevenue').textContent = `$${revenue.toFixed(2)}`;
-                document.getElementById('newOrders').textContent = newCount;
-                renderOrders(allOrders);
+                document.getElementById('totalPoints').textContent = totalPoints;
+                updateOrderCounts();
+                renderOrders();
             });
 
             const categoriesQuery = query(collection(db, "phone_categories"), where("companyId", "==", currentCompanyId));
             unsubscribeCategories = onSnapshot(categoriesQuery, (snapshot) => {
                 renderCategories(snapshot);
             });
+
+            const customersQuery = query(collection(db, "phone_customers"), where("companyId", "==", currentCompanyId));
+            unsubscribeCustomers = onSnapshot(customersQuery, (snapshot) => {
+                renderCustomers(snapshot);
+            });
+        }
+
+        function updateOrderCounts() {
+            document.getElementById('count-all').textContent = `(${allOrders.length})`;
+            document.getElementById('count-جديد').textContent = `(${allOrders.filter(o=>o.status==='جديد').length})`;
+            document.getElementById('count-قيد التجهيز').textContent = `(${allOrders.filter(o=>o.status==='قيد التجهيز').length})`;
+            document.getElementById('count-تم التوصيل').textContent = `(${allOrders.filter(o=>o.status==='تم التوصيل').length})`;
+            document.getElementById('count-تم الرفض').textContent = `(${allOrders.filter(o=>o.status==='تم الرفض').length})`;
+        }
+
+        window.filterOrders = function(status, element) {
+            currentOrderFilter = status;
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            element.classList.add('active');
+            renderOrders();
         }
 
         function renderCategories(snapshot) {
             const grid = document.getElementById('categoriesGrid');
             const select = document.getElementById('productCategory');
-
             if(snapshot.empty) {
                 grid.innerHTML = '<p style="text-align:center;color:#999;grid-column:1/-1">لا توجد أقسام</p>';
                 select.innerHTML = '<option value="">اختر القسم</option>';
                 return;
             }
-
             grid.innerHTML = '';
             select.innerHTML = '<option value="">اختر القسم</option>';
             snapshot.forEach(docSnap => {
                 const cat = docSnap.data();
-                grid.innerHTML += `
-                    <div class="category-card">
-                        <span>${cat.name}</span>
-                        <button class="btn btn-red btn-sm" onclick="deleteCategory('${docSnap.id}')"><i class="fa-solid fa-trash"></i></button>
-                    </div>
-                `;
+                grid.innerHTML += `<div class="category-card"><span>${cat.name}</span><button class="btn btn-red btn-sm" onclick="deleteCategory('${docSnap.id}')"><i class="fa-solid fa-trash"></i></button></div>`;
                 select.innerHTML += `<option value="${cat.name}">${cat.name}</option>`;
             });
         }
@@ -394,25 +412,21 @@
 
         function renderProducts(snapshot) {
             const tbody = document.querySelector('#productsTable tbody');
-
             if(snapshot.empty) {
-                tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:#999">لا توجد منتجات</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:#999">لا توجد منتجات</td></tr>';
                 return;
             }
-
             tbody.innerHTML = '';
             snapshot.forEach(docSnap => {
                 const product = docSnap.data();
-                const hasDiscount = product.discount && product.discount > 0;
-                const finalPrice = hasDiscount? product.price * (1 - product.discount / 100) : product.price;
-                
                 tbody.innerHTML += `
                     <tr>
                         <td><img src="${product.image}" class="product-img" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3081/3081559.png'"></td>
                         <td>${product.name}</td>
                         <td><span class="category-tag">${product.category || '-'}</span></td>
-                        <td>${hasDiscount? `<span style="text-decoration:line-through;color:#999">$${product.price}</span><br><span style="color:var(--green-accent);font-weight:700">$${finalPrice.toFixed(2)}</span>` : `$${product.price}`}</td>
-                        <td>${hasDiscount? `<span class="discount-badge">-${product.discount}%</span>` : '-'}</td>
+                        <td>$${product.price}</td>
+                        <td><span class="points-badge"><i class="fa-solid fa-gift"></i> ${product.pointsCost || 0} نقطة</span></td>
+                        <td><span class="points-badge" style="background:rgba(46,204,113,0.2);color:var(--green-accent)"><i class="fa-solid fa-star"></i> ${product.pointsEarned || 0}</span></td>
                         <td><button class="btn btn-red btn-sm" onclick="deleteProduct('${docSnap.id}')"><i class="fa-solid fa-trash"></i></button></td>
                     </tr>
                 `;
@@ -424,17 +438,15 @@
             const name = document.getElementById('productName').value.trim();
             const category = document.getElementById('productCategory').value;
             const price = parseFloat(document.getElementById('productPrice').value);
-            const discount = parseFloat(document.getElementById('productDiscount').value) || 0;
+            const pointsCost = parseInt(document.getElementById('productPointsCost').value) || 0;
+            const pointsEarned = parseInt(document.getElementById('productPointsEarned').value) || 0;
             const image = document.getElementById('productImage').value.trim();
 
-            await addDoc(collection(db, "phone_products"), { 
-                name, 
-                price, 
-                discount,
-                image, 
-                category, 
-                companyId: currentCompanyId, 
-                companyName: currentCompanyName 
+            await addDoc(collection(db, "phone_products"), {
+                name, price,
+                pointsCost, // سعر بالنقاط
+                pointsEarned, // نقاط مكافأة
+                image, category, companyId: currentCompanyId, companyName: currentCompanyName
             });
             alert('تمت إضافة المنتج');
             this.reset();
@@ -445,23 +457,31 @@
             await deleteDoc(doc(db, "phone_products", id));
         }
 
-        window.filterOrders = function(status, element) {
-            currentFilter = status;
-            document.querySelectorAll('.filter-chip').forEach(chip => chip.classList.remove('active'));
-            element.classList.add('active');
-            renderOrders(allOrders);
+        // دالة حذف الطلب الجديد
+        window.deleteOrder = async function(id) {
+            if(!confirm('متأكد من حذف الطلب نهائياً؟')) return;
+            await deleteDoc(doc(db, "phone_orders", id));
+            alert('تم حذف الطلب بنجاح');
         }
 
-        function renderOrders(orders) {
+        function renderOrders() {
             const tbody = document.querySelector('#ordersTable tbody');
-            
-            const filtered = currentFilter === 'all'? orders : orders.filter(o => o.status === currentFilter);
+            const searchTerm = document.getElementById('searchOrderPhone').value.trim();
 
-            if(filtered.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:#999">لا توجد طلبات</td></tr>';
-                return;
+            let filtered = allOrders;
+
+            if(currentOrderFilter!== 'all') {
+                filtered = filtered.filter(o => o.status === currentOrderFilter);
             }
 
+            if(searchTerm) {
+                filtered = filtered.filter(o => o.customer.phone.includes(searchTerm) || o.code.includes(searchTerm));
+            }
+
+            if(filtered.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="9" style="text-align:center;color:#999">لا توجد طلبات</td></tr>';
+                return;
+            }
             tbody.innerHTML = '';
             filtered.forEach(order => {
                 const date = new Date(order.date).toLocaleDateString('ar-SA');
@@ -471,7 +491,8 @@
                 if(order.status === 'تم الرفض') statusClass = 'status-rejected';
 
                 const paymentInfo = order.paymentMethod === 'شام كاش'
-            ? `<span style="color:var(--green-accent);font-weight:700">شام كاش</span><br><span style="font-size:12px">${order.shamcashCode}</span>`
+        ? `<span style="color:var(--green-accent);font-weight:700">شام كاش</span><br><span style="font-size:12px">${order.shamcashCode || ''}</span>`
+                    : order.paymentMethod === 'بالنقاط'? `<span style="color:var(--purple-accent);font-weight:700">بالنقاط</span><br><span style="font-size:12px">خصم ${order.pointsDeducted || 0}</span>`
                     : '<span style="color:#999">عند الاستلام</span>';
 
                 tbody.innerHTML += `
@@ -480,64 +501,83 @@
                         <td>${order.customer.name}</td>
                         <td>${order.customer.phone}</td>
                         <td>$${order.total.toFixed(2)}</td>
+                        <td><span class="points-badge">${order.pointsEarned || 0}</span></td>
                         <td>${paymentInfo}</td>
                         <td><span class="status ${statusClass}">${order.status}</span></td>
                         <td>
-                            <button class="btn btn-blue btn-sm" onclick='showOrderDetails(${JSON.stringify(order).replace(/'/g, "&apos;")})'>
-                                <i class="fa-solid fa-eye"></i> تفاصيل
-                            </button>
-                            <select onchange="updateOrderStatus('${order.id}', this.value)" style="padding:5px;background:#1a1a1a;color:#fff;border:1px solid #333;border-radius:5px;margin-right:5px;">
+                            <select onchange="updateOrderStatus('${order.id}', this.value, '${order.customer.phone}', ${order.pointsEarned || 0}, ${order.paidWithPoints})" style="padding:5px;background:#1a1a1a;color:#fff;border:1px solid #333;border-radius:5px;">
                                 <option value="جديد" ${order.status === 'جديد'? 'selected' : ''}>جديد</option>
                                 <option value="قيد التجهيز" ${order.status === 'قيد التجهيز'? 'selected' : ''}>قيد التجهيز</option>
                                 <option value="تم التوصيل" ${order.status === 'تم التوصيل'? 'selected' : ''}>تم التوصيل</option>
                                 <option value="تم الرفض" ${order.status === 'تم الرفض'? 'selected' : ''}>تم الرفض</option>
                             </select>
                         </td>
+                        <td>
+                            <button class="btn btn-red btn-sm" onclick="deleteOrder('${order.id}')"><i class="fa-solid fa-trash"></i> حذف</button>
+                        </td>
                     </tr>
                 `;
             });
         }
 
-        window.updateOrderStatus = async function(orderId, newStatus) {
+        window.updateOrderStatus = async function(orderId, newStatus, customerPhone, pointsEarned, paidWithPoints) {
             await updateDoc(doc(db, "phone_orders", orderId), { status: newStatus });
+
+            // اذا تم التوصيل وكان الدفع فلوس، نضيف نقاط المكافأة للزبون
+            if(newStatus === 'تم التوصيل' && pointsEarned > 0 &&!paidWithPoints) {
+                const customersQuery = query(collection(db, "phone_customers"), where("phone", "==", customerPhone), where("companyId", "==", currentCompanyId));
+                const snap = await getDocs(customersQuery);
+
+                if(snap.empty) {
+                    await addDoc(collection(db, "phone_customers"), {
+                        name: '', phone: customerPhone, points: pointsEarned, companyId: currentCompanyId
+                    });
+                } else {
+                    const customerDoc = snap.docs[0];
+                    await updateDoc(doc(db, "phone_customers", customerDoc.id), {
+                        points: increment(pointsEarned)
+                    });
+                }
+                alert(`تم إضافة ${pointsEarned} نقطة مكافأة للزبون`);
+            }
         }
 
-        window.showOrderDetails = function(order) {
-            const details = document.getElementById('orderDetails');
-            const date = new Date(order.date).toLocaleString('ar-SA');
-            
-            details.innerHTML = `
-                <div style="margin-bottom:20px">
-                    <p><strong>كود الطلب:</strong> ${order.code}</p>
-                    <p><strong>التاريخ:</strong> ${date}</p>
-                    <p><strong>الحالة:</strong> ${order.status}</p>
-                    <p><strong>طريقة الدفع:</strong> ${order.paymentMethod} ${order.shamcashCode? '- ' + order.shamcashCode : ''}</p>
-                </div>
-                <div style="margin-bottom:20px; padding:15px; background:#1a1a1a; border-radius:8px">
-                    <h3 style="color:var(--blue-accent); margin-bottom:10px">معلومات الزبون</h3>
-                    <p><strong>الاسم:</strong> ${order.customer.name}</p>
-                    <p><strong>الجوال:</strong> ${order.customer.phone}</p>
-                    <p><strong>العنوان:</strong> ${order.customer.address}</p>
-                </div>
-                <div>
-                    <h3 style="color:var(--blue-accent); margin-bottom:10px">المنتجات</h3>
-                    ${order.items.map(item => `
-                        <div class="order-item">
-                            <span>${item.name} × ${item.qty}</span>
-                            <span style="color:var(--green-accent)">$${(item.price * item.qty).toFixed(2)}</span>
-                        </div>
-                    `).join('')}
-                    <div style="margin-top:15px; padding-top:15px; border-top:1px solid #333; display:flex; justify-content:space-between; font-size:18px; font-weight:700">
-                        <span>المجموع:</span>
-                        <span style="color:var(--green-accent)">$${order.total.toFixed(2)}</span>
-                    </div>
-                </div>
-            `;
-            document.getElementById('orderModal').classList.add('active');
+        function renderCustomers(snapshot) {
+            const tbody = document.querySelector('#customersTable tbody');
+            if(snapshot.empty) {
+                tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:#999">لا يوجد زبائن</td></tr>';
+                return;
+            }
+            tbody.innerHTML = '';
+            snapshot.forEach(docSnap => {
+                const customer = docSnap.data();
+                tbody.innerHTML += `
+                    <tr>
+                        <td>${customer.name || 'زبون'}</td>
+                        <td>${customer.phone}</td>
+                        <td><span class="points-badge"><i class="fa-solid fa-gift"></i> ${customer.points || 0}</span></td>
+                        <td>
+                            <button class="btn btn-purple btn-sm" onclick="giftPoints('${docSnap.id}', '${customer.phone}')"><i class="fa-solid fa-gift"></i> إهداء</button>
+                            <button class="btn btn-red btn-sm" onclick="resetPoints('${docSnap.id}')"><i class="fa-solid fa-rotate-left"></i> تصفير</button>
+                        </td>
+                    </tr>
+                `;
+            });
         }
 
-        window.closeOrderModal = function() {
-            document.getElementById('orderModal').classList.remove('active');
+        window.giftPoints = async function(id, phone) {
+            const points = prompt(`كم نقطة تريد إهداءها للزبون ${phone}؟`);
+            if(!points || isNaN(points) || points <= 0) return;
+
+            await updateDoc(doc(db, "phone_customers", id), {
+                points: increment(Number(points))
+            });
+            alert(`تم إضافة ${points} نقطة للزبون بنجاح`);
+        }
+
+        window.resetPoints = async function(id) {
+            if(!confirm('متأكد من تصفير النقاط؟')) return;
+            await updateDoc(doc(db, "phone_customers", id), { points: 0 });
         }
 
         window.exportToExcel = function() {
@@ -546,7 +586,6 @@
                 alert('لا يوجد طلبات للتصدير');
                 return;
             }
-
             let csv = [];
             const rows = table.querySelectorAll('tr');
             for (let row of rows) {
@@ -558,7 +597,6 @@
                 }
                 csv.push(rowData.join(','));
             }
-
             const csvContent = '\uFEFF' + csv.join('\n');
             const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
             const link = document.createElement('a');
